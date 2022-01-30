@@ -1,0 +1,8 @@
+# IntelliJ
+.idea
+
+# Database
+*.db
+
+# Build outputs
+*.jar
