@@ -2,15 +2,15 @@ package genre;
 
 public class Genre {
 
-    private int id;
+    private long id;
     private String name;
 
-    public Genre(int id, String name) {
+    public Genre(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
