@@ -7,6 +7,8 @@ public interface SongRepository {
 
     List<Song> findAllSongs();
 
+    List<Song> findAllSongsByUserId(long userId);
+
     Song save(Song song);
 
     void delete(long id);

@@ -87,6 +87,37 @@ public class SongRepositoryImpl implements SongRepository {
     }
 
     @Override
+    public List<Song> findAllSongsByUserId(long userId) {
+        String stmt = "SELECT * FROM ? WHERE userId = ?";
+        try {
+            // Setup connection
+            Connection connection = getConnection();
+            assert connection != null;
+            // Prepare statement
+            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
+            preparedStatement.setString(1, TABLE_NAME_SONG);
+            preparedStatement.setLong(2, userId);
+            // Execute statement
+            ResultSet result = preparedStatement.executeQuery();
+            // Materialize result data
+            List<Song> songs = new ArrayList<>();
+            while (result.next()) {
+                int songId = result.getInt("id");
+                String songTitle = result.getString("title");
+                float songBpm = result.getFloat("bpm");
+                List<Artist> songArtists = artistRepository.findAllArtistsBySongId(songId);
+                Genre songGenre = genreRepository.findGenreBySongId(songId);
+                BarType songBarType = barTypeRepository.findBarTypeBySongId(songId);
+                songs.add(new Song(songId, songTitle, songArtists, songGenre, songBpm, songBarType));
+            }
+            return songs;
+        } catch (SQLException e) {
+            System.err.println("DB ERROR: " + e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
     public Song save(Song song) {
         // Check if the artist exists already
         if (findSongById(song.getId()) != null) return null;
