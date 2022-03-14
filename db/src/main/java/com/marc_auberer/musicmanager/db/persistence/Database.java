@@ -4,6 +4,12 @@ import java.sql.*;
 
 public class Database {
 
+    public static final String TABLE_NAME_ARTIST = "artist";
+    public static final String TABLE_NAME_BAR_TYPES = "bar_types";
+    public static final String TABLE_NAME_GENRE = "genre";
+    public static final String TABLE_NAME_SONG = "song";
+    public static final String TABLE_NAME_USER = "user";
+
     private static final String connectionUri = "jdbc:sqlite:./musicmanager.db";
 
     public static Connection getConnection() {

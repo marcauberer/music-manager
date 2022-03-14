@@ -3,9 +3,13 @@ package artist;
 import java.util.List;
 
 public interface ArtistRepository {
+    Artist findArtistById(long id);
+
+    List<Artist> findAllArtists();
+
     List<Artist> findAllArtistsBySongId(long songId);
 
-    Artist save(Artist artist, long songId);
+    Artist save(Artist artist);
 
-    void delete(int id);
+    void delete(long id);
 }

@@ -8,14 +8,14 @@ import bartype.BarType;
 
 public class Song {
 
-    private int id;
+    private long id;
     private String title;
     private List<Artist> artists;
     private Genre genre;
     private float bpm;
     private BarType barType;
 
-    public Song(int id, String title, List<Artist> artists, Genre genre, float bpm, BarType batType) {
+    public Song(long id, String title, List<Artist> artists, Genre genre, float bpm, BarType batType) {
         this.id = id;
         this.title = title;
         this.artists = artists;
@@ -24,7 +24,7 @@ public class Song {
         this.barType = batType;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
