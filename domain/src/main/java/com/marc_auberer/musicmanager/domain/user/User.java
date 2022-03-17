@@ -1,8 +1,8 @@
-package user;
+package com.marc_auberer.musicmanager.domain.user;
 
 import java.util.List;
 
-import song.Song;
+import com.marc_auberer.musicmanager.domain.song.Song;
 
 public class User {
 

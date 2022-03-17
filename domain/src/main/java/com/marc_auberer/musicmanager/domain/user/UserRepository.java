@@ -1,4 +1,4 @@
-package user;
+package com.marc_auberer.musicmanager.domain.user;
 
 import java.util.List;
 

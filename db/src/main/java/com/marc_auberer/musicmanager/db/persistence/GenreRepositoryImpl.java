@@ -1,7 +1,7 @@
 package com.marc_auberer.musicmanager.db.persistence;
 
-import genre.Genre;
-import genre.GenreRepository;
+import com.marc_auberer.musicmanager.domain.genre.Genre;
+import com.marc_auberer.musicmanager.domain.genre.GenreRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

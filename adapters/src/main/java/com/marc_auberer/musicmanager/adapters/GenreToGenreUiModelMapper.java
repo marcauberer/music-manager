@@ -1,6 +1,6 @@
 package com.marc_auberer.musicmanager.adapters;
 
-import genre.Genre;
+import com.marc_auberer.musicmanager.domain.genre.Genre;
 
 import java.util.function.Function;
 

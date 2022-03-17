@@ -1,7 +1,7 @@
 package com.marc_auberer.musicmanager.db.persistence;
 
-import artist.Artist;
-import artist.ArtistRepository;
+import com.marc_auberer.musicmanager.domain.artist.Artist;
+import com.marc_auberer.musicmanager.domain.artist.ArtistRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

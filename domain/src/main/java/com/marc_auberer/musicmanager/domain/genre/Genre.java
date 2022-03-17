@@ -1,4 +1,4 @@
-package genre;
+package com.marc_auberer.musicmanager.domain.genre;
 
 public class Genre {
 

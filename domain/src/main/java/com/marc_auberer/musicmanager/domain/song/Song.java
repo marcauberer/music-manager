@@ -1,10 +1,10 @@
-package song;
+package com.marc_auberer.musicmanager.domain.song;
 
 import java.util.List;
 
-import artist.Artist;
-import genre.Genre;
-import bartype.BarType;
+import com.marc_auberer.musicmanager.domain.artist.Artist;
+import com.marc_auberer.musicmanager.domain.genre.Genre;
+import com.marc_auberer.musicmanager.domain.bartype.BarType;
 
 public class Song {
 

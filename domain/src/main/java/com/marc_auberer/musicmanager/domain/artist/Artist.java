@@ -1,4 +1,4 @@
-package artist;
+package com.marc_auberer.musicmanager.domain.artist;
 
 import java.util.Date;
 

@@ -1,8 +1,8 @@
 package com.marc_auberer.musicmanager.adapters;
 
-import artist.Artist;
-import bartype.BarType;
-import genre.Genre;
+import com.marc_auberer.musicmanager.domain.artist.Artist;
+import com.marc_auberer.musicmanager.domain.bartype.BarType;
+import com.marc_auberer.musicmanager.domain.genre.Genre;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.marc_auberer.musicmanager.adapters;
 
-import bartype.BarType;
+import com.marc_auberer.musicmanager.domain.bartype.BarType;
 
 import java.util.function.Function;
 

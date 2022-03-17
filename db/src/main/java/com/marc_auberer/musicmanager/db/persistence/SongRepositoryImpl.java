@@ -1,10 +1,10 @@
 package com.marc_auberer.musicmanager.db.persistence;
 
-import artist.Artist;
-import bartype.BarType;
-import genre.Genre;
-import song.Song;
-import song.SongRepository;
+import com.marc_auberer.musicmanager.domain.artist.Artist;
+import com.marc_auberer.musicmanager.domain.bartype.BarType;
+import com.marc_auberer.musicmanager.domain.genre.Genre;
+import com.marc_auberer.musicmanager.domain.song.Song;
+import com.marc_auberer.musicmanager.domain.song.SongRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

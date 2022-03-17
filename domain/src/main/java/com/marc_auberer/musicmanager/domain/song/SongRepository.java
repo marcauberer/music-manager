@@ -1,4 +1,4 @@
-package song;
+package com.marc_auberer.musicmanager.domain.song;
 
 import java.util.List;
 

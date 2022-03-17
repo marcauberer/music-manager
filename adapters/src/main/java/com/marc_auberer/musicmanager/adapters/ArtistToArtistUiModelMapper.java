@@ -1,6 +1,6 @@
 package com.marc_auberer.musicmanager.adapters;
 
-import artist.Artist;
+import com.marc_auberer.musicmanager.domain.artist.Artist;
 
 import java.util.function.Function;
 

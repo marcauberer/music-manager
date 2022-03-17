@@ -1,7 +1,7 @@
 package com.marc_auberer.musicmanager.db.persistence;
 
-import bartype.BarType;
-import bartype.BarTypeRepository;
+import com.marc_auberer.musicmanager.domain.bartype.BarType;
+import com.marc_auberer.musicmanager.domain.bartype.BarTypeRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

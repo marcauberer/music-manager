@@ -1,4 +1,4 @@
-package bartype;
+package com.marc_auberer.musicmanager.domain.bartype;
 
 public class BarType {
 
