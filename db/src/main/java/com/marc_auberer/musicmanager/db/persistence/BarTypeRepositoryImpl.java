@@ -3,10 +3,7 @@ package com.marc_auberer.musicmanager.db.persistence;
 import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.bartype.BarTypeRepository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +11,14 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
 
     @Override
     public BarType findBarTypeById(long id) {
-        String stmt = "SELECT * FROM ? WHERE id = ?";
+        String sql = "SELECT * FROM bar_types WHERE id = ?";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_BAR_TYPE);
-            preparedStatement.setLong(2, id);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, id);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
             if (!result.next()) return null;
@@ -39,16 +35,15 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
 
     @Override
     public List<BarType> findAllBarTypes() {
-        String stmt = "SELECT * FROM ?";
+        String sql = "SELECT * FROM bar_types";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_BAR_TYPE);
+            Statement preparedStatement = connection.createStatement();
             // Execute statement
-            ResultSet result = preparedStatement.executeQuery();
+            ResultSet result = preparedStatement.executeQuery(sql);
             // Materialize result data
             List<BarType> barTypes = new ArrayList<>();
             while (result.next()) {
@@ -66,15 +61,14 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
 
     @Override
     public BarType findBarTypeBySongId(long songId) {
-        String stmt = "SELECT * FROM ? WHERE songId = ?";
+        String sql = "SELECT * FROM bar_types WHERE songId = ?";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_BAR_TYPE);
-            preparedStatement.setLong(2, songId);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, songId);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
             if (!result.next()) return null;
@@ -95,17 +89,16 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
         if (findBarTypeById(barType.getId()) != null) return null;
 
         // Insert the new record
-        String stmt = "INSERT INTO ? (id, beat_count, beat_value) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO bar_types (id, beat_count, beat_value) VALUES (?, ?, ?)";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_ARTIST);
-            preparedStatement.setLong(2, barType.getId());
-            preparedStatement.setInt(3, barType.getBeatCount());
-            preparedStatement.setInt(4, barType.getBeatValue());
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, barType.getId());
+            preparedStatement.setInt(2, barType.getBeatCount());
+            preparedStatement.setInt(3, barType.getBeatValue());
             // Execute statement
             preparedStatement.executeUpdate();
             return barType;
@@ -117,15 +110,14 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
 
     @Override
     public void delete(long id) {
-        String stmt = "DELETE FROM ? WHERE id = ?";
+        String sql = "DELETE FROM bar_types WHERE id = ?";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_BAR_TYPE);
-            preparedStatement.setLong(2, id);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, id);
             // Execute statement
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

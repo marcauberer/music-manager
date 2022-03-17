@@ -6,10 +6,7 @@ import com.marc_auberer.musicmanager.domain.genre.Genre;
 import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.domain.song.SongRepository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,15 +24,14 @@ public class SongRepositoryImpl implements SongRepository {
 
     @Override
     public Song findSongById(long id) {
-        String stmt = "SELECT * FROM ? WHERE id = ?";
+        String sql = "SELECT * FROM songs WHERE id = ?";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_SONG);
-            preparedStatement.setLong(2, id);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, id);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
             if (!result.next()) return null;
@@ -55,16 +51,15 @@ public class SongRepositoryImpl implements SongRepository {
 
     @Override
     public List<Song> findAllSongs() {
-        String stmt = "SELECT * FROM ?";
+        String sql = "SELECT * FROM songs";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_SONG);
+            Statement preparedStatement = connection.createStatement();
             // Execute statement
-            ResultSet result = preparedStatement.executeQuery();
+            ResultSet result = preparedStatement.executeQuery(sql);
             // Materialize result data
             List<Song> songs = new ArrayList<>();
             while (result.next()) {
@@ -85,15 +80,14 @@ public class SongRepositoryImpl implements SongRepository {
 
     @Override
     public List<Song> findAllSongsByUserId(long userId) {
-        String stmt = "SELECT * FROM ? WHERE userId = ?";
+        String sql = "SELECT * FROM songs WHERE user_id = ?";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_SONG);
-            preparedStatement.setLong(2, userId);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, userId);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
             // Materialize result data
@@ -129,17 +123,16 @@ public class SongRepositoryImpl implements SongRepository {
         barTypeRepository.save(song.getBarType());
 
         // Insert the new record
-        String stmt = "INSERT INTO ? (id, title, bpm) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO songs (id, title, bpm) VALUES (?, ?, ?)";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_SONG);
-            preparedStatement.setLong(2, song.getId());
-            preparedStatement.setString(3, song.getTitle());
-            preparedStatement.setFloat(4, song.getBpm());
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, song.getId());
+            preparedStatement.setString(2, song.getTitle());
+            preparedStatement.setFloat(3, song.getBpm());
             // Execute statement
             preparedStatement.executeUpdate();
             return song;
@@ -151,15 +144,14 @@ public class SongRepositoryImpl implements SongRepository {
 
     @Override
     public void delete(long id) {
-        String stmt = "DELETE FROM ? WHERE id = ?";
+        String sql = "DELETE FROM songs WHERE id = ?";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_SONG);
-            preparedStatement.setLong(2, id);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, id);
             // Execute statement
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

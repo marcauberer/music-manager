@@ -12,8 +12,10 @@ CREATE TABLE IF NOT EXISTS songs (
     genre_id INTEGER,
     bpm FLOAT,
     bar_type_id INTEGER,
+    user_id INTEGER,
     FOREIGN KEY(genre_id) REFERENCES genre(id),
     FOREIGN KEY(bar_type_id) REFERENCES bar_types(id)
+    FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS artists (

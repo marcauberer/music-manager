@@ -3,10 +3,7 @@ package com.marc_auberer.musicmanager.db.persistence;
 import com.marc_auberer.musicmanager.domain.artist.Artist;
 import com.marc_auberer.musicmanager.domain.artist.ArtistRepository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,15 +12,14 @@ public class ArtistRepositoryImpl implements ArtistRepository {
 
     @Override
     public Artist findArtistById(long id) {
-        String stmt = "SELECT * FROM ? WHERE id = ?";
+        String sql = "SELECT * FROM artists WHERE id = ?";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_ARTIST);
-            preparedStatement.setLong(2, id);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, id);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
             if (!result.next()) return null;
@@ -41,16 +37,15 @@ public class ArtistRepositoryImpl implements ArtistRepository {
 
     @Override
     public List<Artist> findAllArtists() {
-        String stmt = "SELECT * FROM ?";
+        String sql = "SELECT * FROM artists";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_ARTIST);
+            Statement statement = connection.createStatement();
             // Execute statement
-            ResultSet result = preparedStatement.executeQuery();
+            ResultSet result = statement.executeQuery(sql);
             // Materialize result data
             List<Artist> artists = new ArrayList<>();
             while (result.next()) {
@@ -69,15 +64,14 @@ public class ArtistRepositoryImpl implements ArtistRepository {
 
     @Override
     public List<Artist> findAllArtistsBySongId(long songId) {
-        String stmt = "SELECT * FROM ? WHERE songId = ?";
+        String sql = "SELECT * FROM artists WHERE songId = ?";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_ARTIST);
-            preparedStatement.setLong(2, songId);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, songId);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
             // Materialize result data
@@ -102,18 +96,17 @@ public class ArtistRepositoryImpl implements ArtistRepository {
         if (findArtistById(artist.getId()) != null) return null;
 
         // Insert the new record
-        String stmt = "INSERT INTO ? (id, first_name, last_name, date_of_birth) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO artists (id, first_name, last_name, date_of_birth) VALUES (?, ?, ?, ?)";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_ARTIST);
-            preparedStatement.setLong(2, artist.getId());
-            preparedStatement.setString(3, artist.getFirstName());
-            preparedStatement.setString(4, artist.getLastName());
-            preparedStatement.setDate(5, new java.sql.Date(artist.getDateOfBirth().getTime()));
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, artist.getId());
+            preparedStatement.setString(2, artist.getFirstName());
+            preparedStatement.setString(3, artist.getLastName());
+            preparedStatement.setDate(4, new java.sql.Date(artist.getDateOfBirth().getTime()));
             // Execute statement
             preparedStatement.executeUpdate();
             return artist;
@@ -125,15 +118,14 @@ public class ArtistRepositoryImpl implements ArtistRepository {
 
     @Override
     public void delete(long id) {
-        String stmt = "DELETE FROM ? WHERE id = ?";
+        String sql = "DELETE FROM artists WHERE id = ?";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_ARTIST);
-            preparedStatement.setLong(2, id);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, id);
             // Execute statement
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

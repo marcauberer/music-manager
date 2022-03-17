@@ -1,4 +1,4 @@
-# ASE Project
+# Music Manager
 [![CI](https://github.com/marcauberer/ase-project/actions/workflows/ci.yml/badge.svg)](https://github.com/marcauberer/ase-project/actions/workflows/ci.yml)
 
 ## ER-Diagram

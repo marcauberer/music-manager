@@ -4,10 +4,7 @@ import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.domain.user.User;
 import com.marc_auberer.musicmanager.domain.user.UserRepository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,16 +18,15 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAllUsers() {
-        String stmt = "SELECT * FROM ?";
+        String sql = "SELECT * FROM users";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_USER);
+            Statement statement = connection.createStatement();
             // Execute statement
-            ResultSet result = preparedStatement.executeQuery();
+            ResultSet result = statement.executeQuery(sql);
             // Materialize result data
             List<User> user = new ArrayList<>();
             while (result.next()) {
@@ -49,15 +45,14 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findUserByUsername(String username) {
-        String stmt = "SELECT * FROM ? WHERE username = ?";
+        String sql = "SELECT * FROM users WHERE username = ?";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_USER);
-            preparedStatement.setString(2, username);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, username);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
             if (!result.next()) return null;
@@ -68,7 +63,7 @@ public class UserRepositoryImpl implements UserRepository {
             List<Song> userSongs = songRepository.findAllSongsByUserId(userId);
             return new User(userId, userName, userPassword, userSongs);
         } catch (SQLException e) {
-            System.err.println("DB ERROR: " + e.getMessage());
+            System.err.println("DB ERROR in findUserByUsername: " + e.getMessage());
         }
         return null;
     }
@@ -79,17 +74,17 @@ public class UserRepositoryImpl implements UserRepository {
         if (findUserByUsername(user.getUsername()) != null) return null;
 
         // Insert the new record
-        String stmt = "INSERT INTO ? (id, username, password) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO users (id, username, password) VALUES (?, ?, ?)";
         try {
             // Setup connection
             Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, Database.TABLE_NAME_USER);
-            preparedStatement.setLong(2, user.getId());
-            preparedStatement.setString(3, user.getUsername());
-            preparedStatement.setString(4, user.getPassword());
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, user.getId());
+            preparedStatement.setString(2, user.getUsername());
+            preparedStatement.setString(3, user.getPassword());
+
             // Execute statement
             preparedStatement.executeUpdate();
             return user;
