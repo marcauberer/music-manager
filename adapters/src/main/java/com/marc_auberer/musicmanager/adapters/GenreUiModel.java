@@ -1,11 +1,11 @@
-package genre;
+package com.marc_auberer.musicmanager.adapters;
 
-public class Genre {
+public class GenreUiModel {
 
     private final long id;
     private final String name;
 
-    public Genre(long id, String name) {
+    public GenreUiModel(long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -15,6 +15,11 @@ public class Genre {
     }
 
     public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
         return name;
     }
 }

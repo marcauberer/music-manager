@@ -1,12 +1,13 @@
-package song;
-
-import java.util.List;
+package com.marc_auberer.musicmanager.adapters;
 
 import artist.Artist;
-import genre.Genre;
 import bartype.BarType;
+import genre.Genre;
 
-public class Song {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SongUiModel {
 
     private final long id;
     private final String title;
@@ -15,7 +16,7 @@ public class Song {
     private final float bpm;
     private final BarType barType;
 
-    public Song(long id, String title, List<Artist> artists, Genre genre, float bpm, BarType batType) {
+    public SongUiModel(long id, String title, List<Artist> artists, Genre genre, float bpm, BarType batType) {
         this.id = id;
         this.title = title;
         this.artists = artists;
@@ -46,5 +47,17 @@ public class Song {
 
     public BarType getBarType() {
         return barType;
+    }
+
+    @Override
+    public String toString() {
+        // Artist list to string
+        List<String> artistsStrings = new ArrayList<>();
+        for (Artist artist : artists) {
+            artistsStrings.add(artist.getFirstName() + " " + artist.getLastName());
+        }
+        String artistsString = String.join(", " + artistsStrings);
+
+        return title + " by " + artistsString + " (Genre: " + genre + ", Bpm: " + bpm + ", Bar type: " + barType + ")";
     }
 }

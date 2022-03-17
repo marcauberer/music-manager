@@ -11,8 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.marc_auberer.musicmanager.db.persistence.Database.*;
-
 public class UserRepositoryImpl implements UserRepository {
 
     private final SongRepositoryImpl songRepository;
@@ -26,11 +24,11 @@ public class UserRepositoryImpl implements UserRepository {
         String stmt = "SELECT * FROM ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_USER);
+            preparedStatement.setString(1, Database.TABLE_NAME_USER);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
             // Materialize result data
@@ -54,11 +52,11 @@ public class UserRepositoryImpl implements UserRepository {
         String stmt = "SELECT * FROM ? WHERE username = ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_USER);
+            preparedStatement.setString(1, Database.TABLE_NAME_USER);
             preparedStatement.setString(2, username);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
@@ -84,11 +82,11 @@ public class UserRepositoryImpl implements UserRepository {
         String stmt = "INSERT INTO ? (id, username, password) VALUES (?, ?, ?)";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_USER);
+            preparedStatement.setString(1, Database.TABLE_NAME_USER);
             preparedStatement.setLong(2, user.getId());
             preparedStatement.setString(3, user.getUsername());
             preparedStatement.setString(4, user.getPassword());

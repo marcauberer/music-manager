@@ -13,9 +13,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.marc_auberer.musicmanager.db.persistence.Database.TABLE_NAME_SONG;
-import static com.marc_auberer.musicmanager.db.persistence.Database.getConnection;
-
 public class SongRepositoryImpl implements SongRepository {
 
     private final ArtistRepositoryImpl artistRepository;
@@ -33,11 +30,11 @@ public class SongRepositoryImpl implements SongRepository {
         String stmt = "SELECT * FROM ? WHERE id = ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_SONG);
+            preparedStatement.setString(1, Database.TABLE_NAME_SONG);
             preparedStatement.setLong(2, id);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
@@ -61,11 +58,11 @@ public class SongRepositoryImpl implements SongRepository {
         String stmt = "SELECT * FROM ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_SONG);
+            preparedStatement.setString(1, Database.TABLE_NAME_SONG);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
             // Materialize result data
@@ -91,11 +88,11 @@ public class SongRepositoryImpl implements SongRepository {
         String stmt = "SELECT * FROM ? WHERE userId = ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_SONG);
+            preparedStatement.setString(1, Database.TABLE_NAME_SONG);
             preparedStatement.setLong(2, userId);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
@@ -127,19 +124,19 @@ public class SongRepositoryImpl implements SongRepository {
             artistRepository.save(artist);
         }
         // Save genre
-        // ToDo
+        genreRepository.save(song.getGenre());
         // Save bar type
-        // ToDo
+        barTypeRepository.save(song.getBarType());
 
         // Insert the new record
         String stmt = "INSERT INTO ? (id, title, bpm) VALUES (?, ?, ?)";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_SONG);
+            preparedStatement.setString(1, Database.TABLE_NAME_SONG);
             preparedStatement.setLong(2, song.getId());
             preparedStatement.setString(3, song.getTitle());
             preparedStatement.setFloat(4, song.getBpm());
@@ -157,11 +154,11 @@ public class SongRepositoryImpl implements SongRepository {
         String stmt = "DELETE FROM ? WHERE id = ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_SONG);
+            preparedStatement.setString(1, Database.TABLE_NAME_SONG);
             preparedStatement.setLong(2, id);
             // Execute statement
             preparedStatement.executeUpdate();

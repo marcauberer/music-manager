@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.marc_auberer.musicmanager.db.persistence.Database.TABLE_NAME_ARTIST;
-import static com.marc_auberer.musicmanager.db.persistence.Database.getConnection;
-
 public class ArtistRepositoryImpl implements ArtistRepository {
 
     @Override
@@ -21,11 +18,11 @@ public class ArtistRepositoryImpl implements ArtistRepository {
         String stmt = "SELECT * FROM ? WHERE id = ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_ARTIST);
+            preparedStatement.setString(1, Database.TABLE_NAME_ARTIST);
             preparedStatement.setLong(2, id);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
@@ -47,11 +44,11 @@ public class ArtistRepositoryImpl implements ArtistRepository {
         String stmt = "SELECT * FROM ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_ARTIST);
+            preparedStatement.setString(1, Database.TABLE_NAME_ARTIST);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
             // Materialize result data
@@ -75,11 +72,11 @@ public class ArtistRepositoryImpl implements ArtistRepository {
         String stmt = "SELECT * FROM ? WHERE songId = ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_ARTIST);
+            preparedStatement.setString(1, Database.TABLE_NAME_ARTIST);
             preparedStatement.setLong(2, songId);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
@@ -108,11 +105,11 @@ public class ArtistRepositoryImpl implements ArtistRepository {
         String stmt = "INSERT INTO ? (id, first_name, last_name, date_of_birth) VALUES (?, ?, ?, ?)";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_ARTIST);
+            preparedStatement.setString(1, Database.TABLE_NAME_ARTIST);
             preparedStatement.setLong(2, artist.getId());
             preparedStatement.setString(3, artist.getFirstName());
             preparedStatement.setString(4, artist.getLastName());
@@ -131,11 +128,11 @@ public class ArtistRepositoryImpl implements ArtistRepository {
         String stmt = "DELETE FROM ? WHERE id = ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_ARTIST);
+            preparedStatement.setString(1, Database.TABLE_NAME_ARTIST);
             preparedStatement.setLong(2, id);
             // Execute statement
             preparedStatement.executeUpdate();

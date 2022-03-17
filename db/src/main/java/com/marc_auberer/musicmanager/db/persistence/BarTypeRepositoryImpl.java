@@ -1,6 +1,5 @@
 package com.marc_auberer.musicmanager.db.persistence;
 
-import artist.Artist;
 import bartype.BarType;
 import bartype.BarTypeRepository;
 
@@ -9,10 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import static com.marc_auberer.musicmanager.db.persistence.Database.*;
 
 public class BarTypeRepositoryImpl implements BarTypeRepository {
 
@@ -21,11 +17,11 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
         String stmt = "SELECT * FROM ? WHERE id = ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_BAR_TYPE);
+            preparedStatement.setString(1, Database.TABLE_NAME_BAR_TYPE);
             preparedStatement.setLong(2, id);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
@@ -46,11 +42,11 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
         String stmt = "SELECT * FROM ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_BAR_TYPE);
+            preparedStatement.setString(1, Database.TABLE_NAME_BAR_TYPE);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
             // Materialize result data
@@ -73,11 +69,11 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
         String stmt = "SELECT * FROM ? WHERE songId = ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_BAR_TYPE);
+            preparedStatement.setString(1, Database.TABLE_NAME_BAR_TYPE);
             preparedStatement.setLong(2, songId);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
@@ -102,11 +98,11 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
         String stmt = "INSERT INTO ? (id, beat_count, beat_value) VALUES (?, ?, ?)";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_ARTIST);
+            preparedStatement.setString(1, Database.TABLE_NAME_ARTIST);
             preparedStatement.setLong(2, barType.getId());
             preparedStatement.setInt(3, barType.getBeatCount());
             preparedStatement.setInt(4, barType.getBeatValue());
@@ -124,11 +120,11 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
         String stmt = "DELETE FROM ? WHERE id = ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_BAR_TYPE);
+            preparedStatement.setString(1, Database.TABLE_NAME_BAR_TYPE);
             preparedStatement.setLong(2, id);
             // Execute statement
             preparedStatement.executeUpdate();

@@ -1,6 +1,5 @@
 package com.marc_auberer.musicmanager.db.persistence;
 
-import bartype.BarType;
 import genre.Genre;
 import genre.GenreRepository;
 
@@ -11,8 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.marc_auberer.musicmanager.db.persistence.Database.*;
-
 public class GenreRepositoryImpl implements GenreRepository {
 
     @Override
@@ -20,11 +17,11 @@ public class GenreRepositoryImpl implements GenreRepository {
         String stmt = "SELECT * FROM ? WHERE id = ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_GENRE);
+            preparedStatement.setString(1, Database.TABLE_NAME_GENRE);
             preparedStatement.setLong(2, id);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
@@ -44,11 +41,11 @@ public class GenreRepositoryImpl implements GenreRepository {
         String stmt = "SELECT * FROM ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_GENRE);
+            preparedStatement.setString(1, Database.TABLE_NAME_GENRE);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
             // Materialize result data
@@ -70,11 +67,11 @@ public class GenreRepositoryImpl implements GenreRepository {
         String stmt = "SELECT * FROM ? WHERE songId = ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_GENRE);
+            preparedStatement.setString(1, Database.TABLE_NAME_GENRE);
             preparedStatement.setLong(2, songId);
             // Execute statement
             ResultSet result = preparedStatement.executeQuery();
@@ -98,11 +95,11 @@ public class GenreRepositoryImpl implements GenreRepository {
         String stmt = "INSERT INTO ? (id, name) VALUES (?, ?)";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_GENRE);
+            preparedStatement.setString(1, Database.TABLE_NAME_GENRE);
             preparedStatement.setLong(2, genre.getId());
             preparedStatement.setString(3, genre.getName());
             // Execute statement
@@ -119,11 +116,11 @@ public class GenreRepositoryImpl implements GenreRepository {
         String stmt = "DELETE FROM ? WHERE id = ?";
         try {
             // Setup connection
-            Connection connection = getConnection();
+            Connection connection = Database.getConnection();
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setString(1, TABLE_NAME_GENRE);
+            preparedStatement.setString(1, Database.TABLE_NAME_GENRE);
             preparedStatement.setLong(2, id);
             // Execute statement
             preparedStatement.executeUpdate();
