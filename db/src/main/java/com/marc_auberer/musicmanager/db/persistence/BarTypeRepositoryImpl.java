@@ -62,9 +62,8 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
     @Override
     public BarType findBarTypeBySongId(long songId) {
         String sql = "SELECT * FROM bar_types WHERE songId = ?";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -90,9 +89,8 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
 
         // Insert the new record
         String sql = "INSERT INTO bar_types (id, beat_count, beat_value) VALUES (?, ?, ?)";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -111,9 +109,8 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
     @Override
     public void delete(long id) {
         String sql = "DELETE FROM bar_types WHERE id = ?";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(sql);

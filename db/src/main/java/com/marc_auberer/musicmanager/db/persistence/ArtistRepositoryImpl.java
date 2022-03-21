@@ -13,9 +13,8 @@ public class ArtistRepositoryImpl implements ArtistRepository {
     @Override
     public Artist findArtistById(long id) {
         String sql = "SELECT * FROM artists WHERE id = ?";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -38,9 +37,8 @@ public class ArtistRepositoryImpl implements ArtistRepository {
     @Override
     public List<Artist> findAllArtists() {
         String sql = "SELECT * FROM artists";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             Statement statement = connection.createStatement();
@@ -65,9 +63,8 @@ public class ArtistRepositoryImpl implements ArtistRepository {
     @Override
     public List<Artist> findAllArtistsBySongId(long songId) {
         String sql = "SELECT * FROM artists WHERE songId = ?";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -97,9 +94,8 @@ public class ArtistRepositoryImpl implements ArtistRepository {
 
         // Insert the new record
         String sql = "INSERT INTO artists (id, first_name, last_name, date_of_birth) VALUES (?, ?, ?, ?)";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -119,9 +115,8 @@ public class ArtistRepositoryImpl implements ArtistRepository {
     @Override
     public void delete(long id) {
         String sql = "DELETE FROM artists WHERE id = ?";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(sql);

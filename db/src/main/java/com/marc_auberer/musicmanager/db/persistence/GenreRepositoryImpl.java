@@ -12,9 +12,8 @@ public class GenreRepositoryImpl implements GenreRepository {
     @Override
     public Genre findGenreById(long id) {
         String sql = "SELECT * FROM genres WHERE id = ?";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -35,9 +34,8 @@ public class GenreRepositoryImpl implements GenreRepository {
     @Override
     public List<Genre> findAllGenres() {
         String sql = "SELECT * FROM genres";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             Statement statement = connection.createStatement();
@@ -60,9 +58,8 @@ public class GenreRepositoryImpl implements GenreRepository {
     @Override
     public Genre findGenreBySongId(long songId) {
         String stmt = "SELECT * FROM genres WHERE songId = ?";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(stmt);
@@ -87,9 +84,8 @@ public class GenreRepositoryImpl implements GenreRepository {
 
         // Insert the new record
         String sql = "INSERT INTO genres (id, name) VALUES (?, ?)";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -107,9 +103,8 @@ public class GenreRepositoryImpl implements GenreRepository {
     @Override
     public void delete(long id) {
         String sql = "DELETE FROM genres WHERE id = ?";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(sql);

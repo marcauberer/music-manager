@@ -19,9 +19,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<User> findAllUsers() {
         String sql = "SELECT * FROM users";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             Statement statement = connection.createStatement();
@@ -46,9 +45,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User findUserByUsername(String username) {
         String sql = "SELECT * FROM users WHERE username = ?";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -75,9 +73,8 @@ public class UserRepositoryImpl implements UserRepository {
 
         // Insert the new record
         String sql = "INSERT INTO users (id, username, password) VALUES (?, ?, ?)";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            // Check if connection is valid
             assert connection != null;
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
