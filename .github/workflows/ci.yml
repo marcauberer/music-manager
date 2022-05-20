@@ -24,7 +24,11 @@ jobs:
       - name: Build and test project with Maven
         run: mvn package --file pom.xml --batch-mode --update-snapshots --no-transfer-progress
 
-      - name: Build and analyze
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify
+      - name: Upload coverage
+        uses: codecov/codecov-action@v2
+        with:
+          directory: ./mm-report/target/site/jacoco-aggregate/
+          files: jacoco.xml
+          flags: unittests
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
