@@ -8,10 +8,10 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>domain</module>
-        <module>application</module>
-        <module>adapters</module>
-        <module>db</module>
+        <module>3-mm-domain</module>
+        <module>2-mm-application</module>
+        <module>1-mm-adapters</module>
+        <module>0-mm-plugin-database</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

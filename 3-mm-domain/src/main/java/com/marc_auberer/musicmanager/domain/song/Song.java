@@ -15,13 +15,13 @@ public class Song {
     private final float bpm;
     private final BarType barType;
 
-    public Song(long id, String title, List<Artist> artists, Genre genre, float bpm, BarType batType) {
+    public Song(long id, String title, List<Artist> artists, Genre genre, float bpm, BarType barType) {
         this.id = id;
         this.title = title;
         this.artists = artists;
         this.genre = genre;
         this.bpm = bpm;
-        this.barType = batType;
+        this.barType = barType;
     }
 
     public long getId() {
