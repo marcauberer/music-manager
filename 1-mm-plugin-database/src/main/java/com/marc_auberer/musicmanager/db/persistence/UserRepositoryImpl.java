@@ -3,91 +3,73 @@ package com.marc_auberer.musicmanager.db.persistence;
 import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.domain.user.User;
 import com.marc_auberer.musicmanager.domain.user.UserRepository;
+import com.marc_auberer.musicmanager.utils.CSVHelper;
 
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class UserRepositoryImpl implements UserRepository {
 
+    private static final String FILE_PATH = "./data/users.csv";
+    private final CSVHelper csvHelper;
+    private final List<User> users = new ArrayList<>();
     private final SongRepositoryImpl songRepository;
 
     public UserRepositoryImpl() {
         songRepository = new SongRepositoryImpl();
+        csvHelper = new CSVHelper(FILE_PATH, ";");
+        // Pre-fetch all users at once
+        reloadUsers();
     }
 
     @Override
     public List<User> findAllUsers() {
-        String sql = "SELECT * FROM users";
-        try (Connection connection = Database.getConnection()) {
-            // Check if connection is valid
-            assert connection != null;
-            // Prepare statement
-            Statement statement = connection.createStatement();
-            // Execute statement
-            ResultSet result = statement.executeQuery(sql);
-            // Materialize result data
-            List<User> user = new ArrayList<>();
-            while (result.next()) {
-                int userId = result.getInt("id");
-                String userName = result.getString("username");
-                String userPassword = result.getString("password");
-                List<Song> userSongs = songRepository.findAllSongsByUserId(userId);
-                user.add(new User(userId, userName, userPassword, userSongs));
-            }
-            return user;
-        } catch (SQLException e) {
-            System.err.println("DB ERROR: " + e.getMessage());
-        }
-        return null;
+        return users;
     }
 
     @Override
-    public User findUserByUsername(String username) {
-        String sql = "SELECT * FROM users WHERE username = ?";
-        try (Connection connection = Database.getConnection()) {
-            // Check if connection is valid
-            assert connection != null;
-            // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, username);
-            // Execute statement
-            ResultSet result = preparedStatement.executeQuery();
-            if (!result.next()) return null;
-            // Materialize result data
-            int userId = result.getInt("id");
-            String userName = result.getString("username");
-            String userPassword = result.getString("password");
-            List<Song> userSongs = songRepository.findAllSongsByUserId(userId);
-            return new User(userId, userName, userPassword, userSongs);
-        } catch (SQLException e) {
-            System.err.println("DB ERROR in findUserByUsername: " + e.getMessage());
-        }
-        return null;
+    public Optional<User> findUserByUsername(String username) {
+        return users.stream()
+                .filter(user -> user.getUsername().equals(username))
+                .findFirst();
     }
 
     @Override
-    public User save(User user) {
-        // Check if the artist exists already
-        if (findUserByUsername(user.getUsername()) != null) return null;
+    public void save(User user) {
+        // Load users once again to reflect any potential changes
+        reloadUsers();
 
-        // Insert the new record
-        String sql = "INSERT INTO users (id, username, password) VALUES (?, ?, ?)";
-        try (Connection connection = Database.getConnection()) {
-            // Check if connection is valid
-            assert connection != null;
-            // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setLong(1, user.getId());
-            preparedStatement.setString(2, user.getUsername());
-            preparedStatement.setString(3, user.getPassword());
+        users.add(user);
 
-            // Execute statement
-            preparedStatement.executeUpdate();
-            return user;
-        } catch (SQLException e) {
-            System.err.println("DB ERROR: " + e.getMessage());
-        }
-        return null;
+        // Save users list
+        writeOut();
+    }
+
+    private void writeOut() {
+        List<String[]> serializedUsers = users.stream()
+                .map(User::getFieldContents)
+                .collect(Collectors.toList());
+        csvHelper.write(User.getCSVHeader(), serializedUsers);
+    }
+
+    private void reloadUsers() {
+        users.clear();
+
+        // Load all users
+        Optional<List<String[]>> serializedUsers = csvHelper.read();
+        serializedUsers.ifPresent(strings -> strings.forEach(serializedUser -> {
+            // Get basic fields
+            long userId = Long.parseLong(serializedUser[0]);
+            String username = serializedUser[1];
+            String password = serializedUser[2];
+
+            // Load transitive songs
+            List<Song> songs = songRepository.findAllSongsByUserId(userId);
+
+            // Create user object
+            users.add(new User(userId, username, password, songs));
+        }));
     }
 }

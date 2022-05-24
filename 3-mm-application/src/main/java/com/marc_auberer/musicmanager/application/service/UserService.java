@@ -3,6 +3,8 @@ package com.marc_auberer.musicmanager.application.service;
 import com.marc_auberer.musicmanager.domain.user.User;
 import com.marc_auberer.musicmanager.domain.user.UserRepository;
 
+import java.util.Optional;
+
 public class UserService {
 
     private final UserRepository userRepository;
@@ -13,7 +15,7 @@ public class UserService {
         this.user = user;
     }
 
-    public User getUser() {
+    public Optional<User> getUser() {
         return userRepository.findUserByUsername(user.getUsername());
     }
 }

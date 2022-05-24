@@ -1,15 +1,14 @@
 package com.marc_auberer.musicmanager.domain.bartype;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BarTypeRepository {
-    BarType findBarTypeById(long id);
+    Optional<BarType> findBarTypeById(long id);
 
     List<BarType> findAllBarTypes();
 
-    BarType findBarTypeBySongId(long songId);
-
-    BarType save(BarType barType);
+    void save(BarType barType);
 
     void delete(long id);
 }

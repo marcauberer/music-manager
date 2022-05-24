@@ -13,6 +13,7 @@ import com.marc_auberer.musicmanager.domain.user.User;
 import com.marc_auberer.musicmanager.domain.user.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class MusicManager {
 
@@ -44,12 +45,9 @@ public class MusicManager {
 
     public User login(String username, String password) throws UserNotFoundException {
         // Search for the user in the database
-        User user = userRepository.findUserByUsername(username);
-
+        Optional<User> optionalUser = userRepository.findUserByUsername(username);
         // Check if the user exists
-        if (user == null) {
-            throw new UserNotFoundException("The user '" + username + "' was not found");
-        }
+        User user = optionalUser.orElseThrow(() -> new UserNotFoundException("The user '" + username + "' was not found"));
 
         currentUser = user;
         instantiateServicesForUser();
@@ -59,7 +57,7 @@ public class MusicManager {
 
     public User register(String username, String password) throws UserAlreadyExistsException {
         // Check if the user exists already
-        if (userRepository.findUserByUsername(username) != null) {
+        if (userRepository.findUserByUsername(username).isPresent()) {
             throw new UserAlreadyExistsException("The user '" + username + "' already exists");
         }
 

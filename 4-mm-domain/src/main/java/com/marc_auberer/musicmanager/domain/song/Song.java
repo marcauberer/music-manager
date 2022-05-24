@@ -47,4 +47,18 @@ public class Song {
     public BarType getBarType() {
         return barType;
     }
+
+    public String[] getFieldContents() {
+        return new String[] {
+                String.valueOf(id),
+                String.valueOf(genre.getId()),
+                title,
+                String.valueOf(bpm),
+                String.valueOf(barType.getId())
+        };
+    }
+
+    public static String[] getCSVHeader() {
+        return new String[] {"Id", "Title", "Genre", "Bpm", "BarType"};
+    }
 }

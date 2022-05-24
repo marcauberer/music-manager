@@ -1,15 +1,14 @@
 package com.marc_auberer.musicmanager.domain.genre;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GenreRepository {
-    Genre findGenreById(long id);
+    Optional<Genre> findGenreById(long id);
 
     List<Genre> findAllGenres();
 
-    Genre findGenreBySongId(long songId);
-
-    Genre save(Genre genre);
+    void save(Genre genre);
 
     void delete(long id);
 }

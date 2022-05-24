@@ -2,123 +2,77 @@ package com.marc_auberer.musicmanager.db.persistence;
 
 import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.bartype.BarTypeRepository;
+import com.marc_auberer.musicmanager.domain.genre.Genre;
+import com.marc_auberer.musicmanager.domain.user.User;
+import com.marc_auberer.musicmanager.utils.CSVHelper;
 
+import javax.swing.text.html.Option;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class BarTypeRepositoryImpl implements BarTypeRepository {
 
+    private static final String FILE_PATH = "./data/bar-types.csv";
+    private final CSVHelper csvHelper;
+    private final List<BarType> barTypes = new ArrayList<>();
+
+    public BarTypeRepositoryImpl() {
+        csvHelper = new CSVHelper(FILE_PATH, ";");
+        // Pre-fetch all bar types at once
+        reloadBarTypes();
+    }
+
     @Override
-    public BarType findBarTypeById(long id) {
-        String sql = "SELECT * FROM bar_types WHERE id = ?";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
-            assert connection != null;
-            // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setLong(1, id);
-            // Execute statement
-            ResultSet result = preparedStatement.executeQuery();
-            if (!result.next()) return null;
-            // Materialize result data
-            int barTypeId = result.getInt("id");
-            int barTypeBeatCount = result.getInt("beat_count");
-            int barTypeBeatValue = result.getInt("beat_value");
-            return new BarType(barTypeId, barTypeBeatCount, barTypeBeatValue);
-        } catch (SQLException e) {
-            System.err.println("DB ERROR: " + e.getMessage());
-        }
-        return null;
+    public Optional<BarType> findBarTypeById(long id) {
+        return barTypes.stream().filter(barType -> barType.getId() == id).findFirst();
     }
 
     @Override
     public List<BarType> findAllBarTypes() {
-        String sql = "SELECT * FROM bar_types";
-        try {
-            // Setup connection
-            Connection connection = Database.getConnection();
-            assert connection != null;
-            // Prepare statement
-            Statement preparedStatement = connection.createStatement();
-            // Execute statement
-            ResultSet result = preparedStatement.executeQuery(sql);
-            // Materialize result data
-            List<BarType> barTypes = new ArrayList<>();
-            while (result.next()) {
-                int barTypeId = result.getInt("id");
-                int barTypeBeatCount = result.getInt("beat_count");
-                int barTypeBeatValue = result.getInt("beat_value");
-                barTypes.add(new BarType(barTypeId, barTypeBeatCount, barTypeBeatValue));
-            }
-            return barTypes;
-        } catch (SQLException e) {
-            System.err.println("DB ERROR: " + e.getMessage());
-        }
-        return null;
+        return barTypes;
     }
 
     @Override
-    public BarType findBarTypeBySongId(long songId) {
-        String sql = "SELECT * FROM bar_types WHERE songId = ?";
-        try (Connection connection = Database.getConnection()) {
-            // Check if connection is valid
-            assert connection != null;
-            // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setLong(1, songId);
-            // Execute statement
-            ResultSet result = preparedStatement.executeQuery();
-            if (!result.next()) return null;
-            // Materialize result data
-            int barTypeId = result.getInt("id");
-            int barTypeBeatCount = result.getInt("beat_count");
-            int barTypeBeatValue = result.getInt("beat_value");
-            return new BarType(barTypeId, barTypeBeatCount, barTypeBeatValue);
-        } catch (SQLException e) {
-            System.err.println("DB ERROR: " + e.getMessage());
-        }
-        return null;
-    }
+    public void save(BarType barType) {
+        // Load bar types once again to reflect any potential changes
+        reloadBarTypes();
 
-    @Override
-    public BarType save(BarType barType) {
-        // Check if the artist exists already
-        if (findBarTypeById(barType.getId()) != null) return null;
+        barTypes.add(barType);
 
-        // Insert the new record
-        String sql = "INSERT INTO bar_types (id, beat_count, beat_value) VALUES (?, ?, ?)";
-        try (Connection connection = Database.getConnection()) {
-            // Check if connection is valid
-            assert connection != null;
-            // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setLong(1, barType.getId());
-            preparedStatement.setInt(2, barType.getBeatCount());
-            preparedStatement.setInt(3, barType.getBeatValue());
-            // Execute statement
-            preparedStatement.executeUpdate();
-            return barType;
-        } catch (SQLException e) {
-            System.err.println("DB ERROR: " + e.getMessage());
-        }
-        return null;
+        // Save bar types list
+        writeOut();
     }
 
     @Override
     public void delete(long id) {
-        String sql = "DELETE FROM bar_types WHERE id = ?";
-        try (Connection connection = Database.getConnection()) {
-            // Check if connection is valid
-            assert connection != null;
-            // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setLong(1, id);
-            // Execute statement
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("DB ERROR: " + e.getMessage());
-        }
+        barTypes.removeIf(barType -> barType.getId() == id);
+        writeOut();
+    }
+
+    private void writeOut() {
+        List<String[]> serializedBarTypes = barTypes.stream()
+                .map(BarType::getFieldContents)
+                .collect(Collectors.toList());
+        csvHelper.write(BarType.getCSVHeader(), serializedBarTypes);
+    }
+
+    private void reloadBarTypes() {
+        barTypes.clear();
+
+        // Load all bar types
+        Optional<List<String[]>> serializedBarTypes = csvHelper.read();
+        serializedBarTypes.ifPresent(strings -> strings.forEach(serializedBarType -> {
+            // Get basic fields
+            long barTypeId = Long.parseLong(serializedBarType[0]);
+            int beatCount = Integer.parseInt(serializedBarType[1]);
+            int beatValue = Integer.parseInt(serializedBarType[2]);
+
+            // Create bar type object
+            barTypes.add(new BarType(barTypeId, beatCount, beatValue));
+        }));
     }
 }

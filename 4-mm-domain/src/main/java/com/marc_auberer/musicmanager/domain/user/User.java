@@ -1,5 +1,6 @@
 package com.marc_auberer.musicmanager.domain.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.marc_auberer.musicmanager.domain.song.Song;
@@ -32,5 +33,13 @@ public class User {
 
     public List<Song> getSongs() {
         return songs;
+    }
+
+    public String[] getFieldContents() {
+        return new String[] {String.valueOf(id), username, password};
+    }
+
+    public static String[] getCSVHeader() {
+        return new String[] {"Id", "Username", "Password"};
     }
 }

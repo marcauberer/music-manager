@@ -13,3 +13,6 @@ target/
 
 # Coverage reports
 jacoco.xml
+
+# Application data
+data/

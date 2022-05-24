@@ -17,4 +17,12 @@ public class Genre {
     public String getName() {
         return name;
     }
+
+    public String[] getFieldContents() {
+        return new String[] {String.valueOf(id), name};
+    }
+
+    public static String[] getCSVHeader() {
+        return new String[] {"Id", "Name"};
+    }
 }

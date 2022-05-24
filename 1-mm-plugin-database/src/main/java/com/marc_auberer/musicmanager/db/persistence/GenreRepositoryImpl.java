@@ -1,118 +1,81 @@
 package com.marc_auberer.musicmanager.db.persistence;
 
+import com.marc_auberer.musicmanager.domain.artist.Artist;
+import com.marc_auberer.musicmanager.domain.bartype.BarType;
+import com.marc_auberer.musicmanager.domain.exception.TransitiveDataException;
 import com.marc_auberer.musicmanager.domain.genre.Genre;
 import com.marc_auberer.musicmanager.domain.genre.GenreRepository;
+import com.marc_auberer.musicmanager.domain.song.Song;
+import com.marc_auberer.musicmanager.domain.user.User;
+import com.marc_auberer.musicmanager.utils.CSVHelper;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class GenreRepositoryImpl implements GenreRepository {
 
+    private static final String FILE_PATH = "./data/genres.csv";
+    private final CSVHelper csvHelper;
+    private final List<Genre> genres = new ArrayList<>();
+
+    public GenreRepositoryImpl() {
+        csvHelper = new CSVHelper(FILE_PATH, ";");
+        // Pre-fetch all genres at once
+        reloadGenres();
+    }
+
     @Override
-    public Genre findGenreById(long id) {
-        String sql = "SELECT * FROM genres WHERE id = ?";
-        try (Connection connection = Database.getConnection()) {
-            // Check if connection is valid
-            assert connection != null;
-            // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setLong(1, id);
-            // Execute statement
-            ResultSet result = preparedStatement.executeQuery();
-            if (!result.next()) return null;
-            // Materialize result data
-            int genreId = result.getInt("id");
-            String genreName = result.getString("name");
-            return new Genre(genreId, genreName);
-        } catch (SQLException e) {
-            System.err.println("DB ERROR: " + e.getMessage());
-        }
-        return null;
+    public Optional<Genre> findGenreById(long id) {
+        return genres.stream()
+                .filter(genre -> genre.getId() == id)
+                .findFirst();
     }
 
     @Override
     public List<Genre> findAllGenres() {
-        String sql = "SELECT * FROM genres";
-        try (Connection connection = Database.getConnection()) {
-            // Check if connection is valid
-            assert connection != null;
-            // Prepare statement
-            Statement statement = connection.createStatement();
-            // Execute statement
-            ResultSet result = statement.executeQuery(sql);
-            // Materialize result data
-            List<Genre> genres = new ArrayList<>();
-            while (result.next()) {
-                int genreId = result.getInt("id");
-                String genreName = result.getString("name");
-                genres.add(new Genre(genreId, genreName));
-            }
-            return genres;
-        } catch (SQLException e) {
-            System.err.println("DB ERROR: " + e.getMessage());
-        }
-        return null;
+        return genres;
     }
 
     @Override
-    public Genre findGenreBySongId(long songId) {
-        String stmt = "SELECT * FROM genres WHERE songId = ?";
-        try (Connection connection = Database.getConnection()) {
-            // Check if connection is valid
-            assert connection != null;
-            // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(stmt);
-            preparedStatement.setLong(1, songId);
-            // Execute statement
-            ResultSet result = preparedStatement.executeQuery();
-            if (!result.next()) return null;
-            // Materialize result data
-            int genreId = result.getInt("id");
-            String genreName = result.getString("name");
-            return new Genre(genreId, genreName);
-        } catch (SQLException e) {
-            System.err.println("DB ERROR: " + e.getMessage());
-        }
-        return null;
-    }
+    public void save(Genre genre) {
+        // Load genres once again to reflect any potential changes
+        reloadGenres();
 
-    @Override
-    public Genre save(Genre genre) {
-        // Check if the artist exists already
-        if (findGenreById(genre.getId()) != null) return null;
+        genres.add(genre);
 
-        // Insert the new record
-        String sql = "INSERT INTO genres (id, name) VALUES (?, ?)";
-        try (Connection connection = Database.getConnection()) {
-            // Check if connection is valid
-            assert connection != null;
-            // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setLong(1, genre.getId());
-            preparedStatement.setString(2, genre.getName());
-            // Execute statement
-            preparedStatement.executeUpdate();
-            return genre;
-        } catch (SQLException e) {
-            System.err.println("DB ERROR: " + e.getMessage());
-        }
-        return null;
+        // Save genres list
+        writeOut();
     }
 
     @Override
     public void delete(long id) {
-        String sql = "DELETE FROM genres WHERE id = ?";
-        try (Connection connection = Database.getConnection()) {
-            // Check if connection is valid
-            assert connection != null;
-            // Prepare statement
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setLong(1, id);
-            // Execute statement
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("DB ERROR: " + e.getMessage());
-        }
+        genres.removeIf(genre -> genre.getId() == id);
+        writeOut();
+    }
+
+    private void writeOut() {
+        List<String[]> serializedGenres = genres.stream()
+                .map(Genre::getFieldContents)
+                .collect(Collectors.toList());
+        csvHelper.write(Genre.getCSVHeader(), serializedGenres);
+    }
+
+    private void reloadGenres() {
+        genres.clear();
+
+        // Load all genres
+        Optional<List<String[]>> serializedGenres = csvHelper.read();
+        serializedGenres.ifPresent(strings -> strings.forEach(serializedGenre -> {
+            // Get basic fields
+            long genreId = Long.parseLong(serializedGenre[0]);
+            String name = serializedGenre[1];
+
+            // Create genre object
+            genres.add(new Genre(genreId, name));
+        }));
     }
 }

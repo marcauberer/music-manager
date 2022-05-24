@@ -48,11 +48,16 @@ ToDo
 git clone https://github.com/marcauberer/music-manager.git
 ```
 
-#### Projekt compilieren
+#### Projekt kompilieren
 
 ```shell
 mvn package 
 ```
+
+#### Demo-Daten laden (Optional)
+
+Es existiert ein vorbereiteter Datenbestand mit dem sich die Applikation testen lässt.
+Um diesen zu laden, kann das Skript `reload-demo-data.bat` genutzt werden.
 
 #### Ausführbare JAR-Datei finden
 

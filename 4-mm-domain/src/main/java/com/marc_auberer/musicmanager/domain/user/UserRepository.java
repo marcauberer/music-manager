@@ -1,12 +1,13 @@
 package com.marc_auberer.musicmanager.domain.user;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository {
 
     List<User> findAllUsers();
 
-    User findUserByUsername(String username);
+    Optional<User> findUserByUsername(String username);
 
-    User save(User user);
+    void save(User user);
 }

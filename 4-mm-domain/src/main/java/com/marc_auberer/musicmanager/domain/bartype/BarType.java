@@ -23,4 +23,12 @@ public class BarType {
     public int getBeatValue() {
         return beatValue;
     }
+
+    public String[] getFieldContents() {
+        return new String[] {String.valueOf(id), String.valueOf(beatCount), String.valueOf(beatValue)};
+    }
+
+    public static String[] getCSVHeader() {
+        return new String[] {"Id", "BeatCount", "BeatValue"};
+    }
 }

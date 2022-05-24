@@ -1,15 +1,16 @@
 package com.marc_auberer.musicmanager.domain.song;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SongRepository {
-    Song findSongById(long id);
+    Optional<Song> findSongById(long id);
 
     List<Song> findAllSongs();
 
     List<Song> findAllSongsByUserId(long userId);
 
-    Song save(Song song);
+    void save(Song song);
 
     void delete(long id);
 }
