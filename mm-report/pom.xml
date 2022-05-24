@@ -1,27 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Sadly, we have to make another module just for Jacoco reports
-
-    Compare with this file:
-    https://github.com/jacoco/jacoco/blob/master/jacoco-maven-plugin.test/it/it-report-aggregate/report/pom.xml
-
-    See the reason for this behavior:
-    https://groups.google.com/g/jacoco/c/FpdLbxsXSTY
-    -->
-
     <parent>
         <groupId>com.marc-auberer.musicmanager</groupId>
         <artifactId>musicmanager</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <artifactId>report</artifactId>
+
     <name>Music Manager Aggregate Report</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
     <dependencies>
