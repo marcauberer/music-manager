@@ -6,10 +6,10 @@ import com.marc_auberer.musicmanager.domain.song.Song;
 
 public class User {
 
-    private long id;
-    private String username;
-    private String password;
-    private List<Song> songs;
+    private final long id;
+    private final String username;
+    private final String password;
+    private final List<Song> songs;
 
     public User(long id, String username, String password, List<Song> songs) {
         this.id = id;

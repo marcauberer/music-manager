@@ -27,9 +27,10 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>3.36.0.3</version>
+            <artifactId>utils</artifactId>
+            <groupId>com.marc-auberer.musicmanager</groupId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <artifactId>adapters</artifactId>

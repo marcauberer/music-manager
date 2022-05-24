@@ -15,7 +15,7 @@
         <artifactId>musicmanager</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>mm-report</artifactId>
+    <artifactId>report</artifactId>
     <name>Music Manager Aggregate Report</name>
 
     <properties>
