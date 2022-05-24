@@ -11,9 +11,6 @@ import java.awt.*;
 
 public class Application {
     public static void main(String[] args) {
-        // Initialize application
-        Database.setupDatabase();
-
         // Create repositories
         UserRepositoryImpl userRepository = new UserRepositoryImpl();
         SongRepositoryImpl songRepository = new SongRepositoryImpl();

@@ -31,4 +31,12 @@ public class Artist {
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
+
+    public String[] getFieldContents() {
+        return new String[] {String.valueOf(id), firstName, lastName, String.valueOf(dateOfBirth.getTime())};
+    }
+
+    public static String[] getCSVHeader() {
+        return new String[] {"Id", "FirstName", "LastName", "DateOfBirth"};
+    }
 }

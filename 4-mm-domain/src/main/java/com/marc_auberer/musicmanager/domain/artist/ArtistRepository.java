@@ -1,15 +1,16 @@
 package com.marc_auberer.musicmanager.domain.artist;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ArtistRepository {
-    Artist findArtistById(long id);
+    Optional<Artist> findArtistById(long id);
 
     List<Artist> findAllArtists();
 
-    List<Artist> findAllArtistsBySongId(long songId);
+    List<Artist> findArtistsBySongId(long songId);
 
-    Artist save(Artist artist);
+    void save(Artist artist);
 
     void delete(long id);
 }
