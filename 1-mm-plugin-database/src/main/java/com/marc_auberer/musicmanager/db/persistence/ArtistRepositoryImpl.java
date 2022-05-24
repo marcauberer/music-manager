@@ -2,20 +2,14 @@ package com.marc_auberer.musicmanager.db.persistence;
 
 import com.marc_auberer.musicmanager.domain.artist.Artist;
 import com.marc_auberer.musicmanager.domain.artist.ArtistRepository;
-import com.marc_auberer.musicmanager.domain.bartype.BarType;
-import com.marc_auberer.musicmanager.domain.exception.TransitiveDataException;
-import com.marc_auberer.musicmanager.domain.genre.Genre;
-import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.utils.CSVHelper;
 
-import java.sql.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.stream.Collectors;
 
 public class ArtistRepositoryImpl implements ArtistRepository {

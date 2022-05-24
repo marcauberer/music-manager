@@ -2,7 +2,7 @@ package com.marc_auberer.musicmanager.domain.bartype;
 
 public class BarType {
 
-    long id;
+    private final long id;
     private final int beatCount; // e.g. for 6/8: 6
     private final int beatValue; // e.g. for 6/8: 8
 

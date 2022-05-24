@@ -2,14 +2,9 @@ package com.marc_auberer.musicmanager.db.persistence;
 
 import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.bartype.BarTypeRepository;
-import com.marc_auberer.musicmanager.domain.genre.Genre;
-import com.marc_auberer.musicmanager.domain.user.User;
 import com.marc_auberer.musicmanager.utils.CSVHelper;
 
-import javax.swing.text.html.Option;
-import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

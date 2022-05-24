@@ -55,7 +55,7 @@ public class MusicManager {
         return user;
     }
 
-    public User register(String username, String password) throws UserAlreadyExistsException {
+    public void register(String username, String password) throws UserAlreadyExistsException {
         // Check if the user exists already
         if (userRepository.findUserByUsername(username).isPresent()) {
             throw new UserAlreadyExistsException("The user '" + username + "' already exists");
@@ -66,8 +66,6 @@ public class MusicManager {
         userRepository.save(user);
         currentUser = user;
         instantiateServicesForUser();
-
-        return currentUser;
     }
 
     private void instantiateServicesForUser() {

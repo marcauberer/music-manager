@@ -13,10 +13,10 @@
 - _sollten mündliche Aussagen den schriftlichen Aufgaben widersprechen, gelten die schriftlichen Aufgaben (ggf. an
   Anpassung der schriftlichen Aufgaben erinnern!)_
 - _alles muss ins Repository (Code, Ausarbeitung und alles was damit zusammenhängt)_
-- _die Beispiele sollten wenn möglich vom aktuellen Stand genommen werden_
-    - _finden sich dort keine entsprechenden Beispiele, dürfenl auch ältere Commits unter Verweis auf den Commit
+- _die Beispiele sollten, wenn möglich vom aktuellen Stand genommen werden_
+    - _finden sich dort keine entsprechenden Beispiele, dürfen auch ältere Commits unter Verweis auf den Commit
       verwendet werden_
-    - _Ausnahme: beim Kapitel &quot;Refactoring&quot; darf von vorne herein aus allen Ständen frei gewählt werden (mit
+    - _Ausnahme: beim Kapitel &quot;Refactoring&quot; darf von vorneherein aus allen Ständen frei gewählt werden (mit
       Verweis auf den entsprechenden Commit)_
 - _falls verlangte Negativ-Beispiele nicht vorhanden sind, müssen entsprechend mehr Positiv-Beispiele gebracht werden_
     - _Achtung: werden im Code entsprechende Negativ-Beispiele gefunden, gibt es keine Punkte für die zusätzlichen
@@ -56,7 +56,7 @@ mvn package
 
 #### Demo-Daten laden (Optional)
 
-Es existiert ein vorbereiteter Datenbestand mit dem sich die Applikation testen lässt.
+Es existiert ein vorbereiteter Datenbestand, mit dem sich die Applikation testen lässt.
 Um diesen zu laden, kann das Skript `reload-demo-data.bat` genutzt werden.
 
 #### Ausführbare JAR-Datei finden

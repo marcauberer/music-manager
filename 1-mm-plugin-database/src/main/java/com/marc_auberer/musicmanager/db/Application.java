@@ -1,10 +1,12 @@
 package com.marc_auberer.musicmanager.db;
 
 import com.marc_auberer.musicmanager.application.MusicManager;
-import com.marc_auberer.musicmanager.application.service.UserService;
-import com.marc_auberer.musicmanager.db.persistence.*;
+import com.marc_auberer.musicmanager.db.persistence.ArtistRepositoryImpl;
+import com.marc_auberer.musicmanager.db.persistence.BarTypeRepositoryImpl;
+import com.marc_auberer.musicmanager.db.persistence.GenreRepositoryImpl;
+import com.marc_auberer.musicmanager.db.persistence.SongRepositoryImpl;
+import com.marc_auberer.musicmanager.db.persistence.UserRepositoryImpl;
 import com.marc_auberer.musicmanager.db.ui.LoginUI;
-import com.marc_auberer.musicmanager.domain.genre.Genre;
 
 import javax.swing.*;
 import java.awt.*;
