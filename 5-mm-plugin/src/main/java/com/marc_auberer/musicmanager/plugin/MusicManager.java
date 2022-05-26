@@ -1,6 +1,6 @@
 package com.marc_auberer.musicmanager.plugin;
 
-import com.marc_auberer.musicmanager.application.service.LoginObserver;
+import com.marc_auberer.musicmanager.application.observer.LoginObserver;
 import com.marc_auberer.musicmanager.domain.user.User;
 import com.marc_auberer.musicmanager.plugin.ui.LoginUI;
 import com.marc_auberer.musicmanager.plugin.ui.MusicManagerUI;

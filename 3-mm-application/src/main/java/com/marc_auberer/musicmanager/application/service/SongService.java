@@ -1,5 +1,6 @@
 package com.marc_auberer.musicmanager.application.service;
 
+import com.marc_auberer.musicmanager.application.observer.SongListObserver;
 import com.marc_auberer.musicmanager.db.SongRepositoryImpl;
 import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.domain.song.SongRepository;
@@ -12,10 +13,12 @@ public class SongService {
 
     private final SongRepository songRepository;
     private final User user;
+    private final SongListObserver songListObserver;
 
-    public SongService(User user) {
+    public SongService(User user, SongListObserver songListObserver) {
         this.songRepository = new SongRepositoryImpl();
         this.user = user;
+        this.songListObserver = songListObserver;
     }
 
     public List<Song> getAllSongsForUser() {
@@ -35,5 +38,20 @@ public class SongService {
                         song.getTitle().toLowerCase().contains(searchTerm.toLowerCase())
                 )
                 .collect(Collectors.toList());
+    }
+
+    public void save(Song song) {
+        songRepository.save(song);
+        songListObserver.onRefresh(getAllSongsForUser());
+    }
+
+    public void update(Song song) {
+        songRepository.update(song);
+        songListObserver.onRefresh(getAllSongsForUser());
+    }
+
+    public void delete(Song song) {
+        songRepository.delete(song.getId());
+        songListObserver.onRefresh(getAllSongsForUser());
     }
 }

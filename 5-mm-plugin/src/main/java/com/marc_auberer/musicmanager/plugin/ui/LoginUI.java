@@ -2,7 +2,7 @@ package com.marc_auberer.musicmanager.plugin.ui;
 
 import com.marc_auberer.musicmanager.application.exception.UserAlreadyExistsException;
 import com.marc_auberer.musicmanager.application.exception.UserNotFoundException;
-import com.marc_auberer.musicmanager.application.service.LoginObserver;
+import com.marc_auberer.musicmanager.application.observer.LoginObserver;
 import com.marc_auberer.musicmanager.application.service.UserService;
 import com.marc_auberer.musicmanager.domain.user.User;
 

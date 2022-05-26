@@ -12,5 +12,7 @@ public interface SongRepository {
 
     void save(Song song);
 
+    void update(Song song);
+
     void delete(long id);
 }

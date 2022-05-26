@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class SongRepositoryImpl extends Repository implements SongRepository {
 
@@ -62,6 +64,20 @@ public class SongRepositoryImpl extends Repository implements SongRepository {
 
         // Save song list
         writeOut();
+    }
+
+    @Override
+    public void update(Song song) {
+        // Search for item with this particular song id and get its index
+        OptionalInt indexOpt = IntStream.range(0, songs.size())
+                .filter(i -> songs.get(i).getId() == song.getId())
+                .findFirst();
+
+        if (indexOpt.isPresent()) {
+            // Update the item at this index
+            songs.set(indexOpt.getAsInt(), song);
+            writeOut();
+        }
     }
 
     @Override

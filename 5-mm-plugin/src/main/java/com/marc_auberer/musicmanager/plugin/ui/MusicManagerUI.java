@@ -1,6 +1,7 @@
 package com.marc_auberer.musicmanager.plugin.ui;
 
-import com.marc_auberer.musicmanager.application.service.LoginObserver;
+import com.marc_auberer.musicmanager.application.observer.LoginObserver;
+import com.marc_auberer.musicmanager.application.observer.SongListObserver;
 import com.marc_auberer.musicmanager.application.service.SongService;
 import com.marc_auberer.musicmanager.application.service.YTLinkGeneratorService;
 import com.marc_auberer.musicmanager.domain.song.Song;
@@ -14,12 +15,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class MusicManagerUI extends JFrame {
+public class MusicManagerUI extends JFrame implements SongListObserver {
 
     private final LoginObserver loginObserver;
     private final User user;
     private final SongService songService;
     private final YTLinkGeneratorService linkGeneratorService;
+    private final JTable songTable;
     private final Optional<Song> selectedSong = Optional.empty();
 
     public MusicManagerUI(LoginObserver loginObserver, User user) {
@@ -27,7 +29,7 @@ public class MusicManagerUI extends JFrame {
         this.user = user;
 
         // Initialize services
-        songService = new SongService(user);
+        songService = new SongService(user, this);
         linkGeneratorService = new YTLinkGeneratorService();
 
         // Setup window
@@ -43,28 +45,15 @@ public class MusicManagerUI extends JFrame {
         rootPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setContentPane(rootPanel);
 
-        // Load songs
-        List<Song> songs = songService.getAllSongsForUser();
-        String[][] songData = songs.stream().map(song -> {
-            String songTitle = song.getTitle();
-            String songArtists = song.getArtists().stream()
-                    .map(artist -> artist.getFirstName() + " "+ artist.getLastName())
-                    .collect(Collectors.joining(", "));
-            String songGenre = song.getGenre().getName();
-            String songBpm = String.valueOf(song.getBpm());
-            String songBarType = song.getBarType().getBeatCount() + "/" + song.getBarType().getBeatValue();
-            return new String[]{songTitle, songArtists, songGenre, songBpm, songBarType};
-        }).toArray(String[][]::new);
-
         // Song list
         String[] columnNames = {"Song Title", "Artist", "Genre", "Bpm", "Bar type"};
-        JTable songList = new JTable(songData, columnNames);
-        JScrollPane songScrollPane = new JScrollPane(songList);
+        songTable = new JTable(new String[][]{}, columnNames);
+        JScrollPane songScrollPane = new JScrollPane(songTable);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = 5;
-        constraints.gridheight = 5;
+        constraints.gridheight = 4;
         constraints.weightx = 5;
         rootPanel.add(songScrollPane, constraints);
 
@@ -143,11 +132,33 @@ public class MusicManagerUI extends JFrame {
 
     private void deleteSong() {
         assert selectedSong.isPresent();
-
+        songService.delete(selectedSong.get());
     }
 
     private void triggerLogout() {
         dispose();
         loginObserver.onLogout();
+    }
+
+    @Override
+    public void onRefresh(List<Song> songList) {
+        // Convert the List into table rows and cells
+        String[][] songData = songList.stream().map(song -> {
+            String songTitle = song.getTitle();
+            String songArtists = song.getArtists().stream()
+                    .map(artist -> artist.getFirstName() + " " + artist.getLastName())
+                    .collect(Collectors.joining(", "));
+            String songGenre = song.getGenre().getName();
+            String songBpm = String.valueOf(song.getBpm());
+            String songBarType = song.getBarType().getBeatCount() + "/" + song.getBarType().getBeatValue();
+            return new String[]{songTitle, songArtists, songGenre, songBpm, songBarType};
+        }).toArray(String[][]::new);
+
+        // Display the data
+        for (int y = 0; y < songData.length; y++) {
+            for (int x = 0; x < songData[y].length; y++) {
+                songTable.getModel().setValueAt(songData[y][x], x, y);
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.marc_auberer.musicmanager.application.service;
+package com.marc_auberer.musicmanager.application.observer;
 
 import com.marc_auberer.musicmanager.domain.user.User;
 
