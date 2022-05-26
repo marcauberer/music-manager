@@ -51,3 +51,9 @@ jobs:
           flags: unittests
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: music-manager.jar
+          path: 5-mm-plugin/target/*-jar-with-dependencies.jar

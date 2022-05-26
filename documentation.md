@@ -69,7 +69,7 @@ Um diesen zu laden, kann das Skript `reload-demo-data.bat` genutzt werden.
 cd 1-mm-plugin-database
 ```
 
-Die ausführbare JAR-Datei hat standardmäßig den Namen `music-manager.jar`.
+Die ausführbare JAR-Datei hat standardmäßig den Namen `plugin-<version>-jar-with-dependencies.jar`.
 
 ### Wie testet man die Applikation?
 
