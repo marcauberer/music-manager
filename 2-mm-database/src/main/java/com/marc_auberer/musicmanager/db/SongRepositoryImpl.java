@@ -1,4 +1,4 @@
-package com.marc_auberer.musicmanager.db.persistence;
+package com.marc_auberer.musicmanager.db;
 
 import com.marc_auberer.musicmanager.domain.artist.Artist;
 import com.marc_auberer.musicmanager.domain.bartype.BarType;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class SongRepositoryImpl implements SongRepository {
+public class SongRepositoryImpl extends Repository implements SongRepository {
 
     private static final String FILE_PATH = "./data/songs.csv";
     private final CSVHelper csvHelper;
@@ -29,7 +29,7 @@ public class SongRepositoryImpl implements SongRepository {
         barTypeRepository = new BarTypeRepositoryImpl();
         csvHelper = new CSVHelper(FILE_PATH, ";");
         // Pre-fetch all songs at once
-        reloadSongs();
+        reload();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class SongRepositoryImpl implements SongRepository {
     @Override
     public void save(Song song) {
         // Load songs once again to reflect any potential changes
-        reloadSongs();
+        reload();
 
         songs.add(song);
 
@@ -64,14 +64,16 @@ public class SongRepositoryImpl implements SongRepository {
         writeOut();
     }
 
-    private void writeOut() {
+    @Override
+    protected void writeOut() {
         List<String[]> serializedSongs = songs.stream()
                 .map(Song::getFieldContents)
                 .collect(Collectors.toList());
         csvHelper.write(Song.getCSVHeader(), serializedSongs);
     }
 
-    private void reloadSongs() {
+    @Override
+    protected void reload() {
         songs.clear();
 
         // Load all songs

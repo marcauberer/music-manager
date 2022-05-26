@@ -1,8 +1,9 @@
-package com.marc_auberer.musicmanager.db.ui;
+package com.marc_auberer.musicmanager.plugin.ui;
 
-import com.marc_auberer.musicmanager.application.MusicManager;
 import com.marc_auberer.musicmanager.application.exception.UserAlreadyExistsException;
 import com.marc_auberer.musicmanager.application.exception.UserNotFoundException;
+import com.marc_auberer.musicmanager.application.service.LoginObserver;
+import com.marc_auberer.musicmanager.application.service.UserService;
 import com.marc_auberer.musicmanager.domain.user.User;
 
 import javax.swing.*;
@@ -13,16 +14,20 @@ public class LoginUI extends JFrame {
     // Constants
     private final String INFO_TEXT = "Please enter your login credentials below";
 
-    // Components
+    // UI Components
     private final JLabel labelInfo = new JLabel(INFO_TEXT);
     private final JTextField textFieldUsername = new JTextField();
     private final JPasswordField textFieldPassword = new JPasswordField();
 
     // Members
-    private final MusicManager musicManager;
+    private final UserService userService;
+    private final LoginObserver loginObserver;
 
-    public LoginUI(MusicManager musicManager) {
-        this.musicManager = musicManager;
+    public LoginUI(LoginObserver loginObserver) {
+        this.loginObserver = loginObserver;
+
+        // Create user service
+        this.userService = new UserService();
 
         // Setup window
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,12 +109,9 @@ public class LoginUI extends JFrame {
 
         // Try to log in
         try {
-            User user = musicManager.login(username, password);
-            assert user != null;
+            User user = userService.login(username, password);
             dispose();
-            // Show main window
-            MusicManagerUI musicManagerUI = new MusicManagerUI(musicManager, user);
-            musicManagerUI.setVisible(true);
+            loginObserver.onLogin(user);
         } catch (UserNotFoundException ex) {
             labelInfo.setText(ex.getMessage());
         }
@@ -122,7 +124,8 @@ public class LoginUI extends JFrame {
 
         // Try to register
         try {
-            musicManager.register(username, password);
+            userService.register(username, password);
+
         } catch (UserAlreadyExistsException ex) {
             labelInfo.setText(ex.getMessage());
         }

@@ -1,4 +1,4 @@
-package com.marc_auberer.musicmanager.db.ui;
+package com.marc_auberer.musicmanager.plugin.ui;
 
 import com.marc_auberer.musicmanager.domain.user.User;
 

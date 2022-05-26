@@ -1,4 +1,4 @@
-package com.marc_auberer.musicmanager.db.persistence;
+package com.marc_auberer.musicmanager.db;
 
 import com.marc_auberer.musicmanager.domain.genre.Genre;
 import com.marc_auberer.musicmanager.domain.genre.GenreRepository;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class GenreRepositoryImpl implements GenreRepository {
+public class GenreRepositoryImpl extends Repository implements GenreRepository {
 
     private static final String FILE_PATH = "./data/genres.csv";
     private final CSVHelper csvHelper;
@@ -18,7 +18,7 @@ public class GenreRepositoryImpl implements GenreRepository {
     public GenreRepositoryImpl() {
         csvHelper = new CSVHelper(FILE_PATH, ";");
         // Pre-fetch all genres at once
-        reloadGenres();
+        reload();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class GenreRepositoryImpl implements GenreRepository {
     @Override
     public void save(Genre genre) {
         // Load genres once again to reflect any potential changes
-        reloadGenres();
+        reload();
 
         genres.add(genre);
 
@@ -50,14 +50,16 @@ public class GenreRepositoryImpl implements GenreRepository {
         writeOut();
     }
 
-    private void writeOut() {
+    @Override
+    protected void writeOut() {
         List<String[]> serializedGenres = genres.stream()
                 .map(Genre::getFieldContents)
                 .collect(Collectors.toList());
         csvHelper.write(Genre.getCSVHeader(), serializedGenres);
     }
 
-    private void reloadGenres() {
+    @Override
+    protected void reload() {
         genres.clear();
 
         // Load all genres

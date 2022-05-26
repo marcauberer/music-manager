@@ -1,7 +1,6 @@
-package com.marc_auberer.musicmanager.db.ui;
+package com.marc_auberer.musicmanager.plugin.ui;
 
-import com.marc_auberer.musicmanager.application.MusicManager;
-import com.marc_auberer.musicmanager.db.persistence.SongRepositoryImpl;
+import com.marc_auberer.musicmanager.application.service.SongService;
 import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.domain.user.User;
 
@@ -14,9 +13,12 @@ import java.util.stream.Collectors;
 
 public class MusicManagerUI extends JFrame {
 
-    private final SongRepositoryImpl songRepository;
+    private final SongService songService;
 
-    public MusicManagerUI(MusicManager musicManager, User user) {
+    public MusicManagerUI(User user) {
+        // Initialize song service
+        songService = new SongService(user);
+
         // Setup window
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(0, 0, 900, 600);
@@ -30,11 +32,8 @@ public class MusicManagerUI extends JFrame {
         rootPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setContentPane(rootPanel);
 
-        // Create repositories
-        songRepository = new SongRepositoryImpl();
-
         // Load songs
-        List<Song> songs = songRepository.findAllSongsByUserId(user.getId());
+        List<Song> songs = songService.getAllSongsForUser();
         String[][] songData = songs.stream().map(song -> {
             String songTitle = song.getTitle();
             String songArtists = song.getArtists().stream()
@@ -110,9 +109,7 @@ public class MusicManagerUI extends JFrame {
         JButton buttonLogin = new JButton("LogOut");
         buttonLogin.addActionListener(e -> {
             dispose();
-            // Show login window
-            LoginUI loginUI = new LoginUI(musicManager);
-            loginUI.setVisible(true);
+
         });
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 3;

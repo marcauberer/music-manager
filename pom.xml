@@ -9,11 +9,12 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>4-mm-domain</module>
-        <module>3-mm-application</module>
-        <module>2-mm-adapters</module>
-        <module>1-mm-plugin-database</module>
         <module>0-mm-utils</module>
+        <module>1-mm-domain</module>
+        <module>2-mm-database</module>
+        <module>3-mm-application</module>
+        <module>4-mm-adapters</module>
+        <module>5-mm-plugin</module>
         <module>mm-report</module>
     </modules>
 

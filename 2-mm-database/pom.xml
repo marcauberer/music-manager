@@ -26,8 +26,8 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <artifactId>adapters</artifactId>
             <groupId>com.marc-auberer.musicmanager</groupId>
+            <artifactId>domain</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

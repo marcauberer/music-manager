@@ -1,4 +1,4 @@
-package com.marc_auberer.musicmanager.db.persistence;
+package com.marc_auberer.musicmanager.db;
 
 import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.bartype.BarTypeRepository;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class BarTypeRepositoryImpl implements BarTypeRepository {
+public class BarTypeRepositoryImpl extends Repository implements BarTypeRepository {
 
     private static final String FILE_PATH = "./data/bar-types.csv";
     private final CSVHelper csvHelper;
@@ -18,7 +18,7 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
     public BarTypeRepositoryImpl() {
         csvHelper = new CSVHelper(FILE_PATH, ";");
         // Pre-fetch all bar types at once
-        reloadBarTypes();
+        reload();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
     @Override
     public void save(BarType barType) {
         // Load bar types once again to reflect any potential changes
-        reloadBarTypes();
+        reload();
 
         barTypes.add(barType);
 
@@ -48,14 +48,16 @@ public class BarTypeRepositoryImpl implements BarTypeRepository {
         writeOut();
     }
 
-    private void writeOut() {
+    @Override
+    protected void writeOut() {
         List<String[]> serializedBarTypes = barTypes.stream()
                 .map(BarType::getFieldContents)
                 .collect(Collectors.toList());
         csvHelper.write(BarType.getCSVHeader(), serializedBarTypes);
     }
 
-    private void reloadBarTypes() {
+    @Override
+    protected void reload() {
         barTypes.clear();
 
         // Load all bar types

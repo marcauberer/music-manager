@@ -1,6 +1,6 @@
 package com.marc_auberer.musicmanager.application.service;
 
-import com.marc_auberer.musicmanager.application.authorization.AuthorizationService;
+import com.marc_auberer.musicmanager.db.SongRepositoryImpl;
 import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.domain.song.SongRepository;
 import com.marc_auberer.musicmanager.domain.user.User;
@@ -11,13 +11,15 @@ import java.util.stream.Collectors;
 public class SongService {
 
     private final SongRepository songRepository;
-    private final AuthorizationService authorizationService;
     private final User user;
 
-    public SongService(SongRepository songRepository, AuthorizationService authorizationService, User user) {
-        this.songRepository = songRepository;
-        this.authorizationService = authorizationService;
+    public SongService(User user) {
+        this.songRepository = new SongRepositoryImpl();
         this.user = user;
+    }
+
+    public List<Song> getAllSongsForUser() {
+        return songRepository.findAllSongsByUserId(user.getId());
     }
 
     /**
@@ -28,12 +30,10 @@ public class SongService {
      * @return List of songs, that match the search criteria
      */
     public List<Song> searchSongsByTitle(String searchTerm) {
-        return songRepository.findAllSongs().stream()
+        return songRepository.findAllSongsByUserId(user.getId()).stream()
                 .filter(song ->
                         song.getTitle().toLowerCase().contains(searchTerm.toLowerCase())
                 )
                 .collect(Collectors.toList());
     }
-
-
 }
