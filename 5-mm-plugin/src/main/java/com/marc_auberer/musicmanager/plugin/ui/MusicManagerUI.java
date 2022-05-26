@@ -1,23 +1,34 @@
 package com.marc_auberer.musicmanager.plugin.ui;
 
+import com.marc_auberer.musicmanager.application.service.LoginObserver;
 import com.marc_auberer.musicmanager.application.service.SongService;
+import com.marc_auberer.musicmanager.application.service.YTLinkGeneratorService;
 import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.domain.user.User;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MusicManagerUI extends JFrame {
 
+    private final LoginObserver loginObserver;
+    private final User user;
     private final SongService songService;
+    private final YTLinkGeneratorService linkGeneratorService;
+    private final Optional<Song> selectedSong = Optional.empty();
 
-    public MusicManagerUI(User user) {
-        // Initialize song service
+    public MusicManagerUI(LoginObserver loginObserver, User user) {
+        this.loginObserver = loginObserver;
+        this.user = user;
+
+        // Initialize services
         songService = new SongService(user);
+        linkGeneratorService = new YTLinkGeneratorService();
 
         // Setup window
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,41 +63,26 @@ public class MusicManagerUI extends JFrame {
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 0;
         constraints.gridy = 0;
-        constraints.gridwidth = 4;
-        constraints.gridheight = 4;
-        constraints.weightx = 4;
+        constraints.gridwidth = 5;
+        constraints.gridheight = 5;
+        constraints.weightx = 5;
         rootPanel.add(songScrollPane, constraints);
 
-        // Import button
-        JButton buttonImport = new JButton("Import song");
-        buttonImport.addActionListener(e -> {
-            // Open file picker to select the song file
-            final FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("Music (.mp3)", "mp3");
-            final JFileChooser filePicker = new JFileChooser();
-            filePicker.setDialogTitle("Music Manager - Import song");
-            filePicker.setApproveButtonText("Import");
-            filePicker.setFileFilter(extensionFilter);
-            filePicker.setMultiSelectionEnabled(false);
-            int result = filePicker.showOpenDialog(rootPanel);
-            if (result == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = filePicker.getSelectedFile();
-                System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-            }
-        });
+        // New button
+        JButton buttonNew = new JButton("New Song");
+        buttonNew.addActionListener(e -> newSong());
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 0;
         constraints.gridy = 4;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         constraints.weightx = 1;
-        rootPanel.add(buttonImport, constraints);
+        rootPanel.add(buttonNew, constraints);
 
         // Edit button
-        JButton buttonEdit = new JButton("Edit item");
+        JButton buttonEdit = new JButton("Edit Song");
         buttonEdit.setEnabled(false);
-        buttonEdit.addActionListener(e -> {
-
-        });
+        buttonEdit.addActionListener(e -> editSong());
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         constraints.gridy = 4;
@@ -94,27 +90,64 @@ public class MusicManagerUI extends JFrame {
         rootPanel.add(buttonEdit, constraints);
 
         // Delete button
-        JButton buttonDelete = new JButton("Delete item");
+        JButton buttonDelete = new JButton("Delete Song");
         buttonDelete.setEnabled(false);
-        buttonDelete.addActionListener(e -> {
-
-        });
+        buttonDelete.addActionListener(e -> deleteSong());
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 2;
         constraints.gridy = 4;
         constraints.weightx = 1;
         rootPanel.add(buttonDelete, constraints);
 
-        // Logout button
-        JButton buttonLogin = new JButton("LogOut");
-        buttonLogin.addActionListener(e -> {
-            dispose();
-
-        });
+        // Play button
+        JButton buttonPlay = new JButton("Play Song");
+        buttonPlay.setEnabled(false);
+        buttonPlay.addActionListener(e -> playSong());
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 3;
         constraints.gridy = 4;
         constraints.weightx = 1;
-        rootPanel.add(buttonLogin, constraints);
+        rootPanel.add(buttonPlay, constraints);
+
+        // Logout button
+        JButton buttonLogout = new JButton("LogOut");
+        buttonLogout.addActionListener(e -> triggerLogout());
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.gridx = 4;
+        constraints.gridy = 4;
+        constraints.weightx = 1;
+        rootPanel.add(buttonLogout, constraints);
+    }
+
+    private void newSong() {
+        // Open JFrame to add new song
+    }
+
+    private void playSong() {
+        assert selectedSong.isPresent();
+
+        // Assemble YouTube URL
+        String url = linkGeneratorService.generateYouTubeLink(selectedSong.get());
+
+        // Open Website
+        try {
+            Desktop.getDesktop().browse(URI.create(url));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void editSong() {
+        assert selectedSong.isPresent();
+    }
+
+    private void deleteSong() {
+        assert selectedSong.isPresent();
+
+    }
+
+    private void triggerLogout() {
+        dispose();
+        loginObserver.onLogout();
     }
 }
