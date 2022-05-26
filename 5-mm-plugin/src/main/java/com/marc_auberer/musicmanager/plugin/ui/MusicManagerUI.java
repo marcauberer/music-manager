@@ -21,7 +21,7 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
     private final User user;
     private final SongService songService;
     private final YTLinkGeneratorService linkGeneratorService;
-    private final JTable songTable;
+    private JTable songTable;
     private final Optional<Song> selectedSong = Optional.empty();
 
     public MusicManagerUI(LoginObserver loginObserver, User user) {
@@ -32,6 +32,10 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
         songService = new SongService(user, this);
         linkGeneratorService = new YTLinkGeneratorService();
 
+        setupUI();
+    }
+
+    private void setupUI() {
         // Setup window
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(0, 0, 900, 600);
