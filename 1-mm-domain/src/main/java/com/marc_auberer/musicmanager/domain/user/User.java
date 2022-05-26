@@ -6,7 +6,7 @@ import java.util.List;
 
 public class User {
 
-    private final long id;
+    private long id;
     private final String username;
     private final String password;
     private final List<Song> songs;
@@ -16,6 +16,10 @@ public class User {
         this.username = username;
         this.password = password;
         this.songs = songs;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getId() {

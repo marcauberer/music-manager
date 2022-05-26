@@ -44,6 +44,12 @@ public class ArtistRepositoryImpl extends Repository implements ArtistRepository
         // Load artists once again to reflect any potential changes
         reload();
 
+        // Consider auto-increment ids
+        if (artist.getId() == AUTO_INC) {
+            artist.setId(artists.size());
+        }
+
+        // Save
         artists.add(artist);
 
         // Save artist list

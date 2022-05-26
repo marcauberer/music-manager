@@ -38,6 +38,12 @@ public class GenreRepositoryImpl extends Repository implements GenreRepository {
         // Load genres once again to reflect any potential changes
         reload();
 
+        // Consider auto-increment ids
+        if (genre.getId() == AUTO_INC) {
+            genre.setId(genres.size());
+        }
+
+        // Save
         genres.add(genre);
 
         // Save genres list

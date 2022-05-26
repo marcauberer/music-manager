@@ -2,12 +2,16 @@ package com.marc_auberer.musicmanager.domain.genre;
 
 public class Genre {
 
-    private final long id;
+    private long id;
     private final String name;
 
     public Genre(long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getId() {

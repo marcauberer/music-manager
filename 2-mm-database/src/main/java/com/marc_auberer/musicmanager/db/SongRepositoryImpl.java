@@ -52,6 +52,12 @@ public class SongRepositoryImpl extends Repository implements SongRepository {
         // Load songs once again to reflect any potential changes
         reload();
 
+        // Consider auto-increment ids
+        if (song.getId() == AUTO_INC) {
+            song.setId(songs.size());
+        }
+
+        // Save
         songs.add(song);
 
         // Save song list

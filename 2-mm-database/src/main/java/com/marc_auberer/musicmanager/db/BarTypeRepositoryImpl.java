@@ -36,6 +36,12 @@ public class BarTypeRepositoryImpl extends Repository implements BarTypeReposito
         // Load bar types once again to reflect any potential changes
         reload();
 
+        // Consider auto-increment ids
+        if (barType.getId() == AUTO_INC) {
+            barType.setId(barTypes.size());
+        }
+
+        // Save
         barTypes.add(barType);
 
         // Save bar types list

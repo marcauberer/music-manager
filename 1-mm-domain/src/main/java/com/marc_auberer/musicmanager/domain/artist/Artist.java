@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Artist {
 
-    private final long id;
+    private long id;
     private final String firstName;
     private final String lastName;
     private final Date dateOfBirth;
@@ -14,6 +14,10 @@ public class Artist {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getId() {

@@ -1,14 +1,14 @@
 package com.marc_auberer.musicmanager.domain.song;
 
-import java.util.List;
-
 import com.marc_auberer.musicmanager.domain.artist.Artist;
-import com.marc_auberer.musicmanager.domain.genre.Genre;
 import com.marc_auberer.musicmanager.domain.bartype.BarType;
+import com.marc_auberer.musicmanager.domain.genre.Genre;
+
+import java.util.List;
 
 public class Song {
 
-    private final long id;
+    private long id;
     private final String title;
     private final List<Artist> artists;
     private final Genre genre;
@@ -22,6 +22,10 @@ public class Song {
         this.genre = genre;
         this.bpm = bpm;
         this.barType = barType;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getId() {

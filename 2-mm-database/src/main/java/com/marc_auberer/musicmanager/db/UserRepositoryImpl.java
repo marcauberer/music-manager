@@ -41,6 +41,12 @@ public class UserRepositoryImpl extends Repository implements UserRepository {
         // Load users once again to reflect any potential changes
         reload();
 
+        // Consider auto-increment ids
+        if (user.getId() == AUTO_INC) {
+            user.setId(users.size());
+        }
+
+        // Save
         users.add(user);
 
         // Save users list
