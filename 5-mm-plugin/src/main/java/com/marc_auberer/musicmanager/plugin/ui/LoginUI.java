@@ -30,6 +30,10 @@ public class LoginUI extends JFrame {
         this.userService = new UserService();
 
         // Setup window
+        setupUI();
+    }
+
+    private void setupUI() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(0, 0, 350, 140);
         setTitle("Music Manager - Login");

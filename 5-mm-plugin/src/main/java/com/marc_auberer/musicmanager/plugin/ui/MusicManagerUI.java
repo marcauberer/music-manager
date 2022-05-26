@@ -17,11 +17,14 @@ import java.util.stream.Collectors;
 
 public class MusicManagerUI extends JFrame implements SongListObserver {
 
+    // UI Components
+    private JTable songTable;
+
+    // Members
     private final LoginObserver loginObserver;
     private final User user;
     private final SongService songService;
     private final YTLinkGeneratorService linkGeneratorService;
-    private JTable songTable;
     private final Optional<Song> selectedSong = Optional.empty();
 
     public MusicManagerUI(LoginObserver loginObserver, User user) {
@@ -114,6 +117,8 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
 
     private void newSong() {
         // Open JFrame to add new song
+        JFrame newSongDialog = new NewEditSongDialog(songService, user);
+        newSongDialog.setVisible(true);
     }
 
     private void playSong() {
