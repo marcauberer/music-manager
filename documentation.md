@@ -91,3 +91,149 @@ Tätigkeitskapselung entstehen.
 
 ### Analyse der Dependency Rule
 
+### Analyse der Schichten
+
+#### Application-Schicht
+*ToDo*
+
+#### Plugin-Schicht
+*ToDo*
+
+## Kapitel 3: SOLID
+
+### Analyse Single-Responsibility-Principle (SRP)
+
+#### Positiv-Beispiel
+*ToDo*
+
+#### Negativ-Beispiel
+*ToDo*
+
+### Analyse Open-Closed-Principle (OCP)
+
+#### Positiv-Beispiel
+*ToDo*
+
+#### Negativ-Beispiel
+*ToDo*
+
+### Analyse Liskov-Substitution- (LSP), Interface-Segreggation- (ISP), Dependency-Inversion-Principle (DIP)
+
+#### Positiv-Beispiel
+*ToDo*
+
+#### Negativ-Beispiel
+*ToDo*
+
+## Kapitel 4: Weitere Prinzipien
+
+### Analyse GRASP: Geringe Kopplung
+
+#### Positiv-Beispiel
+*ToDo*
+
+#### Negativ-Beispiel
+*ToDo*
+
+### Analyse GRASP: Hohe Kohäsion
+
+#### Positiv-Beispiel
+*ToDo*
+
+#### Negativ-Beispiel
+*ToDo*
+
+### Don't Repeat Yourself (DRY)
+*ToDo*
+
+## Kapitel 5: Unit tests
+
+### 10 Unit tests
+
+Die folgende Tabelle umfasst eine Auswahl der Unit-Tests für die MusicManager-Applikation.
+
+*ToDo*
+
+### ATRIP - Automatic
+*ToDo*
+
+### ATRIP - Thorough
+*ToDo*
+
+#### Positiv-Beispiel
+*ToDo*
+
+#### Negativ-Beispiel
+*ToDo*
+
+### ATRIP - Professional
+
+#### Positiv-Beispiel
+*ToDo*
+
+#### Negativ-Beispiel
+*ToDo*
+
+### Code Coverage
+*ToDo*
+
+### Fakes und Mocks
+
+#### Mock 1
+*ToDo*
+
+#### Mock 2
+*ToDo*
+
+## Kapitel 6: Domain Driven Design
+
+### Ubiquitous Language
+*ToDo*
+
+### Entities
+*ToDo*
+
+### Value Objects
+*ToDo*
+
+### Repositories
+*ToDo*
+
+### Aggregates
+*ToDo*
+
+## Kapitel 7: Refactoring
+
+### Code Smells
+
+#### Code Smell 1: <name>
+*ToDo*
+
+#### Code Smell 2: <name>
+*ToDo*
+
+### Refactorings
+
+#### Refactoring 1
+*ToDo*
+
+#### Refactoring 2
+*ToDo*
+
+## Kapitel 8: Entwurfsmuster
+
+### Entwurfsmuster 1: Builder Pattern
+Für die Erstellung von Song-Instanzen werden nicht immer alle Felder eines
+Songs benötigt. Wenn beispielsweise die Bpm-Zahl eines Songs unbekannt ist,
+soll eine Erstellung einer Song-Instanz trotzdem möglich sein. Als Abhilfe
+kommt hier der `SongBuilder` zum Einsatz. Hier können die einzelnen Angaben
+über Builder-Methoden getätigt werden. Am Ende kann das fertige Song-Objekt
+mit der Methode `build()` erzeugt werden.
+
+### Entwurfsmuster 2: Observer Pattern
+Das Observer-Pattern kommt an zwei Stellen im Code zum Einsatz. Zum einen
+beim Login, sodass die Haupt-Klasse `MusicManager.java` immer den Überblick
+über den aktuellen Zustand erhält und JFrames ein- und ausblenden kann.
+Zum anderen zur aktualisierung der Song-Liste auf der Benutzeroberfläche.
+Hier benachrichtigt der `SongService` die UI über Veränderungen an der
+Song-Liste sodass sich diese aktualisieren kann.
