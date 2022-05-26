@@ -34,7 +34,11 @@
 
 ### Übersicht über die Applikation
 
-ToDo
+Bei der implementierten Applikation handelt es sich um einen Manager für Musik.
+Mithilfe der Anwendung lassen sich Soundtracks mit den zugehörigen Interpreten
+und einigen Metadaten anzeigen, erstellen, bearbeiten und wieder löschen.
+Zusätzlich bietet die Anwendung einige Hilfsfunktionen wie eine Suche der Titel
+auf YouTube an.
 
 ### Wie startet man die Applikation?
 
