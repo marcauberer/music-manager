@@ -48,7 +48,9 @@ public class SongRepositoryImpl extends Repository implements SongRepository {
 
     @Override
     public List<Song> findAllSongsByUserId(long userId) {
-        return Collections.emptyList();
+        return songs.stream()
+                .filter(song -> song.getUserId() == userId)
+                .collect(Collectors.toList());
     }
 
     @Override

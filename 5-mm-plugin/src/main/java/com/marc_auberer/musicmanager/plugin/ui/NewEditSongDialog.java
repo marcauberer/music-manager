@@ -1,5 +1,6 @@
 package com.marc_auberer.musicmanager.plugin.ui;
 
+import com.marc_auberer.musicmanager.application.builder.SongBuilder;
 import com.marc_auberer.musicmanager.application.observer.ArtistListObserver;
 import com.marc_auberer.musicmanager.application.observer.BarTypeListObserver;
 import com.marc_auberer.musicmanager.application.observer.GenreListObserver;
@@ -10,7 +11,7 @@ import com.marc_auberer.musicmanager.application.service.SongService;
 import com.marc_auberer.musicmanager.domain.artist.Artist;
 import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.genre.Genre;
-import com.marc_auberer.musicmanager.application.builder.SongBuilder;
+import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.domain.user.User;
 
 import javax.swing.*;
@@ -39,7 +40,7 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
     private List<Genre> genres;
     private List<BarType> barTypes;
 
-    public NewEditSongDialog(SongService songService, User user) {
+    public NewEditSongDialog(SongService songService, User user, Song selectedSong) {
         this.user = user;
         this.songService = songService;
 
@@ -50,6 +51,10 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         this.artistService = new ArtistService(this);
         this.genreService = new GenreService(this);
         this.barTypeService = new BarTypeService(this);
+
+        if (selectedSong != null) {
+            fillUI(selectedSong);
+        }
     }
 
     private void setupUI() {
@@ -140,6 +145,19 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         constraints.gridy = 14;
         rootPanel.add(buttonCancel, constraints);
         buttonCancel.addActionListener(actionEvent -> dispose());
+    }
+
+    private void fillUI(Song selectedSong) {
+        // Set title
+        songTitle.setText(selectedSong.getTitle());
+        // Set artists
+        songArtists.setListData(selectedSong.getArtists().toArray(Artist[]::new));
+        // Set genre
+        songGenre.setSelectedItem(selectedSong.getGenre());
+        // Set bpm
+        songBpm.setText(String.valueOf(selectedSong.getBpm()));
+        // Set bar type
+        songBarType.setSelectedItem(selectedSong.getBarType());
     }
 
     private void createSong() {

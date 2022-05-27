@@ -10,8 +10,11 @@ import com.marc_auberer.musicmanager.domain.user.User;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,7 +29,8 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
     private final User user;
     private final SongService songService;
     private final YTLinkGeneratorService linkGeneratorService;
-    private final Optional<Song> selectedSong = Optional.empty();
+    private List<Song> songs = Collections.emptyList();
+    private Optional<Song> selectedSong = Optional.empty();
 
     public MusicManagerUI(LoginObserver loginObserver, User user) {
         this.loginObserver = loginObserver;
@@ -42,7 +46,7 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
     private void setupUI() {
         // Setup window
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(0, 0, 900, 600);
+        setBounds(0, 0, 900, 520);
         setTitle("Music Manager - Home");
         setResizable(false);
         setLocationRelativeTo(null);
@@ -57,6 +61,14 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
         String[] columnNames = {"Song Title", "Artist", "Genre", "Bpm", "Bar type"};
         songTable = new JTable(new String[][]{}, columnNames);
         songTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        songTable.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                JTable table = (JTable) mouseEvent.getSource();
+                if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+                    editSong();
+                }
+            }
+        });
         JScrollPane songScrollPane = new JScrollPane(songTable);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 0;
@@ -115,11 +127,21 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
         constraints.gridy = 4;
         constraints.weightx = 1;
         rootPanel.add(buttonLogout, constraints);
+
+        // Add selection listener to song table
+        songTable.getSelectionModel().addListSelectionListener(e -> {
+            int selectedIndex = songTable.getSelectedRow();
+            boolean validIndex = selectedIndex != -1;
+            selectedSong = validIndex ? Optional.of(songs.get(selectedIndex)) : Optional.empty();
+            buttonEdit.setEnabled(validIndex);
+            buttonDelete.setEnabled(validIndex);
+            buttonPlay.setEnabled(validIndex);
+        });
     }
 
     private void newSong() {
         // Open JFrame to add new song
-        JFrame newSongDialog = new NewEditSongDialog(songService, user);
+        JFrame newSongDialog = new NewEditSongDialog(songService, user, null);
         newSongDialog.setVisible(true);
     }
 
@@ -139,10 +161,14 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
 
     private void editSong() {
         assert selectedSong.isPresent();
+        // Open JFrame to edit the selected song
+        JFrame newSongDialog = new NewEditSongDialog(songService, user, selectedSong.get());
+        newSongDialog.setVisible(true);
     }
 
     private void deleteSong() {
         assert selectedSong.isPresent();
+        songTable.getSelectionModel().clearSelection();
         songService.delete(selectedSong.get());
     }
 
@@ -153,19 +179,37 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
 
     @Override
     public void onRefresh(List<Song> songList) {
+        this.songs = songList;
+
         // Convert the List into table rows and cells
         String[][] songData = songList.stream().map(song -> {
+            // Get title
             String songTitle = song.getTitle();
+            // Get artists
             String songArtists = song.getArtists().stream()
                     .map(artist -> artist.getFirstName() + " " + artist.getLastName())
                     .collect(Collectors.joining(", "));
-            String songGenre = song.getGenre().getName();
-            String songBpm = String.valueOf(song.getBpm());
-            String songBarType = song.getBarType().getBeatCount() + "/" + song.getBarType().getBeatValue();
+            // Get genre
+            String songGenre = "Unknown";
+            if (song.getGenre() != null) {
+                songGenre = song.getGenre().getName();
+            }
+            // Get bpm
+            String songBpm = song.getBpm() == 0 ? "Unknown" : String.valueOf(song.getBpm());
+            // Get bar type
+            String songBarType = "Unknown";
+            if (song.getBarType() != null) {
+                songBarType = song.getBarType().getBeatCount() + "/" + song.getBarType().getBeatValue();
+            }
             return new String[]{songTitle, songArtists, songGenre, songBpm, songBarType};
         }).toArray(String[][]::new);
 
-        DefaultTableModel newModel = new DefaultTableModel();
+        DefaultTableModel newModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         newModel.setColumnIdentifiers(new String[]{"Title", "Artists", "Genre", "Bpm", "Bar type"});
         for (String[] row : songData) {
             newModel.addRow(row);
