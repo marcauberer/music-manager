@@ -53,13 +53,10 @@ public class Song {
     }
 
     public String[] getFieldContents() {
-        return new String[] {
-                String.valueOf(id),
-                String.valueOf(genre.getId()),
-                title,
-                String.valueOf(bpm),
-                String.valueOf(barType.getId())
-        };
+        String genreString = genre == null ? "-1" : String.valueOf(genre.getId());
+        String bpmString = bpm == 0f ? "" : String.valueOf(bpm);
+        String barTypeString = barType == null ? "-1" : String.valueOf(barType.getId());
+        return new String[] {String.valueOf(id), title, genreString, bpmString, barTypeString};
     }
 
     public static String[] getCSVHeader() {

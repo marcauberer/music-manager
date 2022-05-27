@@ -8,6 +8,7 @@ import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.domain.user.User;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
@@ -55,6 +56,7 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
         // Song list
         String[] columnNames = {"Song Title", "Artist", "Genre", "Bpm", "Bar type"};
         songTable = new JTable(new String[][]{}, columnNames);
+        songTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane songScrollPane = new JScrollPane(songTable);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 0;
@@ -163,11 +165,12 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
             return new String[]{songTitle, songArtists, songGenre, songBpm, songBarType};
         }).toArray(String[][]::new);
 
-        // Display the data
-        for (int y = 0; y < songData.length; y++) {
-            for (int x = 0; x < songData[y].length; y++) {
-                songTable.getModel().setValueAt(songData[y][x], x, y);
-            }
+        DefaultTableModel newModel = new DefaultTableModel();
+        newModel.setColumnIdentifiers(new String[]{"Title", "Artists", "Genre", "Bpm", "Bar type"});
+        for (String[] row : songData) {
+            newModel.addRow(row);
         }
+        songTable.setModel(newModel);
+        newModel.fireTableDataChanged();
     }
 }

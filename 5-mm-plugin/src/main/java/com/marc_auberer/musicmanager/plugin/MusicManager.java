@@ -28,6 +28,7 @@ public class MusicManager implements LoginObserver {
             JFrame loginFrame = new LoginUI(this);
             loginFrame.setVisible(true);
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.println("MusicManager: Could not open login window");
         }
     }
@@ -37,6 +38,7 @@ public class MusicManager implements LoginObserver {
             JFrame mainFrame = new MusicManagerUI(this, user);
             mainFrame.setVisible(true);
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.println("MusicManager: Could not open main window");
         }
     }

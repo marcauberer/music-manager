@@ -111,13 +111,19 @@ public class SongRepositoryImpl extends Repository implements SongRepository {
 
             // Load transitive genre
             long genreId = Long.parseLong(serializedSong[2]);
-            Optional<Genre> optionalGenre = genreRepository.findGenreById(genreId);
-            Genre genre = optionalGenre.orElseThrow(() -> new TransitiveDataException("Genre not found"));
+            Genre genre = null;
+            if (genreId != -1) {
+                Optional<Genre> optionalGenre = genreRepository.findGenreById(genreId);
+                genre = optionalGenre.orElseThrow(() -> new TransitiveDataException("Genre not found"));
+            }
 
             // Load transitive bar type
             long barTypeId = Long.parseLong(serializedSong[4]);
-            Optional<BarType> optionalBarType = barTypeRepository.findBarTypeById(barTypeId);
-            BarType barType = optionalBarType.orElseThrow(() -> new TransitiveDataException("Bar type not found"));
+            BarType barType = null;
+            if (barTypeId != -1) {
+                Optional<BarType> optionalBarType = barTypeRepository.findBarTypeById(barTypeId);
+                barType = optionalBarType.orElseThrow(() -> new TransitiveDataException("Bar type not found"));
+            }
 
             // Create song object
             songs.add(new Song(songId, title, artists, genre, bom, barType));

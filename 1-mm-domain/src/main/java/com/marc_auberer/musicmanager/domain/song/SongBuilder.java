@@ -10,9 +10,9 @@ public class SongBuilder {
 
     private final String title;
     private final List<Artist> artists;
-    private Genre genre;
+    private Genre genre = null;
     private float bpm = 0f;
-    private BarType barType;
+    private BarType barType = null;
 
     public SongBuilder(String title, List<Artist> artists) {
         this.title = title;

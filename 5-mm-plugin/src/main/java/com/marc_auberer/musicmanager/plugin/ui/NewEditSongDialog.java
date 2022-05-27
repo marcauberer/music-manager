@@ -55,11 +55,10 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
     private void setupUI() {
         // Setup window
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(0, 0, 350, 350);
+        setBounds(0, 0, 350, 400);
         setTitle("Music Manager - New song");
         setResizable(false);
         setLocationRelativeTo(null);
-        GridBagConstraints constraints = new GridBagConstraints();
 
         // Set root layout
         JPanel rootPanel = new JPanel(new GridBagLayout());
@@ -67,6 +66,7 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         setContentPane(rootPanel);
 
         // Prepare constraints
+        GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -128,10 +128,21 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridy = 12;
         rootPanel.add(songBarType, constraints);
+
+        // Create song button
+        JButton buttonCreate = new JButton("Create song");
+        constraints.gridy = 13;
+        rootPanel.add(buttonCreate, constraints);
+        buttonCreate.addActionListener(actionEvent -> createSong());
+
+        // Cancel button
+        JButton buttonCancel = new JButton("Cancel");
+        constraints.gridy = 14;
+        rootPanel.add(buttonCancel, constraints);
+        buttonCancel.addActionListener(actionEvent -> dispose());
     }
 
     private void createSong() {
-
         // Get title
         String title = songTitle.getText().trim();
 
