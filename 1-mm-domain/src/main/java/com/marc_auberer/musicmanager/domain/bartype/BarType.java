@@ -35,4 +35,9 @@ public class BarType {
     public static String[] getCSVHeader() {
         return new String[] {"Id", "BeatCount", "BeatValue"};
     }
+
+    @Override
+    public String toString() {
+        return beatCount + "/" + beatValue;
+    }
 }

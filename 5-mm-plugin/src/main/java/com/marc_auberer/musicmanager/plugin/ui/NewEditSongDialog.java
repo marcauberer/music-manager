@@ -10,15 +10,13 @@ import com.marc_auberer.musicmanager.application.service.SongService;
 import com.marc_auberer.musicmanager.domain.artist.Artist;
 import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.genre.Genre;
-import com.marc_auberer.musicmanager.domain.song.Song;
+import com.marc_auberer.musicmanager.domain.song.SongBuilder;
 import com.marc_auberer.musicmanager.domain.user.User;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.marc_auberer.musicmanager.db.Repository.AUTO_INC;
 
 public class NewEditSongDialog extends JFrame implements ArtistListObserver, GenreListObserver, BarTypeListObserver {
 
@@ -57,7 +55,7 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
     private void setupUI() {
         // Setup window
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(0, 0, 300, 650);
+        setBounds(0, 0, 350, 350);
         setTitle("Music Manager - New song");
         setResizable(false);
         setLocationRelativeTo(null);
@@ -68,59 +66,72 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         rootPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setContentPane(rootPanel);
 
-        // Title text field
-        songTitle = new JTextField();
+        // Prepare constraints
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = 5;
         constraints.gridheight = 1;
         constraints.weightx = 5;
+
+        // Title label
+        JLabel songTitleLabel = new JLabel("Song title:");
+        rootPanel.add(songTitleLabel, constraints);
+
+        // Title text field
+        songTitle = new JTextField();
+        constraints.gridy = 1;
         rootPanel.add(songTitle, constraints);
+
+        // Artists label
+        JLabel songArtistsLabel = new JLabel("Artists:");
+        constraints.gridy = 2;
+        rootPanel.add(songArtistsLabel, constraints);
 
         // Artists
         songArtists = new JList<>();
         JScrollPane songScrollPane = new JScrollPane(songArtists);
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridx = 0;
-        constraints.gridy = 1;
-        constraints.gridwidth = 5;
-        constraints.gridheight = 3;
-        constraints.weightx = 5;
+        constraints.gridy = 3;
+        constraints.gridheight = 4;
         rootPanel.add(songScrollPane, constraints);
+
+        // Genre label
+        JLabel songGenreLabel = new JLabel("Genre:");
+        constraints.gridy = 7;
+        constraints.gridheight = 1;
+        rootPanel.add(songGenreLabel, constraints);
 
         // Genre
         songGenre = new JComboBox<>();
         constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridx = 0;
-        constraints.gridy = 4;
-        constraints.gridwidth = 5;
-        constraints.gridheight = 1;
-        constraints.weightx = 5;
+        constraints.gridy = 8;
         rootPanel.add(songGenre, constraints);
+
+        // Bpm label
+        JLabel bpmLabel = new JLabel("Bpm:");
+        constraints.gridy = 9;
+        rootPanel.add(bpmLabel, constraints);
 
         // Bpm text field
         songBpm = new JTextField();
         constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridx = 0;
-        constraints.gridy = 5;
-        constraints.gridwidth = 5;
-        constraints.gridheight = 1;
-        constraints.weightx = 5;
+        constraints.gridy = 10;
         rootPanel.add(songBpm, constraints);
+
+        // Bpm label
+        JLabel barTypeLabel = new JLabel("Bar type:");
+        constraints.gridy = 11;
+        rootPanel.add(barTypeLabel, constraints);
 
         // Bar type
         songBarType = new JComboBox<>();
         constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridx = 0;
-        constraints.gridy = 6;
-        constraints.gridwidth = 5;
-        constraints.gridheight = 1;
-        constraints.weightx = 5;
+        constraints.gridy = 12;
         rootPanel.add(songBarType, constraints);
     }
 
     private void createSong() {
+
         // Get title
         String title = songTitle.getText().trim();
 
@@ -131,19 +142,30 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
             selectedArtists.add(artists.get(index));
         }
 
+        SongBuilder songBuilder = new SongBuilder(title, selectedArtists);
+
         // Get genre
         int selectedGenreIndex = songGenre.getSelectedIndex();
-        Genre genre = genres.get(selectedGenreIndex);
+        if (selectedGenreIndex != -1) {
+            Genre genre = genres.get(selectedGenreIndex);
+            songBuilder.withGenre(genre);
+        }
 
         // Get Bpm
-        float bpm = Float.parseFloat(songBpm.getText().trim());
+        if (!songBpm.getText().trim().isEmpty()) {
+            float bpm = Float.parseFloat(songBpm.getText().trim());
+            songBuilder.withBpm(bpm);
+        }
 
         // Get bar type
-        BarType barType = null;
+        int selectedBarTypeIndex = songBarType.getSelectedIndex();
+        if (selectedBarTypeIndex != -1) {
+            BarType barType = barTypes.get(selectedBarTypeIndex);
+            songBuilder.withBarType(barType);
+        }
 
-        // Save song
-        Song song = new Song(AUTO_INC, title, selectedArtists, genre, bpm, barType);
-        songService.createSong(song);
+        // Build and save song
+        songService.createSong(songBuilder.build());
 
         // Close dialog
         dispose();

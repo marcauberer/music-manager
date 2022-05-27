@@ -29,4 +29,9 @@ public class Genre {
     public static String[] getCSVHeader() {
         return new String[] {"Id", "Name"};
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

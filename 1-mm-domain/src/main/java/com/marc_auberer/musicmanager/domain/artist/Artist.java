@@ -43,4 +43,9 @@ public class Artist {
     public static String[] getCSVHeader() {
         return new String[] {"Id", "FirstName", "LastName", "DateOfBirth"};
     }
+
+    @Override
+    public String toString() {
+        return lastName.isEmpty() ? firstName : firstName + " " + lastName;
+    }
 }

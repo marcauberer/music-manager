@@ -45,4 +45,9 @@ public class User {
     public static String[] getCSVHeader() {
         return new String[] {"Id", "Username", "Password"};
     }
+
+    @Override
+    public String toString() {
+        return username;
+    }
 }
