@@ -1,4 +1,4 @@
-Id ; Title                  ; Genre ; Bpm ; BarType
-0  ; Sunset Over The Empire ; 0     ; 184 ; 0
-1  ; Summer's End           ; 1     ; 115 ; 0
-2  ; No Gods, No Masters    ; 0     ; 124 ; 0
+Id ; UserId ; Title                  ; Genre ; Bpm ; BarType
+0  ; 0      ; Sunset Over The Empire ; 0     ; 184 ; 0
+1  ; 0      ; Summer's End           ; 1     ; 115 ; 0
+2  ; 1      ; No Gods, No Masters    ; 0     ; 124 ; 0

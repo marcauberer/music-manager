@@ -9,14 +9,16 @@ import java.util.List;
 public class Song {
 
     private long id;
+    private long userId;
     private final String title;
     private final List<Artist> artists;
     private final Genre genre;
     private final float bpm;
     private final BarType barType;
 
-    public Song(long id, String title, List<Artist> artists, Genre genre, float bpm, BarType barType) {
+    public Song(long id, long userId, String title, List<Artist> artists, Genre genre, float bpm, BarType barType) {
         this.id = id;
+        this.userId = userId;
         this.title = title;
         this.artists = artists;
         this.genre = genre;
@@ -30,6 +32,10 @@ public class Song {
 
     public long getId() {
         return id;
+    }
+
+    public long getUserId() {
+        return userId;
     }
 
     public String getTitle() {
@@ -56,11 +62,11 @@ public class Song {
         String genreString = genre == null ? "-1" : String.valueOf(genre.getId());
         String bpmString = bpm == 0f ? "" : String.valueOf(bpm);
         String barTypeString = barType == null ? "-1" : String.valueOf(barType.getId());
-        return new String[] {String.valueOf(id), title, genreString, bpmString, barTypeString};
+        return new String[] {String.valueOf(id), String.valueOf(userId), title, genreString, bpmString, barTypeString};
     }
 
     public static String[] getCSVHeader() {
-        return new String[] {"Id", "Title", "Genre", "Bpm", "BarType"};
+        return new String[] {"Id", "UserId", "Title", "Genre", "Bpm", "BarType"};
     }
 
     @Override

@@ -10,7 +10,7 @@ import com.marc_auberer.musicmanager.application.service.SongService;
 import com.marc_auberer.musicmanager.domain.artist.Artist;
 import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.genre.Genre;
-import com.marc_auberer.musicmanager.domain.song.SongBuilder;
+import com.marc_auberer.musicmanager.application.builder.SongBuilder;
 import com.marc_auberer.musicmanager.domain.user.User;
 
 import javax.swing.*;
@@ -153,7 +153,7 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
             selectedArtists.add(artists.get(index));
         }
 
-        SongBuilder songBuilder = new SongBuilder(title, selectedArtists);
+        SongBuilder songBuilder = new SongBuilder(user, title, selectedArtists);
 
         // Get genre
         int selectedGenreIndex = songGenre.getSelectedIndex();

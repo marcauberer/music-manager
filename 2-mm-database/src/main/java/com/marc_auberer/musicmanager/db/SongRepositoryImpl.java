@@ -36,12 +36,14 @@ public class SongRepositoryImpl extends Repository implements SongRepository {
 
     @Override
     public Optional<Song> findSongById(long id) {
-        return Optional.empty();
+        return songs.stream()
+                .filter(song -> song.getId() == id)
+                .findFirst();
     }
 
     @Override
     public List<Song> findAllSongs() {
-        return Collections.emptyList();
+        return songs;
     }
 
     @Override
@@ -103,14 +105,15 @@ public class SongRepositoryImpl extends Repository implements SongRepository {
         serializedSongs.ifPresent(strings -> strings.forEach(serializedSong -> {
             // Get basic fields
             long songId = Long.parseLong(serializedSong[0]);
-            String title = serializedSong[1];
-            float bom = Float.parseFloat(serializedSong[3]);
+            long userId = Long.parseLong(serializedSong[1]);
+            String title = serializedSong[2];
+            float bom = Float.parseFloat(serializedSong[4]);
 
             // Load transitive artists
             List<Artist> artists = Collections.emptyList();
 
             // Load transitive genre
-            long genreId = Long.parseLong(serializedSong[2]);
+            long genreId = Long.parseLong(serializedSong[3]);
             Genre genre = null;
             if (genreId != -1) {
                 Optional<Genre> optionalGenre = genreRepository.findGenreById(genreId);
@@ -118,7 +121,7 @@ public class SongRepositoryImpl extends Repository implements SongRepository {
             }
 
             // Load transitive bar type
-            long barTypeId = Long.parseLong(serializedSong[4]);
+            long barTypeId = Long.parseLong(serializedSong[5]);
             BarType barType = null;
             if (barTypeId != -1) {
                 Optional<BarType> optionalBarType = barTypeRepository.findBarTypeById(barTypeId);
@@ -126,7 +129,7 @@ public class SongRepositoryImpl extends Repository implements SongRepository {
             }
 
             // Create song object
-            songs.add(new Song(songId, title, artists, genre, bom, barType));
+            songs.add(new Song(songId, userId, title, artists, genre, bom, barType));
         }));
     }
 }
