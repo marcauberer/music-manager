@@ -1,5 +1,6 @@
 package com.marc_auberer.musicmanager.domain.user;
 
+import com.marc_auberer.musicmanager.domain.artist.Artist;
 import com.marc_auberer.musicmanager.domain.song.Song;
 
 import java.util.List;
@@ -54,5 +55,10 @@ public class User {
     @Override
     public int hashCode() {
         return (int) this.id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return ((User) obj).getId() == this.id;
     }
 }

@@ -1,5 +1,7 @@
 package com.marc_auberer.musicmanager.domain.bartype;
 
+import com.marc_auberer.musicmanager.domain.artist.Artist;
+
 public class BarType {
 
     private long id;
@@ -44,5 +46,10 @@ public class BarType {
     @Override
     public int hashCode() {
         return (int) this.id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return ((BarType) obj).getId() == this.id;
     }
 }

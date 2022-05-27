@@ -53,4 +53,9 @@ public class Artist {
     public int hashCode() {
         return (int) this.id;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return ((Artist) obj).getId() == this.id;
+    }
 }

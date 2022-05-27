@@ -78,4 +78,9 @@ public class Song {
     public int hashCode() {
         return (int) this.id;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return ((Song) obj).getId() == this.id;
+    }
 }
