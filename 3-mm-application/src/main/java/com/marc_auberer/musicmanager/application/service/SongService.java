@@ -42,7 +42,7 @@ public class SongService {
                 .collect(Collectors.toList());
     }
 
-    public void createSong(Song song) {
+    public void create(Song song) {
         songRepository.save(song);
         songListObserver.onRefresh(getAllSongsForUser());
     }

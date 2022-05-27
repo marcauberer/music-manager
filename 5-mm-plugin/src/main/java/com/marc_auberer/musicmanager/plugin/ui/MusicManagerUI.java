@@ -168,8 +168,9 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
 
     private void deleteSong() {
         assert selectedSong.isPresent();
+        Song songToDelete = selectedSong.get();
         songTable.getSelectionModel().clearSelection();
-        songService.delete(selectedSong.get());
+        songService.delete(songToDelete);
     }
 
     private void triggerLogout() {

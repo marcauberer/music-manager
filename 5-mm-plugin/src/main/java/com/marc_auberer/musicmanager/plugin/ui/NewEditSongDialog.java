@@ -34,6 +34,7 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
     private final ArtistService artistService;
     private final GenreService genreService;
     private final BarTypeService barTypeService;
+    private boolean updateMode = false;
 
     // Data collections
     private List<Artist> artists;
@@ -53,6 +54,7 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         this.barTypeService = new BarTypeService(this);
 
         if (selectedSong != null) {
+            updateMode = true;
             fillUI(selectedSong);
         }
     }
@@ -135,10 +137,10 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         rootPanel.add(songBarType, constraints);
 
         // Create song button
-        JButton buttonCreate = new JButton("Create song");
+        JButton buttonCreate = new JButton(updateMode ? "Update song" : "Create song");
         constraints.gridy = 13;
         rootPanel.add(buttonCreate, constraints);
-        buttonCreate.addActionListener(actionEvent -> createSong());
+        buttonCreate.addActionListener(actionEvent -> createOrUpdateSong());
 
         // Cancel button
         JButton buttonCancel = new JButton("Cancel");
@@ -151,7 +153,17 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         // Set title
         songTitle.setText(selectedSong.getTitle());
         // Set artists
-        songArtists.setListData(selectedSong.getArtists().toArray(Artist[]::new));
+        // Search for item with this particular song id and get its index
+        List<Artist> selectedArtists = selectedSong.getArtists();
+        List<Integer> selectedIndices = new ArrayList<>();
+        for (int index = 0; index < artists.size(); index++) {
+            for (Artist selectedArtist : selectedArtists) {
+                if (artists.get(index).getId() == selectedArtist.getId()) {
+                    selectedIndices.add(index);
+                }
+            }
+        }
+        songArtists.setSelectedIndices(selectedIndices.stream().mapToInt(Integer::intValue).toArray());
         // Set genre
         songGenre.setSelectedItem(selectedSong.getGenre());
         // Set bpm
@@ -160,7 +172,7 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         songBarType.setSelectedItem(selectedSong.getBarType());
     }
 
-    private void createSong() {
+    private void createOrUpdateSong() {
         // Get title
         String title = songTitle.getText().trim();
 
@@ -194,7 +206,11 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         }
 
         // Build and save song
-        songService.createSong(songBuilder.build());
+        if (updateMode) {
+            songService.update(songBuilder.build());
+        } else {
+            songService.create(songBuilder.build());
+        }
 
         // Close dialog
         dispose();

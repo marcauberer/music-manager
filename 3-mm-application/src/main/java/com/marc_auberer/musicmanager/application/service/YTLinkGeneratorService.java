@@ -18,7 +18,7 @@ public class YTLinkGeneratorService {
         if (!firstArtist.getLastName().isEmpty()) {
             firstArtistName += " " + firstArtist.getLastName();
         }
-        return String.format(URL_TEMPLATE, encodeValue(songTitle), encodeValue(firstArtistName));
+        return String.format(URL_TEMPLATE, encodeValue(firstArtistName), encodeValue(songTitle));
     }
 
     private String encodeValue(String value) {
