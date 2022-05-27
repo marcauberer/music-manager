@@ -71,7 +71,7 @@ Die Demo-Daten beinhalten auch zwei Nutzeraccounts. Die Zugangsdaten lauten:
 #### Ausführbare JAR-Datei finden
 
 ```shell
-cd 1-mm-plugin-database
+cd 4-mm-plugin
 ```
 
 Die ausführbare JAR-Datei hat standardmäßig den Namen `plugin-<version>-jar-with-dependencies.jar`.
