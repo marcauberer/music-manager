@@ -73,4 +73,9 @@ public class Song {
     public String toString() {
         return title;
     }
+
+    @Override
+    public int hashCode() {
+        return (int) this.id;
+    }
 }

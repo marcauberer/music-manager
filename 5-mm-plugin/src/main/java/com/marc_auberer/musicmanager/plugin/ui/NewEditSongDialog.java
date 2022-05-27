@@ -165,11 +165,19 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         }
         songArtists.setSelectedIndices(selectedIndices.stream().mapToInt(Integer::intValue).toArray());
         // Set genre
-        songGenre.setSelectedItem(selectedSong.getGenre());
+        for (int index = 0; index < genres.size(); index++) {
+            if (genres.get(index).getId() == selectedSong.getGenre().getId()) {
+                songGenre.setSelectedIndex(index);
+            }
+        }
         // Set bpm
         songBpm.setText(String.valueOf(selectedSong.getBpm()));
         // Set bar type
-        songBarType.setSelectedItem(selectedSong.getBarType());
+        for (int index = 0; index < barTypes.size(); index++) {
+            if (barTypes.get(index).getId() == selectedSong.getBarType().getId()) {
+                songBarType.setSelectedIndex(index);
+            }
+        }
     }
 
     private void createOrUpdateSong() {

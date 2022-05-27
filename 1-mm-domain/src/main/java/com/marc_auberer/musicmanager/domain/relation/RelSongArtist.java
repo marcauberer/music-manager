@@ -36,4 +36,9 @@ public class RelSongArtist {
     public String toString() {
         return String.format("{%s,%s,%s}", this.id, this.songId, this.artistId);
     }
+
+    @Override
+    public int hashCode() {
+        return (int) this.id;
+    }
 }

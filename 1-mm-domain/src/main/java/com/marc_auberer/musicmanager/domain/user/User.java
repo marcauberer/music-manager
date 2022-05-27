@@ -50,4 +50,9 @@ public class User {
     public String toString() {
         return username;
     }
+
+    @Override
+    public int hashCode() {
+        return (int) this.id;
+    }
 }

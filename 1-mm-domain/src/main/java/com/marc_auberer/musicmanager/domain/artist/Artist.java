@@ -48,4 +48,9 @@ public class Artist {
     public String toString() {
         return lastName.isEmpty() ? firstName : firstName + " " + lastName;
     }
+
+    @Override
+    public int hashCode() {
+        return (int) this.id;
+    }
 }

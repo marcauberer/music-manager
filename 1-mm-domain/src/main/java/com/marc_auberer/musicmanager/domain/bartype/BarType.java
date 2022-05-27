@@ -40,4 +40,9 @@ public class BarType {
     public String toString() {
         return beatCount + "/" + beatValue;
     }
+
+    @Override
+    public int hashCode() {
+        return (int) this.id;
+    }
 }

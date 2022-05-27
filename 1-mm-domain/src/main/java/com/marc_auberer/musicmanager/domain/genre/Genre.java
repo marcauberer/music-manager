@@ -34,4 +34,9 @@ public class Genre {
     public String toString() {
         return name;
     }
+
+    @Override
+    public int hashCode() {
+        return (int) this.id;
+    }
 }
