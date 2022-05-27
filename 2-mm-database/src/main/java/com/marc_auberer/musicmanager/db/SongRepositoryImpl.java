@@ -1,15 +1,18 @@
 package com.marc_auberer.musicmanager.db;
 
 import com.marc_auberer.musicmanager.domain.artist.Artist;
+import com.marc_auberer.musicmanager.domain.artist.ArtistRepository;
 import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.exception.TransitiveDataException;
 import com.marc_auberer.musicmanager.domain.genre.Genre;
+import com.marc_auberer.musicmanager.domain.genre.GenreRepository;
+import com.marc_auberer.musicmanager.domain.relation.RelSongArtist;
+import com.marc_auberer.musicmanager.domain.relation.RelSongArtistRepository;
 import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.domain.song.SongRepository;
 import com.marc_auberer.musicmanager.utils.CSVHelper;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -21,14 +24,16 @@ public class SongRepositoryImpl extends Repository implements SongRepository {
     private static final String FILE_PATH = "./data/songs.csv";
     private final CSVHelper csvHelper;
     private final List<Song> songs = new ArrayList<>();
-    private final ArtistRepositoryImpl artistRepository;
-    private final GenreRepositoryImpl genreRepository;
+    private final ArtistRepository artistRepository;
+    private final GenreRepository genreRepository;
     private final BarTypeRepositoryImpl barTypeRepository;
+    private final RelSongArtistRepository songArtistRelRepository;
 
     public SongRepositoryImpl() {
         artistRepository = new ArtistRepositoryImpl();
         genreRepository = new GenreRepositoryImpl();
         barTypeRepository = new BarTypeRepositoryImpl();
+        songArtistRelRepository = new RelSongArtistRepositoryImpl(artistRepository);
         csvHelper = new CSVHelper(FILE_PATH, ";");
         // Pre-fetch all songs at once
         reload();
@@ -92,6 +97,16 @@ public class SongRepositoryImpl extends Repository implements SongRepository {
 
     @Override
     protected void writeOut() {
+        // Write relations out
+        List<RelSongArtist> relations = new ArrayList<>();
+        songs.forEach(song -> {
+            song.getArtists().forEach(artist -> {
+                relations.add(new RelSongArtist(relations.size(), song.getId(), artist.getId()));
+            });
+        });
+        songArtistRelRepository.updateRelations(relations);
+
+        // Write songs out
         List<String[]> serializedSongs = songs.stream()
                 .map(Song::getFieldContents)
                 .collect(Collectors.toList());
@@ -112,7 +127,7 @@ public class SongRepositoryImpl extends Repository implements SongRepository {
             float bom = Float.parseFloat(serializedSong[4]);
 
             // Load transitive artists
-            List<Artist> artists = Collections.emptyList();
+            List<Artist> artists = songArtistRelRepository.findAllArtistsBySongId(songId);
 
             // Load transitive genre
             long genreId = Long.parseLong(serializedSong[3]);

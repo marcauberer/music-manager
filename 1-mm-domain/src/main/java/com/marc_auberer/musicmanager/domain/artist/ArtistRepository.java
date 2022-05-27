@@ -8,8 +8,6 @@ public interface ArtistRepository {
 
     List<Artist> findAllArtists();
 
-    List<Artist> findArtistsBySongId(long songId);
-
     void save(Artist artist);
 
     void delete(long id);

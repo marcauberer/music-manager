@@ -6,7 +6,6 @@ import com.marc_auberer.musicmanager.utils.CSVHelper;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -32,11 +31,6 @@ public class ArtistRepositoryImpl extends Repository implements ArtistRepository
     @Override
     public List<Artist> findAllArtists() {
         return artists;
-    }
-
-    @Override
-    public List<Artist> findArtistsBySongId(long songId) {
-        return Collections.emptyList();
     }
 
     @Override
