@@ -56,6 +56,9 @@ public class Artist {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
         return ((Artist) obj).getId() == this.id;
     }
 }

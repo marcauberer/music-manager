@@ -1,6 +1,6 @@
 package com.marc_auberer.musicmanager.domain.bartype;
 
-import com.marc_auberer.musicmanager.domain.artist.Artist;
+import com.marc_auberer.musicmanager.domain.user.User;
 
 public class BarType {
 
@@ -50,6 +50,9 @@ public class BarType {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
         return ((BarType) obj).getId() == this.id;
     }
 }

@@ -63,6 +63,11 @@ mvn package
 Es existiert ein vorbereiteter Datenbestand, mit dem sich die Applikation testen lässt.
 Um diesen zu laden, kann das Skript `reload-demo-data.bat` genutzt werden.
 
+Die Demo-Daten beinhalten auch zwei Nutzeraccounts. Die Zugangsdaten lauten:
+
+1. Username: marc, Passwort: 12345
+2. Username: testuser, Password: testpw
+
 #### Ausführbare JAR-Datei finden
 
 ```shell

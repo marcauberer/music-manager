@@ -1,5 +1,7 @@
 package com.marc_auberer.musicmanager.domain.genre;
 
+import com.marc_auberer.musicmanager.domain.user.User;
+
 public class Genre {
 
     private long id;
@@ -42,6 +44,9 @@ public class Genre {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
         return ((Genre) obj).getId() == this.id;
     }
 }

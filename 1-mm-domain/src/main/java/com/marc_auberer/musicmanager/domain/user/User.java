@@ -1,6 +1,5 @@
 package com.marc_auberer.musicmanager.domain.user;
 
-import com.marc_auberer.musicmanager.domain.artist.Artist;
 import com.marc_auberer.musicmanager.domain.song.Song;
 
 import java.util.List;
@@ -59,6 +58,9 @@ public class User {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
         return ((User) obj).getId() == this.id;
     }
 }

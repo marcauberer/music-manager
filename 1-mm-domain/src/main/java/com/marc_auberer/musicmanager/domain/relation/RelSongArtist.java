@@ -1,5 +1,7 @@
 package com.marc_auberer.musicmanager.domain.relation;
 
+import com.marc_auberer.musicmanager.domain.user.User;
+
 public class RelSongArtist {
 
     private final long id;
@@ -44,6 +46,9 @@ public class RelSongArtist {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
         return ((RelSongArtist) obj).getId() == this.id;
     }
 }

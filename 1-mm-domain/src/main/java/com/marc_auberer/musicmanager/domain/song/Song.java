@@ -3,6 +3,7 @@ package com.marc_auberer.musicmanager.domain.song;
 import com.marc_auberer.musicmanager.domain.artist.Artist;
 import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.genre.Genre;
+import com.marc_auberer.musicmanager.domain.user.User;
 
 import java.util.List;
 
@@ -81,6 +82,9 @@ public class Song {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
         return ((Song) obj).getId() == this.id;
     }
 }
