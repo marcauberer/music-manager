@@ -19,6 +19,8 @@ public class SongService {
         this.songRepository = new SongRepositoryImpl();
         this.user = user;
         this.songListObserver = songListObserver;
+        // Notify observers about initial data load
+        songListObserver.onRefresh(getAllSongsForUser());
     }
 
     public List<Song> getAllSongsForUser() {
@@ -40,7 +42,7 @@ public class SongService {
                 .collect(Collectors.toList());
     }
 
-    public void save(Song song) {
+    public void createSong(Song song) {
         songRepository.save(song);
         songListObserver.onRefresh(getAllSongsForUser());
     }

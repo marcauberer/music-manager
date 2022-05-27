@@ -31,11 +31,11 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
         this.loginObserver = loginObserver;
         this.user = user;
 
+        setupUI();
+
         // Initialize services
         songService = new SongService(user, this);
         linkGeneratorService = new YTLinkGeneratorService();
-
-        setupUI();
     }
 
     private void setupUI() {
