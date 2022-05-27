@@ -19,6 +19,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.marc_auberer.musicmanager.db.Repository.AUTO_INC;
+
 public class NewEditSongDialog extends JFrame implements ArtistListObserver, GenreListObserver, BarTypeListObserver {
 
     // UI Components
@@ -31,10 +33,10 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
     // Members
     private final User user;
     private final SongService songService;
+    private final Song selectedSong;
     private final ArtistService artistService;
     private final GenreService genreService;
     private final BarTypeService barTypeService;
-    private boolean updateMode = false;
 
     // Data collections
     private List<Artist> artists;
@@ -44,6 +46,7 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
     public NewEditSongDialog(SongService songService, User user, Song selectedSong) {
         this.user = user;
         this.songService = songService;
+        this.selectedSong = selectedSong;
 
         // Setup UI
         setupUI();
@@ -54,7 +57,6 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         this.barTypeService = new BarTypeService(this);
 
         if (selectedSong != null) {
-            updateMode = true;
             fillUI(selectedSong);
         }
     }
@@ -65,6 +67,7 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         setBounds(0, 0, 350, 400);
         setTitle("Music Manager - New song");
         setResizable(false);
+        setAlwaysOnTop(true);
         setLocationRelativeTo(null);
 
         // Set root layout
@@ -137,7 +140,7 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         rootPanel.add(songBarType, constraints);
 
         // Create song button
-        JButton buttonCreate = new JButton(updateMode ? "Update song" : "Create song");
+        JButton buttonCreate = new JButton(selectedSong == null ? "Create song" : "Update song");
         constraints.gridy = 13;
         rootPanel.add(buttonCreate, constraints);
         buttonCreate.addActionListener(actionEvent -> createOrUpdateSong());
@@ -191,7 +194,8 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
             selectedArtists.add(artists.get(index));
         }
 
-        SongBuilder songBuilder = new SongBuilder(user, title, selectedArtists);
+        long songId = selectedSong != null ? selectedSong.getId() : AUTO_INC;
+        SongBuilder songBuilder = new SongBuilder(songId, user, title, selectedArtists);
 
         // Get genre
         int selectedGenreIndex = songGenre.getSelectedIndex();
@@ -214,7 +218,7 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         }
 
         // Build and save song
-        if (updateMode) {
+        if (selectedSong != null) {
             songService.update(songBuilder.build());
         } else {
             songService.create(songBuilder.build());

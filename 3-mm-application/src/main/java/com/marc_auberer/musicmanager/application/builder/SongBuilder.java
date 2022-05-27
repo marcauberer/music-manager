@@ -8,18 +8,18 @@ import com.marc_auberer.musicmanager.domain.user.User;
 
 import java.util.List;
 
-import static com.marc_auberer.musicmanager.db.Repository.AUTO_INC;
-
 public class SongBuilder {
 
     private final User user;
+    private final long id;
     private final String title;
     private final List<Artist> artists;
     private Genre genre = null;
     private float bpm = 0f;
     private BarType barType = null;
 
-    public SongBuilder(User user, String title, List<Artist> artists) {
+    public SongBuilder(long id, User user, String title, List<Artist> artists) {
+        this.id = id;
         this.user = user;
         this.title = title;
         this.artists = artists;
@@ -41,6 +41,6 @@ public class SongBuilder {
     }
 
     public Song build() {
-        return new Song(AUTO_INC, user.getId(), title, artists, genre, bpm, barType);
+        return new Song(id, user.getId(), title, artists, genre, bpm, barType);
     }
 }
