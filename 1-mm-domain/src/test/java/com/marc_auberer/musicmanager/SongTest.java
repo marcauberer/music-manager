@@ -1,7 +1,6 @@
 package com.marc_auberer.musicmanager;
 
 import com.marc_auberer.musicmanager.domain.artist.Artist;
-import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.genre.Genre;
 import com.marc_auberer.musicmanager.domain.song.Song;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ public class SongTest {
         // Test data
         List<Artist> artists = List.of(new Artist(4, "Powerwolf", "", new Date(0)));
         Genre genre = new Genre(65, "Power Metal");
-        BarType barType = new BarType(0, 4, 4);
+        com.marc_auberer.musicmanager.domain.bartype.BarType barType = new com.marc_auberer.musicmanager.domain.bartype.BarType(0, 4, 4);
         Song testSong = new Song(9, 12, "Demons Are A Girl's Best Friend", artists, genre, 143, barType);
 
         // Execute
@@ -45,7 +44,7 @@ public class SongTest {
         // Test data
         List<Artist> artists = List.of(new Artist(1, "Arch Enemy", "", new Date(0)));
         Genre genre = new Genre(61, "Melodic Death Metal");
-        BarType barType = new BarType(0, 4, 4);
+        com.marc_auberer.musicmanager.domain.bartype.BarType barType = new com.marc_auberer.musicmanager.domain.bartype.BarType(0, 4, 4);
         Song testSong = new Song(13, 0, "Avalanche", artists, genre, 187, barType);
 
         // Execute

@@ -16,7 +16,11 @@ public class UserRepositoryImpl extends Repository implements UserRepository {
     private final List<User> users = new ArrayList<>();
 
     public UserRepositoryImpl() {
-        csvHelper = new CSVHelper(FILE_PATH, ";");
+        this(new CSVHelper(FILE_PATH, ";"));
+    }
+
+    public UserRepositoryImpl(CSVHelper csvHelper) {
+        this.csvHelper = csvHelper;
         // Pre-fetch all users at once
         reload();
     }

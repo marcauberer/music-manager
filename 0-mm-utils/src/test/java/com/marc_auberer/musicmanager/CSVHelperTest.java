@@ -1,7 +1,6 @@
 package com.marc_auberer.musicmanager;
 
 import com.marc_auberer.musicmanager.domain.artist.Artist;
-import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.genre.Genre;
 import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.utils.CSVHelper;
@@ -69,7 +68,7 @@ public class CSVHelperTest {
         String[] header = Song.getCSVHeader();
         List<Artist> artists = List.of(new Artist(1, "Beast In Black", "", new Date(0)));
         Genre genre = new Genre(12, "Metal");
-        BarType barType = new BarType(5, 4, 4);
+        com.marc_auberer.musicmanager.domain.bartype.BarType barType = new com.marc_auberer.musicmanager.domain.bartype.BarType(5, 4, 4);
         List<Song> songs = List.of(
                 new Song(0, 0, "One Night in Tokio", artists, genre, 128, barType),
                 new Song(1, 0, "Moonlight Rendezvous", artists, genre, 102, barType)
@@ -89,8 +88,6 @@ public class CSVHelperTest {
             assertEquals(expectedFileContents, actualFileContents);
         } catch (IOException e) {
             fail();
-        } finally {
-            deleteFile(TEST_FILE_3);
         }
     }
 
@@ -122,12 +119,8 @@ public class CSVHelperTest {
         } catch (IOException e) {
             fail();
         } finally {
-            deleteFile(TEST_FILE_4);
+            File testFile = new File(TEST_FILE_4);
+            testFile.deleteOnExit();
         }
-    }
-
-    private void deleteFile(String filePath) {
-        File testFile = new File(filePath);
-        testFile.deleteOnExit();
     }
 }

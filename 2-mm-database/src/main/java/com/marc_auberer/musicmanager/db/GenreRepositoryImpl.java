@@ -16,7 +16,10 @@ public class GenreRepositoryImpl extends Repository implements GenreRepository {
     private final List<Genre> genres = new ArrayList<>();
 
     public GenreRepositoryImpl() {
-        csvHelper = new CSVHelper(FILE_PATH, ";");
+        this(new CSVHelper(FILE_PATH, ";"));
+    }
+    public GenreRepositoryImpl(CSVHelper csvHelper) {
+        this.csvHelper = csvHelper;
         // Pre-fetch all genres at once
         reload();
     }

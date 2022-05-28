@@ -2,7 +2,6 @@ package com.marc_auberer.musicmanager.db;
 
 import com.marc_auberer.musicmanager.domain.artist.Artist;
 import com.marc_auberer.musicmanager.domain.artist.ArtistRepository;
-import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.exception.TransitiveDataException;
 import com.marc_auberer.musicmanager.domain.genre.Genre;
 import com.marc_auberer.musicmanager.domain.genre.GenreRepository;
@@ -139,9 +138,9 @@ public class SongRepositoryImpl extends Repository implements SongRepository {
 
             // Load transitive bar type
             long barTypeId = Long.parseLong(serializedSong[5]);
-            BarType barType = null;
+            com.marc_auberer.musicmanager.domain.bartype.BarType barType = null;
             if (barTypeId != -1) {
-                Optional<BarType> optionalBarType = barTypeRepository.findBarTypeById(barTypeId);
+                Optional<com.marc_auberer.musicmanager.domain.bartype.BarType> optionalBarType = barTypeRepository.findBarTypeById(barTypeId);
                 barType = optionalBarType.orElseThrow(() -> new TransitiveDataException("Bar type not found"));
             }
 

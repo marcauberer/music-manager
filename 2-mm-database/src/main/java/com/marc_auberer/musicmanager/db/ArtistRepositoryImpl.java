@@ -18,7 +18,11 @@ public class ArtistRepositoryImpl extends Repository implements ArtistRepository
     private final List<Artist> artists = new ArrayList<>();
 
     public ArtistRepositoryImpl() {
-        csvHelper = new CSVHelper(FILE_PATH, ";");
+        this(new CSVHelper(FILE_PATH, ";"));
+    }
+
+    public ArtistRepositoryImpl(CSVHelper csvHelper) {
+        this.csvHelper = csvHelper;
         // Pre-fetch all bar types at once
         reload();
     }

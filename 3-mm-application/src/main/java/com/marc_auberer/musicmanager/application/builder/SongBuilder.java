@@ -1,7 +1,6 @@
 package com.marc_auberer.musicmanager.application.builder;
 
 import com.marc_auberer.musicmanager.domain.artist.Artist;
-import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.genre.Genre;
 import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.domain.user.User;
@@ -16,7 +15,7 @@ public class SongBuilder {
     private final List<Artist> artists;
     private Genre genre = null;
     private float bpm = 0f;
-    private BarType barType = null;
+    private com.marc_auberer.musicmanager.domain.bartype.BarType barType = null;
 
     public SongBuilder(long id, User user, String title, List<Artist> artists) {
         this.id = id;
@@ -35,7 +34,7 @@ public class SongBuilder {
         return this;
     }
 
-    public SongBuilder withBarType(BarType barType) {
+    public SongBuilder withBarType(com.marc_auberer.musicmanager.domain.bartype.BarType barType) {
         this.barType = barType;
         return this;
     }

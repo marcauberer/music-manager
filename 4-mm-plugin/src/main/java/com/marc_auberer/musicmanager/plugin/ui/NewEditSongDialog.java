@@ -9,7 +9,6 @@ import com.marc_auberer.musicmanager.application.service.BarTypeService;
 import com.marc_auberer.musicmanager.application.service.GenreService;
 import com.marc_auberer.musicmanager.application.service.SongService;
 import com.marc_auberer.musicmanager.domain.artist.Artist;
-import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.genre.Genre;
 import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.domain.user.User;
@@ -28,7 +27,7 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
     private JList<Artist> songArtists;
     private JComboBox<Genre> songGenre;
     private JTextField songBpm;
-    private JComboBox<BarType> songBarType;
+    private JComboBox<com.marc_auberer.musicmanager.domain.bartype.BarType> songBarType;
 
     // Members
     private final User user;
@@ -41,7 +40,7 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
     // Data collections
     private List<Artist> artists;
     private List<Genre> genres;
-    private List<BarType> barTypes;
+    private List<com.marc_auberer.musicmanager.domain.bartype.BarType> barTypes;
 
     public NewEditSongDialog(SongService songService, User user, Song selectedSong) {
         this.user = user;
@@ -213,7 +212,7 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         // Get bar type
         int selectedBarTypeIndex = songBarType.getSelectedIndex();
         if (selectedBarTypeIndex != -1) {
-            BarType barType = barTypes.get(selectedBarTypeIndex);
+            com.marc_auberer.musicmanager.domain.bartype.BarType barType = barTypes.get(selectedBarTypeIndex);
             songBuilder.withBarType(barType);
         }
 
@@ -243,9 +242,9 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
     }
 
     @Override
-    public void onBarTypeListChanged(List<BarType> barTypes) {
+    public void onBarTypeListChanged(List<com.marc_auberer.musicmanager.domain.bartype.BarType> barTypes) {
         this.barTypes = barTypes;
-        DefaultComboBoxModel<BarType> newModel = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel<com.marc_auberer.musicmanager.domain.bartype.BarType> newModel = new DefaultComboBoxModel<>();
         newModel.addAll(barTypes);
         songBarType.setModel(newModel);
     }

@@ -16,7 +16,11 @@ public class BarTypeRepositoryImpl extends Repository implements BarTypeReposito
     private final List<BarType> barTypes = new ArrayList<>();
 
     public BarTypeRepositoryImpl() {
-        csvHelper = new CSVHelper(FILE_PATH, ";");
+        this(new CSVHelper(FILE_PATH, ";"));
+    }
+
+    public BarTypeRepositoryImpl(CSVHelper csvHelper) {
+        this.csvHelper = csvHelper;
         // Pre-fetch all bar types at once
         reload();
     }
