@@ -1,6 +1,6 @@
 package com.marc_auberer.musicmanager.domain.bartype;
 
-import com.marc_auberer.musicmanager.domain.user.User;
+import java.util.Objects;
 
 public class BarType {
 
@@ -45,7 +45,7 @@ public class BarType {
 
     @Override
     public int hashCode() {
-        return (int) this.id;
+        return Objects.hash(this.id);
     }
 
     @Override

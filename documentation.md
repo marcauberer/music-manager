@@ -2,7 +2,7 @@
 
 ## Music Manager
 **Name**: Auberer, Marc <br>
-**Matrikelnummer**: 1577789
+**Matrikelnummer**: 1577789 <br>
 **Abgabedatum**: 29.05.2022
 
 ## Allgemeine Anmerkungen:

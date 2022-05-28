@@ -56,4 +56,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: music-manager.jar
-          path: 5-mm-plugin/target/*-jar-with-dependencies.jar
+          path: 4-mm-plugin/target/*-jar-with-dependencies.jar

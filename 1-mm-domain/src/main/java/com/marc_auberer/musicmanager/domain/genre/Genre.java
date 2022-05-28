@@ -1,6 +1,6 @@
 package com.marc_auberer.musicmanager.domain.genre;
 
-import com.marc_auberer.musicmanager.domain.user.User;
+import java.util.Objects;
 
 public class Genre {
 
@@ -39,7 +39,7 @@ public class Genre {
 
     @Override
     public int hashCode() {
-        return (int) this.id;
+        return Objects.hash(this.id);
     }
 
     @Override

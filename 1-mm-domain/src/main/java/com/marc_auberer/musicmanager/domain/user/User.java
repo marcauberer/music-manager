@@ -1,21 +1,17 @@
 package com.marc_auberer.musicmanager.domain.user;
 
-import com.marc_auberer.musicmanager.domain.song.Song;
-
-import java.util.List;
+import java.util.Objects;
 
 public class User {
 
     private long id;
     private final String username;
     private final String password;
-    private final List<Song> songs;
 
-    public User(long id, String username, String password, List<Song> songs) {
+    public User(long id, String username, String password) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.songs = songs;
     }
 
     public void setId(long id) {
@@ -34,10 +30,6 @@ public class User {
         return password;
     }
 
-    public List<Song> getSongs() {
-        return songs;
-    }
-
     public String[] getFieldContents() {
         return new String[] {String.valueOf(id), username, password};
     }
@@ -53,7 +45,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return (int) this.id;
+        return Objects.hash(this.id);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.marc_auberer.musicmanager.domain.artist;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Artist {
 
@@ -51,7 +52,7 @@ public class Artist {
 
     @Override
     public int hashCode() {
-        return (int) this.id;
+        return Objects.hash(this.id);
     }
 
     @Override

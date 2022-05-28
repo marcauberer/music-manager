@@ -3,14 +3,14 @@ package com.marc_auberer.musicmanager.domain.song;
 import com.marc_auberer.musicmanager.domain.artist.Artist;
 import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.genre.Genre;
-import com.marc_auberer.musicmanager.domain.user.User;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Song {
 
     private long id;
-    private long userId;
+    private final long userId;
     private final String title;
     private final List<Artist> artists;
     private final Genre genre;
@@ -77,7 +77,7 @@ public class Song {
 
     @Override
     public int hashCode() {
-        return (int) this.id;
+        return Objects.hash(this.id);
     }
 
     @Override
