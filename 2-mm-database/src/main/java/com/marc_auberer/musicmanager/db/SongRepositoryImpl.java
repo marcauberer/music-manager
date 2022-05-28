@@ -1,7 +1,7 @@
 package com.marc_auberer.musicmanager.db;
 
 import com.marc_auberer.musicmanager.domain.artist.Artist;
-import com.marc_auberer.musicmanager.domain.artist.ArtistRepository;
+import com.marc_auberer.musicmanager.domain.bartype.BarTypeRepository;
 import com.marc_auberer.musicmanager.domain.exception.TransitiveDataException;
 import com.marc_auberer.musicmanager.domain.genre.Genre;
 import com.marc_auberer.musicmanager.domain.genre.GenreRepository;
@@ -18,22 +18,30 @@ import java.util.OptionalInt;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class SongRepositoryImpl extends Repository implements SongRepository {
+public class SongRepositoryImpl extends AbstractRepository implements SongRepository {
 
     private static final String FILE_PATH = "./data/songs.csv";
     private final CSVHelper csvHelper;
     private final List<Song> songs = new ArrayList<>();
-    private final ArtistRepository artistRepository;
     private final GenreRepository genreRepository;
-    private final BarTypeRepositoryImpl barTypeRepository;
-    private final RelSongArtistRepository songArtistRelRepository;
+    private final BarTypeRepository barTypeRepository;
+    private final RelSongArtistRepository relSongArtistRepository;
 
     public SongRepositoryImpl() {
-        artistRepository = new ArtistRepositoryImpl();
-        genreRepository = new GenreRepositoryImpl();
-        barTypeRepository = new BarTypeRepositoryImpl();
-        songArtistRelRepository = new RelSongArtistRepositoryImpl(artistRepository);
-        csvHelper = new CSVHelper(FILE_PATH, ";");
+        this(
+                new CSVHelper(FILE_PATH, ";"),
+                new GenreRepositoryImpl(),
+                new BarTypeRepositoryImpl(),
+                new RelSongArtistRepositoryImpl(new ArtistRepositoryImpl())
+        );
+    }
+
+    public SongRepositoryImpl(CSVHelper csvHelper, GenreRepository genreRepository,
+                              BarTypeRepository barTypeRepository, RelSongArtistRepository relSongArtistRepository) {
+        this.csvHelper = csvHelper;
+        this.genreRepository = genreRepository;
+        this.barTypeRepository = barTypeRepository;
+        this.relSongArtistRepository = relSongArtistRepository;
         // Pre-fetch all songs at once
         reload();
     }
@@ -103,7 +111,7 @@ public class SongRepositoryImpl extends Repository implements SongRepository {
                 relations.add(new RelSongArtist(relations.size(), song.getId(), artist.getId()));
             });
         });
-        songArtistRelRepository.updateRelations(relations);
+        relSongArtistRepository.updateRelations(relations);
 
         // Write songs out
         List<String[]> serializedSongs = songs.stream()
@@ -126,7 +134,7 @@ public class SongRepositoryImpl extends Repository implements SongRepository {
             float bom = Float.parseFloat(serializedSong[4]);
 
             // Load transitive artists
-            List<Artist> artists = songArtistRelRepository.findAllArtistsBySongId(songId);
+            List<Artist> artists = relSongArtistRepository.findAllArtistsBySongId(songId);
 
             // Load transitive genre
             long genreId = Long.parseLong(serializedSong[3]);

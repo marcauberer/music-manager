@@ -66,7 +66,7 @@ public class Song {
     }
 
     public static String[] getCSVHeader() {
-        return new String[] {"Id", "UserId", "Title", "Genre", "Bpm", "BarType"};
+        return new String[] {"Id", "UserId", "Title", "GenreId", "Bpm", "BarTypeId"};
     }
 
     @Override

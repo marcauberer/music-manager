@@ -10,7 +10,7 @@ import com.marc_auberer.musicmanager.domain.user.UserRepository;
 
 import java.util.Optional;
 
-import static com.marc_auberer.musicmanager.db.Repository.AUTO_INC;
+import static com.marc_auberer.musicmanager.db.AbstractRepository.AUTO_INC;
 
 public class UserService {
 

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ArtistRepositoryImpl extends Repository implements ArtistRepository {
+public class ArtistRepositoryImpl extends AbstractRepository implements ArtistRepository {
 
     private static final String FILE_PATH = "./data/artists.csv";
     private final CSVHelper csvHelper;

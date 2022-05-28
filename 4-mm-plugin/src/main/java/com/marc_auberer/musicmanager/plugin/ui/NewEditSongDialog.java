@@ -18,7 +18,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.marc_auberer.musicmanager.db.Repository.AUTO_INC;
+import static com.marc_auberer.musicmanager.db.AbstractRepository.AUTO_INC;
 
 public class NewEditSongDialog extends JFrame implements ArtistListObserver, GenreListObserver, BarTypeListObserver {
 

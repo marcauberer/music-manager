@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class RelSongArtistRepositoryImpl extends Repository implements RelSongArtistRepository {
+public class RelSongArtistRepositoryImpl extends AbstractRepository implements RelSongArtistRepository {
 
     private static final String FILE_PATH = "./data/rel_songs_artists.csv";
     private final CSVHelper csvHelper;

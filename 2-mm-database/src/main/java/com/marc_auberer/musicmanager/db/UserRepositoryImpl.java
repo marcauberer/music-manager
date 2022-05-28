@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class UserRepositoryImpl extends Repository implements UserRepository {
+public class UserRepositoryImpl extends AbstractRepository implements UserRepository {
 
     private static final String FILE_PATH = "./data/users.csv";
     private final CSVHelper csvHelper;

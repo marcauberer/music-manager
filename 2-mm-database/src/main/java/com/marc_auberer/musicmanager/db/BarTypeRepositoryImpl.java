@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class BarTypeRepositoryImpl extends Repository implements BarTypeRepository {
+public class BarTypeRepositoryImpl extends AbstractRepository implements BarTypeRepository {
 
     private static final String FILE_PATH = "./data/bar-types.csv";
     private final CSVHelper csvHelper;

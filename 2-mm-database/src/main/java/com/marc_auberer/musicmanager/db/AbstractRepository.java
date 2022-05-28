@@ -1,6 +1,6 @@
 package com.marc_auberer.musicmanager.db;
 
-public abstract class Repository {
+public abstract class AbstractRepository {
 
     public static final long AUTO_INC = -1;
 

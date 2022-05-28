@@ -12,7 +12,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.List;
 import java.util.Optional;
 
-import static com.marc_auberer.musicmanager.db.Repository.AUTO_INC;
+import static com.marc_auberer.musicmanager.db.AbstractRepository.AUTO_INC;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
