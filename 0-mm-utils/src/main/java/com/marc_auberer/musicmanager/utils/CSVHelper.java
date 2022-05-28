@@ -50,6 +50,12 @@ public class CSVHelper {
 
     public void write(String[] header, List<String[]> rows) {
         try {
+            // Ensure the file exists
+            if (!Files.exists(filePath)) {
+                Files.createDirectories(filePath.getParent());
+                Files.createFile(filePath);
+            }
+            // Write header and data into the file
             List<String> rowStrings = new ArrayList<>();
             rowStrings.add(String.join(delimiter, header));
             rows.forEach(row -> rowStrings.add(String.join(delimiter, row)));

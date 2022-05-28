@@ -1,0 +1,9 @@
+@startuml
+class com.marc_auberer.musicmanager.utils.CSVHelper {
+    - Path filePath
+    - String delimiter
+    + <<Create>> CSVHelper(String,String)
+    + Optional<List<String[]>> read()
+    + void write(String[],List<String[]>)
+}
+@enduml
