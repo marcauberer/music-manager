@@ -40,13 +40,13 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findUserByUsername(username);
         // Check if the user was found
         if (optionalUser.isPresent()) {
-            throw new UserNotFoundException(String.format("The user %s was not found.", username));
+            throw new UserAlreadyExistsException(String.format("The user %s already exists.", username));
         }
         // Create new user
         User user = new User(AUTO_INC, username, password);
         userRepository.save(user);
         // We need to load the user again to get the persisted user id
         optionalUser = userRepository.findUserByUsername(username);
-        return optionalUser.orElseThrow(() -> new RegistrationFailedException("Registration failed."));
+        return optionalUser.orElse(user);
     }
 }
