@@ -1,6 +1,5 @@
 package com.marc_auberer.musicmanager.db;
 
-import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.domain.user.User;
 import com.marc_auberer.musicmanager.domain.user.UserRepository;
 import com.marc_auberer.musicmanager.utils.CSVHelper;
@@ -15,10 +14,8 @@ public class UserRepositoryImpl extends Repository implements UserRepository {
     private static final String FILE_PATH = "./data/users.csv";
     private final CSVHelper csvHelper;
     private final List<User> users = new ArrayList<>();
-    private final SongRepositoryImpl songRepository;
 
     public UserRepositoryImpl() {
-        songRepository = new SongRepositoryImpl();
         csvHelper = new CSVHelper(FILE_PATH, ";");
         // Pre-fetch all users at once
         reload();
@@ -73,11 +70,8 @@ public class UserRepositoryImpl extends Repository implements UserRepository {
             String username = serializedUser[1];
             String password = serializedUser[2];
 
-            // Load transitive songs
-            List<Song> songs = songRepository.findAllSongsByUserId(userId);
-
             // Create user object
-            users.add(new User(userId, username, password, songs));
+            users.add(new User(userId, username, password));
         }));
     }
 }

@@ -8,7 +8,6 @@ import com.marc_auberer.musicmanager.db.UserRepositoryImpl;
 import com.marc_auberer.musicmanager.domain.user.User;
 import com.marc_auberer.musicmanager.domain.user.UserRepository;
 
-import java.util.Collections;
 import java.util.Optional;
 
 import static com.marc_auberer.musicmanager.db.Repository.AUTO_INC;
@@ -42,7 +41,7 @@ public class UserService {
             throw new UserNotFoundException(String.format("The user %s was not found.", username));
         }
         // Create new user
-        User user = new User(AUTO_INC, username, password, Collections.emptyList());
+        User user = new User(AUTO_INC, username, password);
         userRepository.save(user);
         // We need to load the user again to get the persisted user id
         optionalUser = userRepository.findUserByUsername(username);

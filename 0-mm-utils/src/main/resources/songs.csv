@@ -13,3 +13,6 @@ Id ; UserId ; Title                  ; Genre ; Bpm ; BarType
 11 ; 0      ; Dystopia               ; 6     ; 120 ; 0
 12 ; 1      ; Bad Habits             ; 7     ; 126 ; 0
 13 ; 1      ; Shape of You           ; 7     ; 96  ; 3
+14 ; 0      ; Viral                  ; 0     ; 105 ; 0
+15 ; 0      ; Drop Dead Cynical      ; 0     ; 140 ; 0
+16 ; 0      ; Handshake With Hell    ; 0     ; 205 ; 0

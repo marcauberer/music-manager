@@ -16,7 +16,7 @@
     </properties>
     <dependencies>
         <dependency>
-            <artifactId>adapters</artifactId>
+            <artifactId>application</artifactId>
             <groupId>com.marc-auberer.musicmanager</groupId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
