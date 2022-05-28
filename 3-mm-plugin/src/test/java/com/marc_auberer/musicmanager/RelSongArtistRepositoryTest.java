@@ -1,10 +1,10 @@
 package com.marc_auberer.musicmanager;
 
-import com.marc_auberer.musicmanager.db.RelSongArtistRepositoryImpl;
 import com.marc_auberer.musicmanager.domain.artist.Artist;
 import com.marc_auberer.musicmanager.domain.artist.ArtistRepository;
 import com.marc_auberer.musicmanager.domain.relation.RelSongArtist;
 import com.marc_auberer.musicmanager.domain.relation.RelSongArtistRepository;
+import com.marc_auberer.musicmanager.plugin.repository.RelSongArtistRepositoryImpl;
 import com.marc_auberer.musicmanager.utils.CSVHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

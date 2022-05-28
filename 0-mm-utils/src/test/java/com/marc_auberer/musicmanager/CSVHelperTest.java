@@ -82,7 +82,7 @@ public class CSVHelperTest {
         try {
             String actualFileContents = Files.readString(Path.of(TEST_FILE_3)).replaceAll("\r\n", "\n");
             String expectedFileContents =
-                    "Id;UserId;Title;Genre;Bpm;BarType\n" +
+                    "Id;UserId;Title;GenreId;Bpm;BarTypeId\n" +
                     "0;0;One Night in Tokio;12;128.0;5\n" +
                     "1;0;Moonlight Rendezvous;12;102.0;5";
             assertEquals(expectedFileContents, actualFileContents);
@@ -110,7 +110,7 @@ public class CSVHelperTest {
         // Assert
         try {
             String actualFileContents = Files.readString(Path.of(TEST_FILE_4)).replaceAll("\r\n", "\n");
-            String expectedFileContents = "Id,UserId,Title,Genre,Bpm,BarType\n" +
+            String expectedFileContents = "Id,UserId,Title,GenreId,Bpm,BarTypeId\n" +
                     "0,Amaranthe,,0\n" +
                     "1,Beast In Black,,0\n" +
                     "2,Halocene,,0\n" +

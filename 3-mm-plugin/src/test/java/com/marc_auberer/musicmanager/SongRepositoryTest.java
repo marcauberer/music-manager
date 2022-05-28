@@ -1,6 +1,5 @@
 package com.marc_auberer.musicmanager;
 
-import com.marc_auberer.musicmanager.db.SongRepositoryImpl;
 import com.marc_auberer.musicmanager.domain.artist.Artist;
 import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.bartype.BarTypeRepository;
@@ -9,6 +8,7 @@ import com.marc_auberer.musicmanager.domain.genre.GenreRepository;
 import com.marc_auberer.musicmanager.domain.relation.RelSongArtistRepository;
 import com.marc_auberer.musicmanager.domain.song.Song;
 import com.marc_auberer.musicmanager.domain.song.SongRepository;
+import com.marc_auberer.musicmanager.plugin.repository.SongRepositoryImpl;
 import com.marc_auberer.musicmanager.utils.CSVHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

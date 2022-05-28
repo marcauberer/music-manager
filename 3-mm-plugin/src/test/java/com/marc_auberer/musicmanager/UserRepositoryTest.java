@@ -1,8 +1,8 @@
 package com.marc_auberer.musicmanager;
 
-import com.marc_auberer.musicmanager.db.UserRepositoryImpl;
 import com.marc_auberer.musicmanager.domain.user.User;
 import com.marc_auberer.musicmanager.domain.user.UserRepository;
+import com.marc_auberer.musicmanager.plugin.repository.UserRepositoryImpl;
 import com.marc_auberer.musicmanager.utils.CSVHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
