@@ -20,7 +20,11 @@ public class RelSongArtistRepositoryImpl extends Repository implements RelSongAr
     private final ArtistRepository artistRepository;
 
     public RelSongArtistRepositoryImpl(ArtistRepository artistRepository) {
-        this.csvHelper = new CSVHelper(FILE_PATH, ";");
+        this(artistRepository, new CSVHelper(FILE_PATH, ";"));
+    }
+
+    public RelSongArtistRepositoryImpl(ArtistRepository artistRepository, CSVHelper csvHelper) {
+        this.csvHelper = csvHelper;
         this.artistRepository = artistRepository;
         // Pre-fetch all bar types at once
         reload();
