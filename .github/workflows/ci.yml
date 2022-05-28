@@ -39,9 +39,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          mvn package --file pom.xml --batch-mode --update-snapshots --no-transfer-progress
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=marcauberer_music-manager
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=marcauberer_music-manager
 
       - name: Upload coverage
         uses: codecov/codecov-action@v2
