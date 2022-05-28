@@ -35,7 +35,7 @@ public class SongTest {
         String[] actualResult = Song.getCSVHeader();
 
         // Assert
-        String[] expectedResult = new String[]{"Id", "UserId", "Title", "Genre", "Bpm", "BarType"};
+        String[] expectedResult = new String[]{"Id", "UserId", "Title", "GenreId", "Bpm", "BarTypeId"};
         assertArrayEquals(expectedResult, actualResult);
     }
 

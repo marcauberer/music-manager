@@ -11,9 +11,8 @@
     <modules>
         <module>0-mm-utils</module>
         <module>1-mm-domain</module>
-        <module>2-mm-database</module>
-        <module>3-mm-application</module>
-        <module>4-mm-plugin</module>
+        <module>2-mm-application</module>
+        <module>3-mm-plugin</module>
         <module>mm-report</module>
     </modules>
 
