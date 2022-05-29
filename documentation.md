@@ -142,10 +142,21 @@ Interfaces strukturell festgehalten und können an äußere Schichten weitergere
 ### Analyse Single-Responsibility-Principle (SRP)
 
 #### Positiv-Beispiel
-*ToDo*
+
+![SRP positive example](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/srp-positive.plantuml&fmt=svg)
+
+Als Positiv-Beispiel lässt sich hier die `BarTypeRepositoryImpl` anführen. Diese kümmert sich lediglich um das Verwalten
+der BarType-Datensätze, und delegiert das Ladens und Speichern ebendieser an den CSVHelper. Mit Datensätzen anderen Typs
+hat die `BarTypeRepository` keinen Kontakt.
 
 #### Negativ-Beispiel
-*ToDo*
+
+Bei der `SongRepositoryImpl` ist es relativ grenzwertig, für kleinere Projekte wie dieses aber vermutlich nock okay.
+Diese Repository kümmert sich nicht nur um das Verwalten von Song-Datensätzen, sondern lädt auch noch die transitiven
+Abhängigkeiten dieser, wie z.B. das zugehörige Genre, den BarType und die Artists. Dies wird zwar durch eine Delegation
+an andere Repositories gelöst, könnte aber sicher noch weiter optimiert werden.
+
+![SRP negative example](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/srp-negative.plantuml&fmt=svg)
 
 ### Analyse Open-Closed-Principle (OCP)
 

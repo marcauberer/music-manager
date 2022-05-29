@@ -1,0 +1,28 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+interface BarTypeRepository << interface >> {
+  + save(BarType): void
+  + delete(long): void
+  + findAllBarTypes(): List<BarType>
+  + findBarTypeById(long): Optional<BarType>
+}
+class BarTypeRepositoryImpl {
+  + BarTypeRepositoryImpl(CSVHelper): 
+  + BarTypeRepositoryImpl(): 
+  + csvHelper: CSVHelper
+  + FILE_PATH: String
+  + barTypes: List<BarType>
+  + writeOut(): void
+  + findBarTypeById(long): Optional<BarType>
+  + reload(): void
+  + delete(long): void
+  + findAllBarTypes(): List<BarType>
+  + save(BarType): void
+}
+
+BarTypeRepositoryImpl  -[#008200,dashed]-^  BarTypeRepository     
+@enduml
