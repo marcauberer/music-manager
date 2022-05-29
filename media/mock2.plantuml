@@ -1,0 +1,26 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+interface BarTypeRepository << interface >> {
+  + save(BarType): void
+  + delete(long): void
+  + findAllBarTypes(): List<BarType>
+  + findBarTypeById(long): Optional<BarType>
+}
+interface BarTypeService << interface >> {
+  + getAllBarTypes(): List<BarType>
+  + createBarType(BarType): void
+}
+class BarTypeServiceTest {
+  ~ BarTypeServiceTest(): 
+  ~ barTypeRepository: BarTypeRepository
+  ~ getAllBarTypes(): void
+  ~ createBarType(): void
+  ~ prepareTests(): void
+}
+
+BarTypeServiceTest "1" *-[#595959,plain]-> "barTypeRepository\n1" BarTypeRepository  
+@enduml

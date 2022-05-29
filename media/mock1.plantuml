@@ -1,0 +1,39 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class CSVHelper {
+  + CSVHelper(String, String): 
+  + delimiter: String
+  + filePath: Path
+  + write(String[], List<String[]>): void
+  + read(): Optional<List<String[]>>
+}
+class UserRepositoryImpl {
+  + UserRepositoryImpl(CSVHelper): 
+  + UserRepositoryImpl(): 
+  + csvHelper: CSVHelper
+  + users: List<User>
+  + FILE_PATH: String
+  + reload(): void
+  + findUserByUsername(String): Optional<User>
+  + save(User): void
+  + writeOut(): void
+  + findAllUsers(): List<User>
+}
+class UserRepositoryTest {
+  ~ UserRepositoryTest(): 
+  ~ csvHelper: CSVHelper
+  ~ findUserById(): void
+  ~ save(): void
+  ~ findAllUsers(): void
+  ~ prepareTest(): void
+}
+
+UserRepositoryImpl "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper          
+UserRepositoryImpl  -[#595959,dashed]->  CSVHelper          : "«create»"
+UserRepositoryTest "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper          
+UserRepositoryTest  -[#595959,dashed]->  UserRepositoryImpl : "«create»"
+@enduml

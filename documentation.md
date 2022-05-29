@@ -180,15 +180,76 @@ Die folgende Tabelle umfasst eine Auswahl der Unit-Tests für die MusicManager-A
 *ToDo*
 
 ### Code Coverage
-*ToDo*
+Die Gesamt-Coverage des Projektes beläuft sich auch 52 %. Somit ist das selbst gestellte Ziel von mindestens 50 % erreicht.
+Hierbei wurden hauptsächlich die Kern-Komponenten aus den unteren drei Schichten (Util, Domain, Application) intensiv
+getestet. Die Plugin-Schicht enthält UI-Code, der von Tests vorerst bewusst ausgenommen ist, da hier Unit-Tests nur bedingt
+sinnvoll sind und eigentlich Integrationstests angebracht wären. Die Implementierungen der Repositories, die ebenfalls
+in der Plugin-Schicht angesiedelt sind, wurden jedoch gewissenhaft und nahezu vollständig getestet.
+
+| Modul / Layer | Coverage | Getestete Komponenten                                                                                                    |
+|---------------|----------|--------------------------------------------------------------------------------------------------------------------------|
+| Util          | ca. 83 % | CSVHelper                                                                                                                |
+| Domain        | ca. 70 % | Jede Domain-Klasse besitzt zwei Methoden für die Persistenz. Diese wurden abgetestet. Zusätzlich einige andere Methoden. |
+| Application   | ca. 89 % | SongBuilder, alle Observer, alle Services, mehrere Exceptions                                                            |
+| Plugin / UI   | ca. 39 % | Repository-Implementationen                                                                                              |
 
 ### Fakes und Mocks
 
+Mocks wurden beim Testen der Komponenten exzessiv benutzt. Instanziierungen von Klassen aus der Schicht unter der zu
+testenden Schicht wurden mit Mocks ersetzt. Die Methodenaufrufe auf solchen Mock-Objekten wurden mittels Mockito umgeleitet
+und für bestimmte Eingabewerte, feste Ausgabewerte definiert.
+
+```java
+class ArtistRepositoryTest {
+
+    @Mock
+    private CSVHelper csvHelper;
+
+    @BeforeEach
+    void prepareTest() {
+        MockitoAnnotations.openMocks(this);
+
+        // CSVHelper read()
+        List<String[]> mockedReadResult = List.of(
+                new String[]{"0", "Arch Enemy", "", "0"},
+                new String[]{"1", "Amorphis", "", "0"},
+                new String[]{"2", "Amaranthe", "", "0"}
+        );
+        when(csvHelper.read()).thenReturn(Optional.of(mockedReadResult));
+
+        // CSVHelper write()
+        doNothing().when(csvHelper).write(any(String[].class), any());
+    }
+
+    @Test
+    void findArtistById() {
+        // Test data
+        ArtistRepository artistRepository = new ArtistRepositoryImpl(csvHelper);
+
+        // Execute
+        Optional<Artist> optionalArtist = artistRepository.findArtistById(2);
+
+        // Verify
+        verify(csvHelper, times(1)).read();
+
+        // Assert
+        assertTrue(optionalArtist.isPresent());
+        Artist artist = optionalArtist.get();
+        assertEquals("Amaranthe", artist.getFirstName());
+    }
+    
+    // ...
+}
+```
+
+In diesem Beispiel wurde der CSVHelper mit einem Mock ersetzt, sodass während des Tests weder vom Speichermedium gelesen,
+noch geschrieben wird.
+
 #### Mock 1
-*ToDo*
+![Mock 1](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/mock1.plantuml&fmt=svg)
 
 #### Mock 2
-*ToDo*
+![Mock 2](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/mock2.plantuml&fmt=svg)
 
 ## Kapitel 6: Domain Driven Design
 

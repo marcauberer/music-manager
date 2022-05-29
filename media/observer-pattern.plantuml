@@ -13,7 +13,7 @@ class MusicManagerUI {
   + linkGeneratorService: YTLinkGeneratorServiceImpl
   + loginObserver: LoginObserver
   + triggerLogout(): void
-  + onRefresh(List<Song>): void
+  + onUpdateSongList(List<Song>): void
   + newSong(): void
   + deleteSong(): void
   + setupUI(): void
@@ -21,7 +21,7 @@ class MusicManagerUI {
   + editSong(): void
 }
 interface SongListObserver << interface >> {
-  + onRefresh(List<Song>): void
+  + onUpdateSongList(List<Song>): void
 }
 class SongServiceImpl {
   + SongServiceImpl(User, SongRepository, SongListObserver): 
