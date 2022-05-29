@@ -86,10 +86,13 @@ mvn package
 
 Die ausführbare JAR-Datei hat standardmäßig den Namen `plugin-<version>-jar-with-dependencies.jar`.
 
--> Kopieren der Datei ins Repo-Root-Verzeichnis.
+-> Kopieren der Datei ins Repo-Root-Verzeichnis
+
 -> Ausführen
 
 ### Wie testet man die Applikation?
+
+Mit Ausführung dieses Befehls laufen alle Tests ab.
 
 ```shell
 mvn test
