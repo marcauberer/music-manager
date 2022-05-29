@@ -62,7 +62,8 @@ mvn package
 #### Demo-Daten laden (Empfohlen)
 
 Es existiert ein vorbereiteter Datenbestand, mit dem sich die Applikation testen lässt.
-Um diesen zu laden, kann das Skript `reload-demo-data.bat` genutzt werden.
+Um diesen zu laden, kann das Skript `reload-demo-data.bat` genutzt werden. Dieses Skript legt die Demo-Dateien im
+Verzeichnis `./data` ab. Wichtig ist dann, dass die JAR-Datei aus dem Kontext des Repository-Root gestartet wird.
 
 Die Demo-Daten beinhalten auch zwei Nutzeraccounts mit bereits verknüpften Songs. Die Zugangsdaten lauten:
 
@@ -71,14 +72,22 @@ Die Demo-Daten beinhalten auch zwei Nutzeraccounts mit bereits verknüpften Song
 
 #### Ausführbare JAR-Datei finden
 
-Die ausführbare JAR-Datei kann aus dem [neuesten Release in der GitHub-Repo](https://github.com/marcauberer/music-manager/releases/latest) heruntergeladen werden. Falls das Projekt
-wie oben beschrieben kompiliert wurde kann folgendermaßen vorgegangen werden:
+**Vorgebaute JAR-Datei herunterladen:** <br>
+Die ausführbare JAR-Datei kann aus dem [neuesten Release in der GitHub-Repo](https://github.com/marcauberer/music-manager/releases/latest)
+heruntergeladen werden. Die Datei <u>muss</u> zur korrekten Ausführung im Kontext des Repository-Root gestartet werden.
+Das heißt, sie sollte am besten dort abgelegt werden.
+
+**JAR-Datei selbst bauen:** <br>
 
 ```shell
-cd 3-mm-plugin
+cd <repository-root>
+mvn package
 ```
 
 Die ausführbare JAR-Datei hat standardmäßig den Namen `plugin-<version>-jar-with-dependencies.jar`.
+
+-> Kopieren der Datei ins Repo-Root-Verzeichnis.
+-> Ausführen
 
 ### Wie testet man die Applikation?
 
