@@ -23,6 +23,9 @@ import java.util.stream.Collectors;
 
 public class MusicManagerUI extends JFrame implements SongListObserver {
 
+    // Constants
+    private String unknownString = "Unknown";
+
     // UI Components
     private JTable songTable;
     private JButton buttonEdit;
@@ -51,7 +54,7 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
 
     private void setupUI() {
         // Setup window
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setBounds(0, 0, 900, 520);
         setTitle("Music Manager - Home");
         setResizable(false);
@@ -83,6 +86,7 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
         songTable = new JTable(new String[][]{}, columnNames);
         songTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         songTable.addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent mouseEvent) {
                 JTable table = (JTable) mouseEvent.getSource();
                 if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
@@ -176,14 +180,14 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
                     .map(artist -> artist.getFirstName() + " " + artist.getLastName())
                     .collect(Collectors.joining(", "));
             // Get genre
-            String songGenre = "Unknown";
+            String songGenre = unknownString;
             if (song.getGenre() != null) {
                 songGenre = song.getGenre().getName();
             }
             // Get bpm
-            String songBpm = song.getBpm() == 0 ? "Unknown" : String.valueOf(song.getBpm());
+            String songBpm = song.getBpm() == 0 ? unknownString : String.valueOf(song.getBpm());
             // Get bar type
-            String songBarType = "Unknown";
+            String songBarType = unknownString;
             if (song.getBarType() != null) {
                 songBarType = song.getBarType().getBeatCount() + "/" + song.getBarType().getBeatValue();
             }

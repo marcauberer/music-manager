@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 
 public class YTLinkGeneratorServiceImpl implements YTLinkGeneratorService {
 
-    private final String URL_TEMPLATE = "https://www.youtube.com/results?search_query=%s+%s";
+    private static final String URL_TEMPLATE = "https://www.youtube.com/results?search_query=%s+%s";
 
     @Override
     public String generateYouTubeLink(Song song) {

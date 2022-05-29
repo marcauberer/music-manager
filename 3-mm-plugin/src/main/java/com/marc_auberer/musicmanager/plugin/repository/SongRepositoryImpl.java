@@ -107,11 +107,11 @@ public class SongRepositoryImpl extends AbstractRepository implements SongReposi
     protected void writeOut() {
         // Write relations out
         List<RelSongArtist> relations = new ArrayList<>();
-        songs.forEach(song -> {
-            song.getArtists().forEach(artist -> {
-                relations.add(new RelSongArtist(relations.size(), song.getId(), artist.getId()));
-            });
-        });
+        songs.forEach(song ->
+                song.getArtists().forEach(artist ->
+                        relations.add(new RelSongArtist(relations.size(), song.getId(), artist.getId()))
+                )
+        );
         relSongArtistRepository.updateRelations(relations);
 
         // Write songs out

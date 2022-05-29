@@ -39,9 +39,6 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
     private final User user;
     private final SongServiceImpl songService;
     private final Song selectedSong;
-    private final ArtistServiceImpl artistService;
-    private final GenreServiceImpl genreService;
-    private final BarTypeServiceImpl barTypeService;
 
     // Data collections
     private List<Artist> artists;
@@ -62,9 +59,9 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         BarTypeRepository barTypeRepository = new BarTypeRepositoryImpl();
 
         // Create services
-        this.artistService = new ArtistServiceImpl(artistRepository, this);
-        this.genreService = new GenreServiceImpl(genreRepository, this);
-        this.barTypeService = new BarTypeServiceImpl(barTypeRepository, this);
+        new ArtistServiceImpl(artistRepository, this);
+        new GenreServiceImpl(genreRepository, this);
+        new BarTypeServiceImpl(barTypeRepository, this);
 
         if (selectedSong != null) {
             fillUI(selectedSong);
@@ -73,7 +70,7 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
 
     private void setupUI() {
         // Setup window
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setBounds(0, 0, 350, 400);
         setTitle("Music Manager - New song");
         setResizable(false);

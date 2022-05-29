@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class UIHelper {
+
+    // Private constructor to hide the public one (Good according to SonarCloud)
+    private UIHelper() {}
+
     public static void placeUIComp(JPanel rootPanel, JComponent component, int gridX, int gridY,
                                    int gridWidth, int gridHeight, int gridWeightX) {
         GridBagConstraints constraints = new GridBagConstraints();
