@@ -211,8 +211,162 @@ Die folgende Tabelle umfasst eine Auswahl der Unit-Tests für die MusicManager-A
 
 ### Code Smells
 
-#### Code Smell 1: <name>
-*ToDo*
+#### Code Smell 1: Long method
+Die Methode `setupUI` der Kasse `MusicManagerUI` war anfangs relativ klein, da die Oberfläche nur wenige Komponenten
+beinhaltete. Mit dem Zuwachs an Funktionalität und demnach einem Zuwachs an Layout-Komponenten überstieg die Code-Dichte
+innerhalb dieser Methode die Grenze der guten Lesbarkeit. <br>
+Um diesen Code Smell zu beheben, wurde die Methode in drei kleinere zerteilt. Eine Oberfunktion die zwei weitere
+Unterfunktionen aufruft. Als Call-Argument ist das Root-Panel notwendig, da dieses in der Oberfunktion erstellt wird und
+kein Klassen-Attribut ist.
+
+**Vorher:** <br>
+```java
+private void setupUI() {
+    // Setup window
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setBounds(0, 0, 900, 520);
+    setTitle("Music Manager - Home");
+    setResizable(false);
+    setLocationRelativeTo(null);
+    GridBagConstraints constraints = new GridBagConstraints();
+
+    // Set root layout
+    JPanel rootPanel = new JPanel(new GridBagLayout());
+    rootPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    setContentPane(rootPanel);
+
+    // Song list
+    String[] columnNames = {"Song Title", "Artist", "Genre", "Bpm", "Bar type"};
+    songTable = new JTable(new String[][]{}, columnNames);
+    songTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    songTable.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent mouseEvent) {
+            JTable table = (JTable) mouseEvent.getSource();
+            if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+                editSong();
+            }
+        }
+    });
+    JScrollPane songScrollPane = new JScrollPane(songTable);
+    UIHelper.placeUIComp(rootPanel, songScrollPane, 0, 0, 5, 4, 5);
+
+    // New button
+    JButton buttonNew = new JButton("New Song");
+    buttonNew.addActionListener(e -> newSong());
+    UIHelper.placeUIComp(rootPanel, buttonNew, 0, 4, 1, 1, 1);
+
+    // Edit button
+    JButton buttonEdit = new JButton("Edit Song");
+    buttonEdit.setEnabled(false);
+    buttonEdit.addActionListener(e -> editSong());
+    UIHelper.placeUIComp(rootPanel, buttonEdit, 1, 4, 1, 1, 1);
+
+    // Delete button
+    JButton buttonDelete = new JButton("Delete Song");
+    buttonDelete.setEnabled(false);
+    buttonDelete.addActionListener(e -> deleteSong());
+    UIHelper.placeUIComp(rootPanel, buttonDelete, 2, 4, 1, 1, 1);
+
+    // Play button
+    JButton buttonPlay = new JButton("Play Song");
+    buttonPlay.setEnabled(false);
+    buttonPlay.addActionListener(e -> playSong());
+    UIHelper.placeUIComp(rootPanel, buttonPlay, 3, 4, 1, 1, 1);
+
+    // Logout button
+    JButton buttonLogout = new JButton("LogOut");
+    buttonLogout.addActionListener(e -> triggerLogout());
+    UIHelper.placeUIComp(rootPanel, buttonLogout, 4, 4, 1, 1, 1);
+
+    // Add selection listener to song table
+    songTable.getSelectionModel().addListSelectionListener(e -> {
+        int selectedIndex = songTable.getSelectedRow();
+        boolean validIndex = selectedIndex != -1;
+        selectedSong = validIndex ? Optional.of(songs.get(selectedIndex)) : Optional.empty();
+        buttonEdit.setEnabled(validIndex);
+        buttonDelete.setEnabled(validIndex);
+        buttonPlay.setEnabled(validIndex);
+    });
+}
+```
+
+**Nachher (Commit-ID: ):** <br>
+```java
+private void setupUI() {
+    // Setup window
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setBounds(0, 0, 900, 520);
+    setTitle("Music Manager - Home");
+    setResizable(false);
+    setLocationRelativeTo(null);
+
+    // Set root layout
+    JPanel rootPanel = new JPanel(new GridBagLayout());
+    rootPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    setContentPane(rootPanel);
+
+    setupSongTable(rootPanel);
+
+    setupButtons(rootPanel);
+
+    // Add selection listener to song table
+    songTable.getSelectionModel().addListSelectionListener(e -> {
+        int selectedIndex = songTable.getSelectedRow();
+        boolean validIndex = selectedIndex != -1;
+        selectedSong = validIndex ? Optional.of(songs.get(selectedIndex)) : Optional.empty();
+        buttonEdit.setEnabled(validIndex);
+        buttonDelete.setEnabled(validIndex);
+        buttonPlay.setEnabled(validIndex);
+    });
+}
+
+private void setupSongTable(JPanel rootPanel) {
+    // Song list
+    String[] columnNames = {"Song Title", "Artist", "Genre", "Bpm", "Bar type"};
+    songTable = new JTable(new String[][]{}, columnNames);
+    songTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    songTable.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent mouseEvent) {
+            JTable table = (JTable) mouseEvent.getSource();
+            if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+                editSong();
+            }
+        }
+    });
+    JScrollPane songScrollPane = new JScrollPane(songTable);
+    UIHelper.placeUIComp(rootPanel, songScrollPane, 0, 0, 5, 4, 5);
+}
+
+private void setupButtons(JPanel rootPanel) {
+    // New button
+    JButton buttonNew = new JButton("New Song");
+    buttonNew.addActionListener(e -> newSong());
+    UIHelper.placeUIComp(rootPanel, buttonNew, 0, 4, 1, 1, 1);
+
+    // Edit button
+    buttonEdit = new JButton("Edit Song");
+    buttonEdit.setEnabled(false);
+    buttonEdit.addActionListener(e -> editSong());
+    UIHelper.placeUIComp(rootPanel, buttonEdit, 1, 4, 1, 1, 1);
+
+    // Delete button
+    buttonDelete = new JButton("Delete Song");
+    buttonDelete.setEnabled(false);
+    buttonDelete.addActionListener(e -> deleteSong());
+    UIHelper.placeUIComp(rootPanel, buttonDelete, 2, 4, 1, 1, 1);
+
+    // Play button
+    buttonPlay = new JButton("Play Song");
+    buttonPlay.setEnabled(false);
+    buttonPlay.addActionListener(e -> playSong());
+    UIHelper.placeUIComp(rootPanel, buttonPlay, 3, 4, 1, 1, 1);
+
+    // Logout button
+    JButton buttonLogout = new JButton("LogOut");
+    buttonLogout.addActionListener(e -> triggerLogout());
+    UIHelper.placeUIComp(rootPanel, buttonLogout, 4, 4, 1, 1, 1);
+}
+```
 
 #### Code Smell 2: <name>
 *ToDo*

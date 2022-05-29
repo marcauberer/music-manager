@@ -25,6 +25,9 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
 
     // UI Components
     private JTable songTable;
+    private JButton buttonEdit;
+    private JButton buttonDelete;
+    private JButton buttonPlay;
 
     // Members
     private final LoginObserver loginObserver;
@@ -53,13 +56,28 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
         setTitle("Music Manager - Home");
         setResizable(false);
         setLocationRelativeTo(null);
-        GridBagConstraints constraints = new GridBagConstraints();
 
         // Set root layout
         JPanel rootPanel = new JPanel(new GridBagLayout());
         rootPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setContentPane(rootPanel);
 
+        setupSongTable(rootPanel);
+
+        setupButtons(rootPanel);
+
+        // Add selection listener to song table
+        songTable.getSelectionModel().addListSelectionListener(e -> {
+            int selectedIndex = songTable.getSelectedRow();
+            boolean validIndex = selectedIndex != -1;
+            selectedSong = validIndex ? Optional.of(songs.get(selectedIndex)) : Optional.empty();
+            buttonEdit.setEnabled(validIndex);
+            buttonDelete.setEnabled(validIndex);
+            buttonPlay.setEnabled(validIndex);
+        });
+    }
+
+    private void setupSongTable(JPanel rootPanel) {
         // Song list
         String[] columnNames = {"Song Title", "Artist", "Genre", "Bpm", "Bar type"};
         songTable = new JTable(new String[][]{}, columnNames);
@@ -74,26 +92,28 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
         });
         JScrollPane songScrollPane = new JScrollPane(songTable);
         UIHelper.placeUIComp(rootPanel, songScrollPane, 0, 0, 5, 4, 5);
+    }
 
+    private void setupButtons(JPanel rootPanel) {
         // New button
         JButton buttonNew = new JButton("New Song");
         buttonNew.addActionListener(e -> newSong());
         UIHelper.placeUIComp(rootPanel, buttonNew, 0, 4, 1, 1, 1);
 
         // Edit button
-        JButton buttonEdit = new JButton("Edit Song");
+        buttonEdit = new JButton("Edit Song");
         buttonEdit.setEnabled(false);
         buttonEdit.addActionListener(e -> editSong());
         UIHelper.placeUIComp(rootPanel, buttonEdit, 1, 4, 1, 1, 1);
 
         // Delete button
-        JButton buttonDelete = new JButton("Delete Song");
+        buttonDelete = new JButton("Delete Song");
         buttonDelete.setEnabled(false);
         buttonDelete.addActionListener(e -> deleteSong());
         UIHelper.placeUIComp(rootPanel, buttonDelete, 2, 4, 1, 1, 1);
 
         // Play button
-        JButton buttonPlay = new JButton("Play Song");
+        buttonPlay = new JButton("Play Song");
         buttonPlay.setEnabled(false);
         buttonPlay.addActionListener(e -> playSong());
         UIHelper.placeUIComp(rootPanel, buttonPlay, 3, 4, 1, 1, 1);
@@ -102,16 +122,6 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
         JButton buttonLogout = new JButton("LogOut");
         buttonLogout.addActionListener(e -> triggerLogout());
         UIHelper.placeUIComp(rootPanel, buttonLogout, 4, 4, 1, 1, 1);
-
-        // Add selection listener to song table
-        songTable.getSelectionModel().addListSelectionListener(e -> {
-            int selectedIndex = songTable.getSelectedRow();
-            boolean validIndex = selectedIndex != -1;
-            selectedSong = validIndex ? Optional.of(songs.get(selectedIndex)) : Optional.empty();
-            buttonEdit.setEnabled(validIndex);
-            buttonDelete.setEnabled(validIndex);
-            buttonPlay.setEnabled(validIndex);
-        });
     }
 
     private void newSong() {
