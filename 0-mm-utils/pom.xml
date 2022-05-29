@@ -6,7 +6,7 @@
         <dependency>
             <groupId>com.marc-auberer.musicmanager</groupId>
             <artifactId>domain</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -14,7 +14,7 @@
     <parent>
         <groupId>com.marc-auberer.musicmanager</groupId>
         <artifactId>musicmanager</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>utils</artifactId>

@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.marc-auberer.musicmanager</groupId>
         <artifactId>musicmanager</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
     <artifactId>plugin</artifactId>
     <properties>
@@ -18,13 +18,13 @@
         <dependency>
             <artifactId>application</artifactId>
             <groupId>com.marc-auberer.musicmanager</groupId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.marc-auberer.musicmanager</groupId>
             <artifactId>utils</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
