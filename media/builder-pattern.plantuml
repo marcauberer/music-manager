@@ -1,0 +1,48 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Song {
+  + Song(long, long, String, List<Artist>, Genre, float, BarType): 
+  + artists: List<Artist>
+  + id: long
+  + userId: long
+  + bpm: float
+  + genre: Genre
+  + title: String
+  + barType: BarType
+  + getGenre(): Genre
+  + getFieldContents(): String[]
+  + getTitle(): String
+  + getArtists(): List<Artist>
+  + getBpm(): float
+  + getBarType(): BarType
+  + setId(long): void
+  + equals(Object): boolean
+  + getUserId(): long
+  + hashCode(): int
+  + toString(): String
+  + getId(): long
+  + getCSVHeader(): String[]
+}
+class SongBuilder {
+  + SongBuilder(long, User, String, List<Artist>): 
+  + user: User
+  + bpm: float
+  + genre: Genre
+  + title: String
+  + barType: BarType
+  + id: long
+  + artists: List<Artist>
+  + withGenre(Genre): SongBuilder
+  + withBpm(float): SongBuilder
+  + withBarType(BarType): SongBuilder
+  + build(): Song
+}
+note "The method build() creates the Song instance" as note2      
+
+SongBuilder  -[#595959,dashed]-  note2       
+SongBuilder  -[#595959,dashed]->  Song        : "«create»"
+@enduml

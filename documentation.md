@@ -235,6 +235,8 @@ kommt hier der `SongBuilder` zum Einsatz. Hier können die einzelnen Angaben
 über Builder-Methoden getätigt werden. Am Ende kann das fertige Song-Objekt
 mit der Methode `build()` erzeugt werden.
 
+![Observer Pattern](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/builder-pattern.plantuml)
+
 ### Entwurfsmuster 2: Observer Pattern
 Das Observer-Pattern kommt an zwei Stellen im Code zum Einsatz. Zum einen
 beim Login, sodass die Haupt-Klasse `MusicManager.java` immer den Überblick
@@ -242,3 +244,5 @@ beim Login, sodass die Haupt-Klasse `MusicManager.java` immer den Überblick
 Zum anderen zur aktualisierung der Song-Liste auf der Benutzeroberfläche.
 Hier benachrichtigt der `SongService` die UI über Veränderungen an der
 Song-Liste sodass sich diese aktualisieren kann.
+
+![Observer Pattern](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/observer-pattern.plantuml)
