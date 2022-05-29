@@ -187,7 +187,62 @@ Wenn Fehler vermieden werden sollen, ist es zudem wichtig alle Verzweigungen im 
 unerwartete Fehler können simuliert werden, um das Verhalten der Applikation im Fehlerfall zu testen.
 
 #### Positiv-Beispiel
-*ToDo*
+Im nachfolgenden Code-Ausschnitt können selbst definierte Exceptions auftreten. Die Tests für diese Methode überprüfen
+sowohl den Erfolgsfall, als auch beide Fehlerfälle.
+
+```java
+public class UserServiceImpl implements UserService {
+
+    // ...
+
+    @Override
+    public User login(String username, String password) throws UserNotFoundException {
+        Optional<User> optionalUser = userRepository.findUserByUsername(username);
+        // Check if the user was found
+        User user = optionalUser.orElseThrow(() ->
+                new UserNotFoundException(String.format("The user %s was not found.", username))
+        );
+        // Check if the password is correct
+        if (!password.equals(user.getPassword())) {
+            String errorMessage = String.format("The user %s was found, but you entered a wrong password.", username);
+            throw new WrongPasswordException(errorMessage);
+        }
+        return user;
+    }
+
+    // ...
+}
+```
+
+```java
+@Test
+void loginUnknownUsername() {
+    // Test data
+    UserService userService = new UserServiceImpl(userRepository);
+
+    // Execute
+    String actualErrorMessage = assertThrowsExactly(UserNotFoundException.class, () -> {
+        userService.login("typo", "12345");
+    }).getMessage();
+
+    // Assert
+    assertEquals("The user typo was not found.", actualErrorMessage);
+}
+
+@Test
+void loginWrongPassword() {
+    // Test data
+    UserService userService = new UserServiceImpl(userRepository);
+
+    // Execute
+    String actualErrorMessage = assertThrowsExactly(WrongPasswordException.class, () -> {
+        userService.login("dhbw", "dhbwpss");
+    }).getMessage();
+
+    // Assert
+    assertEquals("The user dhbw was found, but you entered a wrong password.", actualErrorMessage);
+}
+```
 
 #### Negativ-Beispiel
 
@@ -234,13 +289,171 @@ public class CSVHelper {
 }
 ```
 
+```java
+@Test
+void read1() {
+    // Test data
+    CSVHelper csvHelper = new CSVHelper(TEST_FILE_1, ";");
+
+    // Execute
+    Optional<List<String[]>> actualResult = csvHelper.read();
+
+    // Assert
+    assertTrue(actualResult.isPresent());
+    assertEquals(4, actualResult.get().size());
+    List<String[]> expectedResult = List.of(
+            new String[]{"0", "Cheese Burger", "1200", "9.5"},
+            new String[]{"1", "Spaghetti", "450", "8.2"},
+            new String[]{"2", "Schnitzel", "950", "8.9"},
+            new String[]{"3", "Caesar Salad", "340", "7.0"}
+    );
+    assertArrayEquals(expectedResult.get(0), actualResult.get().get(0));
+    assertArrayEquals(expectedResult.get(1), actualResult.get().get(1));
+    assertArrayEquals(expectedResult.get(2), actualResult.get().get(2));
+    assertArrayEquals(expectedResult.get(3), actualResult.get().get(3));
+}
+```
+
 ### ATRIP - Professional
 
 #### Positiv-Beispiel
-*ToDo*
+```java
+class GenreServiceTest {
+
+    @Mock
+    private GenreRepository genreRepository;
+
+    @BeforeEach
+    void prepareTests() {
+        MockitoAnnotations.openMocks(this);
+
+        // GenreRepository findGenreById
+        Genre mockGenre = new Genre(0, "Doom Metal");
+        when(genreRepository.findGenreById(0)).thenReturn(Optional.of(mockGenre));
+
+        // GenreRepository findAllGenres
+        List<Genre> mockGenres = List.of(
+                mockGenre,
+                new Genre(1, "Power Metal"),
+                new Genre(2, "Death Metal")
+        );
+        when(genreRepository.findAllGenres()).thenReturn(mockGenres);
+    }
+
+    @Test
+    @DisplayName("Retrieve all genres - success")
+    void getAllGenres() {
+        // Test data
+        AtomicInteger changeCounter = new AtomicInteger();
+        GenreService genreService = new GenreServiceImpl(genreRepository, genreList -> changeCounter.getAndIncrement());
+
+        // Execute
+        List<Genre> actualResult = genreService.getAllGenres();
+
+        // Assert
+        List<Genre> expectedResult = List.of(
+                new Genre(0, "Doom Metal"),
+                new Genre(1, "Power Metal"),
+                new Genre(2, "Death Metal")
+        );
+        assertEquals(expectedResult, actualResult);
+        assertEquals(1, changeCounter.get());
+    }
+
+    @Test
+    @DisplayName("Create new genre - success")
+    void createGenre() {
+        // Test data
+        AtomicInteger changeCounter = new AtomicInteger();
+        GenreService barTypeService = new GenreServiceImpl(genreRepository, genreList -> changeCounter.getAndIncrement());
+
+        // Execute
+        Genre newGenre = new Genre(3, "Melodic Death Metal");
+        barTypeService.createGenre(newGenre);
+
+        // Assert
+        assertEquals(2, changeCounter.get());
+    }
+}
+```
+
+Bei obiger Testklasse ist vor allem positiv hervorzuheben, dass die Test-Methoden den zu testenden Methoden-Namen entsprechen.
+Über die Annotation `DisplayName` wird als Ausgabe immer z.B. `Create new genre - success` angezeigt, was dem Entwickler
+den Zweck des Tests vermittelt. Zudem ist der Testcode relativ übersichtlich und lesbar. Sämtliche Initialisierungslogik,
+sowie die Erstellung der Mocks findet in der Method `prepareTests` statt, sodass die Testfälle entlastet werden und
+Code-Duplikation vermieden wird.
 
 #### Negativ-Beispiel
-*ToDo*
+```java
+class GenreServiceTest {
+
+    @Mock
+    private GenreRepository genreRepository;
+
+    @Test
+    void test1() {
+        MockitoAnnotations.openMocks(this);
+
+        // GenreRepository findGenreById
+        Genre mockGenre = new Genre(0, "Doom Metal");
+        when(genreRepository.findGenreById(0)).thenReturn(Optional.of(mockGenre));
+
+        // GenreRepository findAllGenres
+        List<Genre> mockGenres = List.of(
+                mockGenre,
+                new Genre(1, "Power Metal"),
+                new Genre(2, "Death Metal")
+        );
+        when(genreRepository.findAllGenres()).thenReturn(mockGenres);
+        
+        // Test data
+        AtomicInteger changeCounter = new AtomicInteger();
+        GenreService genreService = new GenreServiceImpl(genreRepository, genreList -> changeCounter.getAndIncrement());
+
+        // Execute
+        List<Genre> actualResult = genreService.getAllGenres();
+
+        // Assert
+        List<Genre> expectedResult = List.of(
+                new Genre(0, "Doom Metal"),
+                new Genre(1, "Power Metal"),
+                new Genre(2, "Death Metal")
+        );
+        assertEquals(expectedResult, actualResult);
+        assertEquals(1, changeCounter.get());
+    }
+
+    @Test
+    void test2() {
+        MockitoAnnotations.openMocks(this);
+
+        // GenreRepository findGenreById
+        Genre mockGenre = new Genre(0, "Doom Metal");
+        when(genreRepository.findGenreById(0)).thenReturn(Optional.of(mockGenre));
+
+        // GenreRepository findAllGenres
+        List<Genre> mockGenres = List.of(
+                mockGenre,
+                new Genre(1, "Power Metal"),
+                new Genre(2, "Death Metal")
+        );
+        when(genreRepository.findAllGenres()).thenReturn(mockGenres);
+        
+        // Test data
+        AtomicInteger changeCounter = new AtomicInteger();
+        GenreService barTypeService = new GenreServiceImpl(genreRepository, genreList -> changeCounter.getAndIncrement());
+
+        // Execute
+        Genre newGenre = new Genre(3, "Melodic Death Metal");
+        barTypeService.createGenre(newGenre);
+
+        // Assert
+        assertEquals(2, changeCounter.get());
+    }
+}
+```
+
+Die Kriterien des Positiv-Beispiels werden hier nicht erfüllt.
 
 ### Code Coverage
 Die Gesamt-Coverage des Projektes beläuft sich auch 52 %. Somit ist das selbst gestellte Ziel von mindestens 50 % erreicht.

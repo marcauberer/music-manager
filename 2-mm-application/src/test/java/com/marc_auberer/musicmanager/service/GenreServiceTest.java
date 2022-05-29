@@ -5,6 +5,7 @@ import com.marc_auberer.musicmanager.application.service.impl.GenreServiceImpl;
 import com.marc_auberer.musicmanager.domain.genre.Genre;
 import com.marc_auberer.musicmanager.domain.genre.GenreRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -39,6 +40,7 @@ class GenreServiceTest {
     }
 
     @Test
+    @DisplayName("Retrieve all genres - success")
     void getAllGenres() {
         // Test data
         AtomicInteger changeCounter = new AtomicInteger();
@@ -58,6 +60,7 @@ class GenreServiceTest {
     }
 
     @Test
+    @DisplayName("Create new genre - success")
     void createGenre() {
         // Test data
         AtomicInteger changeCounter = new AtomicInteger();
