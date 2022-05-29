@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UserTest {
+class UserTest {
 
     @Test
-    protected void getFieldContents() {
+    void getFieldContents() {
         // Test data
         User testUser = new User(5, "this is my username", "most secure password");
 
@@ -22,7 +22,7 @@ public class UserTest {
     }
 
     @Test
-    protected void getCSVHeader() {
+    void getCSVHeader() {
         // Execute
         String[] actualResult = User.getCSVHeader();
 
@@ -32,7 +32,7 @@ public class UserTest {
     }
 
     @Test
-    protected void toStringNormal() {
+    void toStringNormal() {
         // Test data
         User testUser = new User(7, "marc", "12345");
 

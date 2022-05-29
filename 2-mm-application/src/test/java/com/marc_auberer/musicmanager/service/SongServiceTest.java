@@ -24,7 +24,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-public class SongServiceTest {
+class SongServiceTest {
 
     @Mock
     private User user;
@@ -32,7 +32,7 @@ public class SongServiceTest {
     private SongRepository songRepository;
 
     @BeforeEach
-    protected void prepareTests() {
+    void prepareTests() {
         MockitoAnnotations.openMocks(this);
 
         // User getId()
@@ -60,7 +60,7 @@ public class SongServiceTest {
     }
 
     @Test
-    protected void getAllSongsForUser() {
+    void getAllSongsForUser() {
         // Test data
         AtomicInteger changeCounter = new AtomicInteger();
         SongService songService = new SongServiceImpl(user, songRepository, songList -> changeCounter.getAndIncrement());
@@ -78,12 +78,12 @@ public class SongServiceTest {
     }
 
     @Test
-    protected void searchSongsByTitle() {
-
+    void searchSongsByTitle() {
+        // ToDo
     }
 
     @Test
-    protected void createSong() {
+    void createSong() {
         // Test data
         AtomicInteger changeCounter = new AtomicInteger();
         SongService songService = new SongServiceImpl(user, songRepository, songList -> changeCounter.getAndIncrement());
@@ -103,7 +103,7 @@ public class SongServiceTest {
     }
 
     @Test
-    protected void updateSong() {
+    void updateSong() {
         // Test data
         AtomicInteger changeCounter = new AtomicInteger();
         SongService songService = new SongServiceImpl(user, songRepository, songList -> changeCounter.getAndIncrement());
@@ -123,7 +123,7 @@ public class SongServiceTest {
     }
 
     @Test
-    protected void deleteSong() {
+    void deleteSong() {
         // Test data
         AtomicInteger changeCounter = new AtomicInteger();
         SongService songService = new SongServiceImpl(user, songRepository, songList -> changeCounter.getAndIncrement());

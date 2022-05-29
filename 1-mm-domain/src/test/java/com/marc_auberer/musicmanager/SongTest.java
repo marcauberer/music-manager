@@ -11,10 +11,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SongTest {
+class SongTest {
 
     @Test
-    protected void getFieldContents() {
+    void getFieldContents() {
         // Test data
         List<Artist> artists = List.of(new Artist(4, "Powerwolf", "", new Date(0)));
         Genre genre = new Genre(65, "Power Metal");
@@ -30,7 +30,7 @@ public class SongTest {
     }
 
     @Test
-    protected void getCSVHeader() {
+    void getCSVHeader() {
         // Execute
         String[] actualResult = Song.getCSVHeader();
 
@@ -40,7 +40,7 @@ public class SongTest {
     }
 
     @Test
-    protected void toStringNormal() {
+    void toStringNormal() {
         // Test data
         List<Artist> artists = List.of(new Artist(1, "Arch Enemy", "", new Date(0)));
         Genre genre = new Genre(61, "Melodic Death Metal");

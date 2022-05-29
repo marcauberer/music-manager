@@ -17,13 +17,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class ArtistServiceTest {
+class ArtistServiceTest {
 
     @Mock
     private ArtistRepository artistRepository;
 
     @BeforeEach
-    protected void prepareTests() {
+    void prepareTests() {
         MockitoAnnotations.openMocks(this);
 
         // ArtistRepository findArtistById
@@ -40,7 +40,7 @@ public class ArtistServiceTest {
     }
 
     @Test
-    protected void getAllArtists() {
+    void getAllArtists() {
         // Test data
         AtomicInteger changeCounter = new AtomicInteger();
         ArtistService artistService = new ArtistServiceImpl(artistRepository, artistList -> changeCounter.getAndIncrement());
@@ -59,7 +59,7 @@ public class ArtistServiceTest {
     }
 
     @Test
-    protected void createArtist() {
+    void createArtist() {
         // Test data
         AtomicInteger changeCounter = new AtomicInteger();
         ArtistService artistService = new ArtistServiceImpl(artistRepository, artistList -> changeCounter.getAndIncrement());

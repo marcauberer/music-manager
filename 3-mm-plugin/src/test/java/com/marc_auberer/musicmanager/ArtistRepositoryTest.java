@@ -19,13 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class ArtistRepositoryTest {
+class ArtistRepositoryTest {
 
     @Mock
     private CSVHelper csvHelper;
 
     @BeforeEach
-    protected void prepareTest() {
+    void prepareTest() {
         MockitoAnnotations.openMocks(this);
 
         // CSVHelper read()
@@ -41,7 +41,7 @@ public class ArtistRepositoryTest {
     }
 
     @Test
-    protected void findArtistById() {
+    void findArtistById() {
         // Test data
         ArtistRepository artistRepository = new ArtistRepositoryImpl(csvHelper);
 
@@ -58,7 +58,7 @@ public class ArtistRepositoryTest {
     }
 
     @Test
-    protected void findAllArtists() {
+    void findAllArtists() {
         // Test data
         ArtistRepository artistRepository = new ArtistRepositoryImpl(csvHelper);
 
@@ -74,7 +74,7 @@ public class ArtistRepositoryTest {
     }
 
     @Test
-    protected void save() {
+    void save() {
         // Test data
         ArtistRepository artistRepository = new ArtistRepositoryImpl(csvHelper);
         Artist newArtist = new Artist(AUTO_INC, "Northlane", "", new Date(0));
@@ -91,7 +91,7 @@ public class ArtistRepositoryTest {
     }
 
     @Test
-    protected void delete() {
+    void delete() {
         // Test data
         ArtistRepository artistRepository = new ArtistRepositoryImpl(csvHelper);
 

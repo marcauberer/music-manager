@@ -13,10 +13,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class YTLinkGeneratorServiceTest {
+class YTLinkGeneratorServiceTest {
 
     @Test
-    protected void generateYouTubeLink() {
+    void generateYouTubeLink() {
         // Test data
         YTLinkGeneratorService linkGeneratorService = new YTLinkGeneratorServiceImpl();
         List<Artist> artists = List.of(new Artist(0, "Slipknot", "", new Date(0)));

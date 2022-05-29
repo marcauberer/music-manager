@@ -22,13 +22,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
-public class UserServiceTest {
+class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
 
     @BeforeEach
-    protected void prepareTests() {
+    void prepareTests() {
         MockitoAnnotations.openMocks(this);
 
         // UserRepository findUserByUsername
@@ -52,7 +52,7 @@ public class UserServiceTest {
     }
 
     @Test
-    protected void loginSuccess() {
+    void loginSuccess() {
         // Test data
         UserService userService = new UserServiceImpl(userRepository);
 
@@ -64,7 +64,7 @@ public class UserServiceTest {
     }
 
     @Test
-    protected void loginUnknownUsername() {
+    void loginUnknownUsername() {
         // Test data
         UserService userService = new UserServiceImpl(userRepository);
 
@@ -78,7 +78,7 @@ public class UserServiceTest {
     }
 
     @Test
-    protected void loginWrongPassword() {
+    void loginWrongPassword() {
         // Test data
         UserService userService = new UserServiceImpl(userRepository);
 
@@ -92,7 +92,7 @@ public class UserServiceTest {
     }
 
     @Test
-    protected void registerSuccess() {
+    void registerSuccess() {
         // Test data
         UserService userService = new UserServiceImpl(userRepository);
 
@@ -105,7 +105,7 @@ public class UserServiceTest {
     }
 
     @Test
-    protected void registerUserAlreadyExists() {
+    void registerUserAlreadyExists() {
         // Test data
         UserService userService = new UserServiceImpl(userRepository);
 

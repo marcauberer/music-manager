@@ -16,13 +16,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class GenreServiceTest {
+class GenreServiceTest {
 
     @Mock
     private GenreRepository genreRepository;
 
     @BeforeEach
-    protected void prepareTests() {
+    void prepareTests() {
         MockitoAnnotations.openMocks(this);
 
         // GenreRepository findGenreById
@@ -39,7 +39,7 @@ public class GenreServiceTest {
     }
 
     @Test
-    protected void getAllGenres() {
+    void getAllGenres() {
         // Test data
         AtomicInteger changeCounter = new AtomicInteger();
         GenreService genreService = new GenreServiceImpl(genreRepository, genreList -> changeCounter.getAndIncrement());
@@ -58,7 +58,7 @@ public class GenreServiceTest {
     }
 
     @Test
-    protected void createGenre() {
+    void createGenre() {
         // Test data
         AtomicInteger changeCounter = new AtomicInteger();
         GenreService barTypeService = new GenreServiceImpl(genreRepository, genreList -> changeCounter.getAndIncrement());

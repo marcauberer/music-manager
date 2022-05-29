@@ -18,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class GenreRepositoryTest {
+class GenreRepositoryTest {
 
     @Mock
     private CSVHelper csvHelper;
 
     @BeforeEach
-    protected void prepareTest() {
+    void prepareTest() {
         MockitoAnnotations.openMocks(this);
 
         // CSVHelper read()
@@ -40,7 +40,7 @@ public class GenreRepositoryTest {
     }
 
     @Test
-    protected void findGenreById() {
+    void findGenreById() {
         // Test data
         GenreRepository genreRepository = new GenreRepositoryImpl(csvHelper);
 
@@ -57,7 +57,7 @@ public class GenreRepositoryTest {
     }
 
     @Test
-    protected void findAllGenres() {
+    void findAllGenres() {
         // Test data
         GenreRepository genreRepository = new GenreRepositoryImpl(csvHelper);
 
@@ -73,7 +73,7 @@ public class GenreRepositoryTest {
     }
 
     @Test
-    protected void save() {
+    void save() {
         // Test data
         GenreRepository genreRepository = new GenreRepositoryImpl(csvHelper);
         Genre newGenre = new Genre(AUTO_INC, "Brutal Blackened Death Metal");
@@ -90,7 +90,7 @@ public class GenreRepositoryTest {
     }
 
     @Test
-    protected void delete() {
+    void delete() {
         // Test data
         GenreRepository genreRepository = new GenreRepositoryImpl(csvHelper);
 

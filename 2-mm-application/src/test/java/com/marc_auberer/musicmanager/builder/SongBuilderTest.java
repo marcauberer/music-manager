@@ -14,10 +14,10 @@ import java.util.List;
 import static com.marc_auberer.musicmanager.domain.AbstractRepository.AUTO_INC;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SongBuilderTest {
+class SongBuilderTest {
 
     @Test
-    protected void testBuilder1() {
+    void testBuilder1() {
         // Test data
         User user = new User(0, "marc", "12345");
         List<Artist> artists = List.of(
@@ -38,7 +38,7 @@ public class SongBuilderTest {
     }
 
     @Test
-    protected void testBuilder2() {
+    void testBuilder2() {
         // Test data
         User user = new User(0, "testuser", "testpw");
         List<Artist> artists = List.of(

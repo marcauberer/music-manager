@@ -10,10 +10,10 @@ import java.util.GregorianCalendar;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ArtistTest {
+class ArtistTest {
 
     @Test
-    protected void getFieldContents() {
+    void getFieldContents() {
         // Test data
         Date dob = new GregorianCalendar(1985, Calendar.AUGUST, 25).getTime();
         Artist testArtist = new Artist(12, "Amy", "McDonald", dob);
@@ -27,7 +27,7 @@ public class ArtistTest {
     }
 
     @Test
-    protected void getCSVHeader() {
+    void getCSVHeader() {
         // Execute
         String[] actualResult = Artist.getCSVHeader();
 
@@ -37,7 +37,7 @@ public class ArtistTest {
     }
 
     @Test
-    protected void toStringFirstAndLastName() {
+    void toStringFirstAndLastName() {
         // Test data
         Date dob = new GregorianCalendar(1950, Calendar.DECEMBER, 30).getTime();
         Artist testArtist = new Artist(0, "Bjarne", "Stroustrup", dob);
@@ -50,7 +50,7 @@ public class ArtistTest {
     }
 
     @Test
-    protected void toStringOnlyFirstName() {
+    void toStringOnlyFirstName() {
         // Test data
         Artist testArtist = new Artist(11, "Arch Enemy", "", new Date(0));
 

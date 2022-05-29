@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class SongRepositoryTest {
+class SongRepositoryTest {
 
     @Mock
     private CSVHelper csvHelper;
@@ -37,7 +37,7 @@ public class SongRepositoryTest {
     private RelSongArtistRepository relSongArtistRepository;
 
     @BeforeEach
-    protected void prepareTest() {
+    void prepareTest() {
         MockitoAnnotations.openMocks(this);
 
         // CSVHelper read()
@@ -67,7 +67,7 @@ public class SongRepositoryTest {
     }
 
     @Test
-    protected void findSongById() {
+    void findSongById() {
         // Test data
         SongRepository songRepository = new SongRepositoryImpl(csvHelper, genreRepository,
                 barTypeRepository, relSongArtistRepository);
@@ -85,7 +85,7 @@ public class SongRepositoryTest {
     }
 
     @Test
-    protected void findAllSongs() {
+    void findAllSongs() {
         // Test data
         SongRepository songRepository = new SongRepositoryImpl(csvHelper, genreRepository,
                 barTypeRepository, relSongArtistRepository);
@@ -102,7 +102,7 @@ public class SongRepositoryTest {
     }
 
     @Test
-    protected void findAllSongsByUserId() {
+    void findAllSongsByUserId() {
         // Test data
         SongRepository songRepository = new SongRepositoryImpl(csvHelper, genreRepository,
                 barTypeRepository, relSongArtistRepository);
@@ -119,7 +119,7 @@ public class SongRepositoryTest {
     }
 
     @Test
-    protected void save() {
+    void save() {
         // Test data
         SongRepository songRepository = new SongRepositoryImpl(csvHelper, genreRepository,
                 barTypeRepository, relSongArtistRepository);
@@ -140,7 +140,7 @@ public class SongRepositoryTest {
     }
 
     @Test
-    protected void update() {
+    void update() {
         // Test data
         SongRepository songRepository = new SongRepositoryImpl(csvHelper, genreRepository,
                 barTypeRepository, relSongArtistRepository);
@@ -163,7 +163,7 @@ public class SongRepositoryTest {
     }
 
     @Test
-    protected void delete() {
+    void delete() {
         // Test data
         SongRepository songRepository = new SongRepositoryImpl(csvHelper, genreRepository,
                 barTypeRepository, relSongArtistRepository);

@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RelSongArtistTest {
+class RelSongArtistTest {
 
     @Test
-    protected void getFieldContents() {
+    void getFieldContents() {
         // Test data
         RelSongArtist testRel = new RelSongArtist(5, 7, 4);
 
@@ -22,7 +22,7 @@ public class RelSongArtistTest {
     }
 
     @Test
-    protected void getCSVHeader() {
+    void getCSVHeader() {
         // Execute
         String[] actualResult = RelSongArtist.getCSVHeader();
 
@@ -32,7 +32,7 @@ public class RelSongArtistTest {
     }
 
     @Test
-    protected void toStringNormal() {
+    void toStringNormal() {
         // Test data
         RelSongArtist testRel = new RelSongArtist(9, 5, 124);
 

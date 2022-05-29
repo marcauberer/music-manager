@@ -16,13 +16,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class BarTypeServiceTest {
+class BarTypeServiceTest {
 
     @Mock
     private BarTypeRepository barTypeRepository;
 
     @BeforeEach
-    protected void prepareTests() {
+    void prepareTests() {
         MockitoAnnotations.openMocks(this);
 
         // BarTypeRepository findBarTypeById
@@ -39,7 +39,7 @@ public class BarTypeServiceTest {
     }
 
     @Test
-    protected void getAllBarTypes() {
+    void getAllBarTypes() {
         // Test data
         AtomicInteger changeCounter = new AtomicInteger();
         BarTypeService barTypeService = new BarTypeServiceImpl(barTypeRepository, barTypeList -> changeCounter.getAndIncrement());
@@ -58,7 +58,7 @@ public class BarTypeServiceTest {
     }
 
     @Test
-    protected void createBarType() {
+    void createBarType() {
         // Test data
         AtomicInteger changeCounter = new AtomicInteger();
         BarTypeService barTypeService = new BarTypeServiceImpl(barTypeRepository, barTypeList -> changeCounter.getAndIncrement());

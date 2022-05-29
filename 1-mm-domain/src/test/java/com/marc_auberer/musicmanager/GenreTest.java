@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class GenreTest {
+class GenreTest {
 
     @Test
-    protected void getFieldContents() {
+    void getFieldContents() {
         // Test data
         Genre testGenre = new Genre(42, "Power Metal");
 
@@ -22,7 +22,7 @@ public class GenreTest {
     }
 
     @Test
-    protected void getCSVHeader() {
+    void getCSVHeader() {
         // Execute
         String[] actualResult = Genre.getCSVHeader();
 
@@ -32,7 +32,7 @@ public class GenreTest {
     }
 
     @Test
-    protected void toStringNormal() {
+    void toStringNormal() {
         // Test data
         Genre testGenre = new Genre(6, "Speed Metal");
 

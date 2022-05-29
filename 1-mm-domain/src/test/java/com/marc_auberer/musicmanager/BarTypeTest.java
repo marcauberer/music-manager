@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BarTypeTest {
+class BarTypeTest {
 
     @Test
-    protected void getFieldContents() {
+    void getFieldContents() {
         // Test data
         BarType testBarType = new BarType(3, 5, 4);
 
@@ -22,7 +22,7 @@ public class BarTypeTest {
     }
 
     @Test
-    protected void getCSVHeader() {
+    void getCSVHeader() {
         // Execute
         String[] actualResult = BarType.getCSVHeader();
 
@@ -32,7 +32,7 @@ public class BarTypeTest {
     }
 
     @Test
-    protected void toStringNormal() {
+    void toStringNormal() {
         // Test data
         BarType testBarType = new BarType(99, 17, 8);
 

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CSVHelperTest {
+class CSVHelperTest {
 
     // Constants
     private final String TEST_FILE_1 = "../.github/test-files/read1.csv";
@@ -26,7 +26,7 @@ public class CSVHelperTest {
     private final String TEST_FILE_4 = "../.github/test-files/write2.csv";
 
     @Test
-    protected void read1() {
+    void read1() {
         // Test data
         CSVHelper csvHelper = new CSVHelper(TEST_FILE_1, ";");
 
@@ -35,7 +35,7 @@ public class CSVHelperTest {
 
         // Assert
         assertTrue(actualResult.isPresent());
-        assertEquals(actualResult.get().size(), 4);
+        assertEquals(4, actualResult.get().size());
         List<String[]> expectedResult = List.of(
                 new String[]{"0", "Cheese Burger", "1200", "9.5"},
                 new String[]{"1", "Spaghetti", "450", "8.2"},
@@ -49,7 +49,7 @@ public class CSVHelperTest {
     }
 
     @Test
-    protected void read2() {
+    void read2() {
         // Test data
         CSVHelper csvHelper = new CSVHelper(TEST_FILE_2, ",");
 
@@ -62,7 +62,7 @@ public class CSVHelperTest {
     }
 
     @Test
-    protected void write1() {
+    void write1() {
         // Test data
         CSVHelper csvHelper = new CSVHelper(TEST_FILE_3, ";");
         String[] header = Song.getCSVHeader();
@@ -92,7 +92,7 @@ public class CSVHelperTest {
     }
 
     @Test
-    protected void write2() {
+    void write2() {
         // Test data
         CSVHelper csvHelper = new CSVHelper(TEST_FILE_4, ",");
         String[] header = Song.getCSVHeader();

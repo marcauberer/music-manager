@@ -18,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class BarTypeRepositoryTest {
+class BarTypeRepositoryTest {
 
     @Mock
     private CSVHelper csvHelper;
 
     @BeforeEach
-    protected void prepareTest() {
+    void prepareTest() {
         MockitoAnnotations.openMocks(this);
 
         // CSVHelper read()
@@ -40,7 +40,7 @@ public class BarTypeRepositoryTest {
     }
 
     @Test
-    protected void findBarTypeById() {
+    void findBarTypeById() {
         // Test data
         BarTypeRepository barTypeRepository = new BarTypeRepositoryImpl(csvHelper);
 
@@ -58,7 +58,7 @@ public class BarTypeRepositoryTest {
     }
 
     @Test
-    protected void findAllBarTypes() {
+    void findAllBarTypes() {
         // Test data
         BarTypeRepository barTypeRepository = new BarTypeRepositoryImpl(csvHelper);
 
@@ -75,7 +75,7 @@ public class BarTypeRepositoryTest {
     }
 
     @Test
-    protected void save() {
+    void save() {
         // Test data
         BarTypeRepository barTypeRepository = new BarTypeRepositoryImpl(csvHelper);
         BarType newBarType = new BarType(AUTO_INC, 5, 6);
@@ -92,7 +92,7 @@ public class BarTypeRepositoryTest {
     }
 
     @Test
-    protected void delete() {
+    void delete() {
         // Test data
         BarTypeRepository barTypeRepository = new BarTypeRepositoryImpl(csvHelper);
 

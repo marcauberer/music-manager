@@ -18,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class UserRepositoryTest {
+class UserRepositoryTest {
 
     @Mock
     private CSVHelper csvHelper;
 
     @BeforeEach
-    protected void prepareTest() {
+    void prepareTest() {
         MockitoAnnotations.openMocks(this);
 
         // CSVHelper read()
@@ -40,7 +40,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    protected void findUserById() {
+    void findUserById() {
         // Test data
         UserRepository userRepository = new UserRepositoryImpl(csvHelper);
 
@@ -57,7 +57,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    protected void findAllUsers() {
+    void findAllUsers() {
         // Test data
         UserRepository userRepository = new UserRepositoryImpl(csvHelper);
 
@@ -73,7 +73,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    protected void save() {
+    void save() {
         // Test data
         UserRepository userRepository = new UserRepositoryImpl(csvHelper);
         User newUser = new User(AUTO_INC, "max", "musterfrau");
