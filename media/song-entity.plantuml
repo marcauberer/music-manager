@@ -1,0 +1,60 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Song {
+  + Song(long, long, String, List<Artist>, Genre, float, BarType): 
+  + id: long
+  + artists: List<Artist>
+  + userId: long
+  + barType: BarType
+  + bpm: float
+  + genre: Genre
+  + title: String
+  + getFieldContents(): String[]
+  + equals(Object): boolean
+  + getArtists(): List<Artist>
+  + getCSVHeader(): String[]
+  + toString(): String
+  + getTitle(): String
+  + hashCode(): int
+  + getBpm(): float
+  + getGenre(): Genre
+  + getId(): long
+  + setId(long): void
+  + getBarType(): BarType
+  + getUserId(): long
+}
+interface SongRepository << interface >> {
+  + findSongById(long): Optional<Song>
+  + findAllSongs(): List<Song>
+  + delete(long): void
+  + findAllSongsByUserId(long): List<Song>
+  + update(Song): void
+  + save(Song): void
+}
+class SongRepositoryImpl {
+  + SongRepositoryImpl(): 
+  + SongRepositoryImpl(CSVHelper, GenreRepository, BarTypeRepository, RelSongArtistRepository): 
+  + songs: List<Song>
+  + csvHelper: CSVHelper
+  + FILE_PATH: String
+  + genreRepository: GenreRepository
+  + barTypeRepository: BarTypeRepository
+  + relSongArtistRepository: RelSongArtistRepository
+  + findAllSongsByUserId(long): List<Song>
+  + findAllSongs(): List<Song>
+  + reload(): void
+  + delete(long): void
+  + findSongById(long): Optional<Song>
+  + save(Song): void
+  + update(Song): void
+  + writeOut(): void
+}
+
+SongRepositoryImpl "1" *-[#595959,plain]-> "songs\n*" Song               
+SongRepositoryImpl  -[#595959,dashed]->  Song               : "«create»"
+SongRepositoryImpl  -[#008200,dashed]-^  SongRepository     
+@enduml

@@ -1,0 +1,35 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+interface SongRepository << interface >> {
+  + findSongById(long): Optional<Song>
+  + findAllSongs(): List<Song>
+  + delete(long): void
+  + findAllSongsByUserId(long): List<Song>
+  + update(Song): void
+  + save(Song): void
+}
+class SongRepositoryImpl {
+  + SongRepositoryImpl(): 
+  + SongRepositoryImpl(CSVHelper, GenreRepository, BarTypeRepository, RelSongArtistRepository): 
+  + songs: List<Song>
+  + csvHelper: CSVHelper
+  + FILE_PATH: String
+  + genreRepository: GenreRepository
+  + barTypeRepository: BarTypeRepository
+  + relSongArtistRepository: RelSongArtistRepository
+  + findAllSongsByUserId(long): List<Song>
+  + findAllSongs(): List<Song>
+  + reload(): void
+  + delete(long): void
+  + findSongById(long): Optional<Song>
+  + save(Song): void
+  + update(Song): void
+  + writeOut(): void
+}
+
+SongRepositoryImpl  -[#008200,dashed]-^  SongRepository     
+@enduml

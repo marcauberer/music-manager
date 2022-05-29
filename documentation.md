@@ -207,16 +207,36 @@ Begrifflichkeiten im Detail:
 | User    | Ein User repräsentiert einen Benutzer des MusicManager-Systems. Die einem User zugeordneten Songs sind voneinander getrennt, alle anderen Resourcen werden jedoch geteilt.                     | Ohne eine Unterstützung von mehreren, (zumindest teilweise) voneinander getrennten Nutzern, kann ein Mehrbenutzerbetrieb nicht funktionieren.                                                                                                          |
 
 ### Entities
-*ToDo*
+Ein Beispiel für eine Entität wäre ein Song. Dieser wird eindeutig über eine ID identifiziert, was automatisch schon
+über das eingebaute CSV-Persistenz-Framework gewährleistet wird. Auch ein Lebenszyklus eines Songs ist gegeben.
+
+![Song entity](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/song-entity.plantuml&fmt=svg)
 
 ### Value Objects
-*ToDo*
+Da die Applikation MusicManager auf einem relationales Datenbankmodell aufgebaut ist, ist jedes Objekt innerhalb der
+Domäne (Artist, BarType, Genre, RelSongArtist, Song, User) ein Entity. Jede dieser Klassen wird in der Persistenzschicht
+(CSVHelper + RepositoryImpl-Klassen) mittels einer ID identifiziert, sodass diese automatisch Entities darstellen. In
+der Theorie wäre es zwar möglich Datensätze auch anders zu identifizieren, dies wurde jedoch nicht so umgesetzt, sodass
+es in der Domäne nur Entities und keine Value Objects gibt.
 
 ### Repositories
-*ToDo*
+MusicManager nutzt Repositories mittels Interfaces, um die Herkunft der Daten vor den darüberliegenden Schichten zu
+verbergen. So könnten mehrere Implementierungen dieser Interfaces existieren, um mehrere Datenquellen anzusprechen.
+Mitgeliefert wird eine Implementierung aller Repositories (Plugin-Schicht) die die Daten mittels CSV-Dateien lesen und
+schreiben.
+
+Es gibt beispielsweise eine `SongRepository`. Diese ist für das Vorhalten der gespeicherten Songs zuständig. Zusätzlich
+lassen sich über die `SongRepository` alle Songs abfragen, Songs pro Nutzer abfragen, Songs filtern, neue Songs erstellen,
+bestehende aktualisieren oder löschen.
+
+Hier die SongRepository als Klassendiagramm:
+
+![Song Repository](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/song-repository.plantuml&fmt=svg)
 
 ### Aggregates
-*ToDo*
+Songs werden zwar unabhängig von Genre, BarType und Artisten gespeichert, es soll zur Laufzeit jedoch trotzdem z.B. von
+einem Song auf dessen Artisten zugegriffen werden können. Hierfür beinhaltet ein Song immer auch eine Liste an Artisten,
+ein/kein Genre, einen/keinen BarType. Demnach ist ein Song-Objekt auch ein Aggregate.
 
 ## Kapitel 7: Refactoring
 
