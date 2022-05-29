@@ -1,0 +1,28 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+interface ArtistRepository << interface >> {
+  + findArtistById(long): Optional<Artist>
+  + delete(long): void
+  + save(Artist): void
+  + findAllArtists(): List<Artist>
+}
+class ArtistRepositoryImpl {
+  + ArtistRepositoryImpl(CSVHelper): 
+  + ArtistRepositoryImpl(): 
+  + artists: List<Artist>
+  + FILE_PATH: String
+  + csvHelper: CSVHelper
+  + delete(long): void
+  + save(Artist): void
+  + findArtistById(long): Optional<Artist>
+  + reload(): void
+  + findAllArtists(): List<Artist>
+  + writeOut(): void
+}
+
+ArtistRepositoryImpl  -[#008200,dashed]-^  ArtistRepository     
+@enduml

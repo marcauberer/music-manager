@@ -161,12 +161,23 @@ an andere Repositories gelöst, könnte aber sicher noch weiter optimiert werden
 ### Analyse Open-Closed-Principle (OCP)
 
 #### Positiv-Beispiel
-*ToDo*
+
+Alle Repositories innerhalb des Projektes bieten eine gute Möglichkeit das OCP umzusetzen. Diese sind alle als Interface
+definiert und die Implementierungen werden auf der Plugin-Schicht bereitgestellt. So können auch andere Implementationen
+der Repositories erstellt und an die Services übergeben werden. Das funktioniert, wenn sie das Interface ebenfalls
+implementieren.
+
+Hier als Beispiel die `ArtistRepository`:
+
+![OCP positive example](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/ocp-positive.plantuml&fmt=svg)
 
 #### Negativ-Beispiel
+
 *ToDo*
 
-### Analyse Liskov-Substitution- (LSP), Interface-Segreggation- (ISP), Dependency-Inversion-Principle (DIP)
+![OCP negative example](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/ocp-negative.plantuml&fmt=svg)
+
+### Analyse Liskov-Substitution- (LSP), Interface-Segregation- (ISP), Dependency-Inversion-Principle (DIP)
 
 #### Positiv-Beispiel
 *ToDo*
