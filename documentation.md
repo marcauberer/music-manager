@@ -155,21 +155,84 @@ Tätigkeitskapselung entstehen.
 
 ### 10 Unit tests
 
-Die folgende Tabelle umfasst eine Auswahl der Unit-Tests für die MusicManager-Applikation.
+Die folgende Tabelle umfasst eine Auswahl von 10 Unit-Tests für die MusicManager-Applikation.
+Insgesamt wurden 65 Tests geschrieben.
 
-*ToDo*
+| Unit Test                         | Beschreibung                                                                                                                                                                                                                        |
+|-----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ArtistServiceTest#getAllArtists() | Es wird für den ArtistService getestet, ob dieser die Anfrage korrekt an die darunterliegende ArtistRepository weitergibt, sowie die Korrekte Liste mit Ergebnissen zurückliefert. Für die ArtistRepository wurde ein Mock genutzt. |
+| ArtistServiceTest#createArtist()  | Es wird für den ArtistService getestet, ob ein Artist korrekt erstellt werden kann. Auch wird überprüft, dass der Observer für die Artist-Liste korrekt aufgerufen wird.                                                            |
+| ArtistServiceTest#createArtist()  | Es wird für den ArtistService getestet, ob ein Artist korrekt erstellt werden kann. Auch wird überprüft, dass der Observer für die Artist-Liste korrekt aufgerufen wird.                                                            |
+| CSVHelper#read1()                 | Es wird für den CSVHelper getestet, ob dieser in der Lage ist eine vorbereitete CSV-Datei zu laden und zu parsen. Das Ergebnis wird mit einem vorgegebenen, korrekten Ergebnis verglichen.                                          |
+| CSVHelper#read2()                 | Es wird für den CSVHelper getestet, ob eine Leere CSV-Datei einzulesen, das erwartete leere Ergebnis liefert. Hier wird versucht auf potentiell unerwartetes Verhalten zu testen.                                                   |
+| CSVHelper#write1()                | Es wird für den CSVHelper getestet, ob dieser in der Lage ist, eine "Tabelle" korrekt in eine CSV-Datei zu schreiben. Nach Ausführung des Tests wird die Datei eingelesen und geprüft ob der Inhalt korrekt ist.                    |
+| GenreTest#getFieldContents()      | Es wird für das Genre getestet, ob der Aufruf an `getFieldContents()` ein String-Array aus den zuvor im Konstruktor überreichten Werte zurückgibt.                                                                                  |
+| GenreTest#getCSVHeader()          | Es wird für das Genre getestet, ob der Aufruf an `getCSVHeader()` den korrekten Wert zurückgibt. Hierbei handelt es sich um eine Konstante. Versehentliche Änderungen fallen somit besser auf.                                      |
+| SongRepositoryTest#save()         | Es wird für den Song getestet, ob die Methode `save()` das richtige tut. Hierzu werden Aufrufe an Mocks verifiziert und geprüft ob die Länge der Song-Liste auf 4 gewachsen ist.                                                    |
+| SongRepositoryTest#delete()       | Es wird für den Song getestet, ob die Methode `delete()` das richtige tut. Hierzu werden Aufrufe an Mocks verifiziert und geprüft ob die Länge der Song-Liste auf 2 geschrumpft ist.                                                |
 
 ### ATRIP - Automatic
-*ToDo*
+Automatic wurde über die Java-Testing-Bibliothek JUnit realisiert, die automatisch alle Testklassen sucht und alle darin
+befindlichen Tests ausführt.
+Über einen Aufruf von `$ mvn test` können die Tests automatisch ausgeführt werden und der Nutzer wird entsprechend
+benachrichtigt, sofern Tests fehlgeschlagen sind. Es wurde zudem ein Workflow für GitHub Actions geschrieben, der für
+jeden Commit läuft, der an den relevanten Projekt-Dateien Änderungen vorgenommen hat. So ist gewährleistet, dass viele
+eventuell unerwünschte Nebeneffekte bei jeder Änderung automatisch gefunden werden.
+
+Zusätzlich zu automatischen Unit-Tests werden neue Code-Smells, Bugs oder Security Probleme vollautomatisch durch
+SonarCloud überwacht. Auch warnt das Tool davor, wenn neuer Code ungetestet ist oder andere Probleme aufweist.
 
 ### ATRIP - Thorough
-*ToDo*
+Wenn Fehler vermieden werden sollen, ist es zudem wichtig alle Verzweigungen im zu testenden Code zu testen. Selbst
+unerwartete Fehler können simuliert werden, um das Verhalten der Applikation im Fehlerfall zu testen.
 
 #### Positiv-Beispiel
 *ToDo*
 
 #### Negativ-Beispiel
-*ToDo*
+
+Im nachfolgenden Code-Ausschnitt können `IOExceptions` auftreten. Diese werden zwar gefangen, aber das Verhalten wird
+aktuell durch keinen Unit-Test abgetestet. Es muss gewährleistet sein, dass der Nutzer von dem Problem erfährt und
+Maßnahmen einleiten kann.
+
+```java
+public class CSVHelper {
+
+    // ...
+
+    public Optional<List<String[]>> read() {
+        try {
+            // Return empty list if file does not exist
+            if (!Files.exists(filePath)) {
+                return Optional.of(Collections.emptyList());
+            }
+
+            // Read lines of file
+            List<String> rows = Files.readAllLines(filePath);
+
+            // Loop through all rows
+            List<String[]> result = new ArrayList<>();
+            for (int i = 1; i < rows.size(); ++i) {
+                // Split row by delimiter to get cells
+                String[] cells = rows.get(i).split(delimiter);
+                // Trim all cells
+                for (int j = 0; j < cells.length; j++) {
+                    cells[j] = cells[j].trim();
+                }
+                // Add to result
+                result.add(cells);
+            }
+
+            return Optional.of(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+    // ...
+}
+```
 
 ### ATRIP - Professional
 
