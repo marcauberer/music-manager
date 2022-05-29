@@ -154,10 +154,12 @@ Das Testen dieser Klasse ist vor allem durch die vielen Mock-Objekte eine Heraus
 ### Analyse GRASP: Hohe Kohäsion
 
 #### Positiv-Beispiel
-*ToDo*
 
-#### Negativ-Beispiel
-*ToDo*
+Die Klasse `YTLinkGeneratorService` ist ein Beispiel für hohe Kohäsion. Er vereint sämtliche Funktionalität für ein
+spezielles Feature, nämlich das Erstellen von YouTube-Links aus einem gegebenen Song-Objekt. Zugegebenermaßen hat der
+Service nicht sonderlich viele Methoden, jedoch sind nicht mehr nötig um diesen Zweck zu erfüllen.
+
+![High cohesion positive example](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/high-cohesion-positive.plantuml&fmt=svg)
 
 ### Don't Repeat Yourself (DRY)
 Um die Oberflächenkomponenten auf der UI zu platzieren, nutze ich den `GridBagLayoutManager`. Um diesen zu nutzen, bedarf

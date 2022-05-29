@@ -1,0 +1,17 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+interface YTLinkGeneratorService << interface >> {
+  + generateYouTubeLink(Song): String
+}
+class YTLinkGeneratorServiceImpl {
+  + YTLinkGeneratorServiceImpl(): 
+  + URL_TEMPLATE: String
+  + encodeValue(String): String
+  + generateYouTubeLink(Song): String
+}
+
+YTLinkGeneratorServiceImpl  -[#008200,dashed]-^  YTLinkGeneratorService     
+@enduml
