@@ -1,0 +1,76 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+package Domain <<Rectangle>> {
+
+    class Artist {
+      + Artist(long, String, String, Date):
+      + lastName: String
+      + dateOfBirth: Date
+      + id: long
+      + firstName: String
+      + getLastName(): String
+      + getCSVHeader(): String[]
+      + toString(): String
+      + getId(): long
+      + getFirstName(): String
+      + getDateOfBirth(): Date
+      + equals(Object): boolean
+      + hashCode(): int
+      + setId(long): void
+      + getFieldContents(): String[]
+    }
+
+    interface ArtistRepository << interface >> {
+      + findArtistById(long): Optional<Artist>
+      + delete(long): void
+      + save(Artist): void
+      + findAllArtists(): List<Artist>
+    }
+
+}
+
+package Application <<Rectangle>> {
+
+    interface ArtistService << interface >> {
+      + getAllArtists(): List<Artist>
+      + createArtist(Artist): void
+    }
+
+    class ArtistServiceImpl {
+      + ArtistServiceImpl(ArtistRepository, ArtistListObserver):
+      + artistListObserver: ArtistListObserver
+      + artistRepository: ArtistRepository
+      + getAllArtists(): List<Artist>
+      + createArtist(Artist): void
+    }
+
+}
+
+package Plugin <<Rectangle>> {
+
+    class ArtistRepositoryImpl {
+      + ArtistRepositoryImpl(CSVHelper):
+      + ArtistRepositoryImpl():
+      + artists: List<Artist>
+      + FILE_PATH: String
+      + csvHelper: CSVHelper
+      + delete(long): void
+      + save(Artist): void
+      + findArtistById(long): Optional<Artist>
+      + reload(): void
+      + findAllArtists(): List<Artist>
+      + writeOut(): void
+    }
+
+}
+
+
+ArtistRepositoryImpl "1" *-[#595959,plain]-> "artists\n*" Artist               
+ArtistRepositoryImpl  -[#595959,dashed]->  Artist               : "«create»"
+ArtistRepositoryImpl  -[#008200,dashed]-^  ArtistRepository     
+ArtistServiceImpl    "1" *-[#595959,plain]-> "artistRepository\n1" ArtistRepository     
+ArtistServiceImpl     -[#008200,dashed]-^  ArtistService        
+@enduml

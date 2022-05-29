@@ -98,11 +98,23 @@ Tätigkeitskapselung entstehen.
 
 ### Analyse der Schichten
 
-#### Application-Schicht
-*ToDo*
+In dieser Applikation halten prinzipiell alle Klassen die Dependency-Rule hinsichtlich dem "Fluss" der Abhängigkeiten ein.
+Klassen innerer Schichten besitzen <u>keine</u> Abhängigkeiten nach Außen. Dies wird u.a. durch den Aufbau des Maven Projektes
+selbst gewährleistet, da nur die äußeren Schichten/Module weiter innen liegende Module als Abhängigkeit definiert haben.
+Beispielsweise werden Repositories in der Domain-Schicht als Interface deklariert und erst außen konkret implementiert.
 
-#### Plugin-Schicht
-*ToDo*
+#### Positiv-Beispiel 1: Songs
+
+Ein Positiv-Beispiel ist die Dependency Rule ist die Schichtenunterteilung bei Songs. Hier kommen die Schichten Domain,
+Application und Plugin zum Einsatz.
+
+![Layers positive example 1](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/layers-positive1.plantuml&fmt=svg)
+
+#### Positiv-Beispiel 2: Artists
+
+Selbiges gilt für die Schichtenarchitektur bei Artists, wobei hier kein Builder notwendig ist.
+
+![Layers positive example 1](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/layers-positive2.plantuml&fmt=svg)
 
 ## Kapitel 3: SOLID
 
