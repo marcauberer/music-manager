@@ -951,3 +951,7 @@ Hier benachrichtigt der `SongService` die UI über Veränderungen an der
 Song-Liste sodass sich diese aktualisieren kann.
 
 ![Observer Pattern](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/observer-pattern.plantuml&fmt=svg)
+
+## Whole class diagram
+
+![Whole class diagram](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/all.plantuml&fmt=svg)

@@ -1,0 +1,706 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class AbstractRepository {
+  + AbstractRepository(): 
+  + AUTO_INC: long
+  + writeOut(): void
+  + reload(): void
+}
+class Application {
+  + Application(): 
+  + main(String[]): void
+}
+class Artist {
+  + Artist(long, String, String, Date): 
+  + firstName: String
+  + lastName: String
+  + id: long
+  + dateOfBirth: Date
+  + toString(): String
+  + getDateOfBirth(): Date
+  + getFieldContents(): String[]
+  + equals(Object): boolean
+  + getLastName(): String
+  + getCSVHeader(): String[]
+  + hashCode(): int
+  + getFirstName(): String
+  + setId(long): void
+  + getId(): long
+}
+interface ArtistListObserver << interface >> {
+  + onArtistListChanged(List<Artist>): void
+}
+interface ArtistRepository << interface >> {
+  + save(Artist): void
+  + findArtistById(long): Optional<Artist>
+  + findAllArtists(): List<Artist>
+  + delete(long): void
+}
+class ArtistRepositoryImpl {
+  + ArtistRepositoryImpl(CSVHelper): 
+  + ArtistRepositoryImpl(): 
+  + artists: List<Artist>
+  + csvHelper: CSVHelper
+  + FILE_PATH: String
+  + save(Artist): void
+  + delete(long): void
+  + findAllArtists(): List<Artist>
+  + findArtistById(long): Optional<Artist>
+  + reload(): void
+  + writeOut(): void
+}
+class ArtistRepositoryTest {
+  ~ ArtistRepositoryTest(): 
+  ~ csvHelper: CSVHelper
+  ~ save(): void
+  ~ findAllArtists(): void
+  ~ delete(): void
+  ~ prepareTest(): void
+  ~ findArtistById(): void
+}
+interface ArtistService << interface >> {
+  + createArtist(Artist): void
+  + getAllArtists(): List<Artist>
+}
+class ArtistServiceImpl {
+  + ArtistServiceImpl(ArtistRepository, ArtistListObserver): 
+  + artistRepository: ArtistRepository
+  + artistListObserver: ArtistListObserver
+  + getAllArtists(): List<Artist>
+  + createArtist(Artist): void
+}
+class ArtistServiceTest {
+  ~ ArtistServiceTest(): 
+  ~ artistRepository: ArtistRepository
+  ~ createArtist(): void
+  ~ getAllArtists(): void
+  ~ prepareTests(): void
+}
+class BarType {
+  + BarType(long, int, int): 
+  + id: long
+  + beatCount: int
+  + beatValue: int
+  + equals(Object): boolean
+  + hashCode(): int
+  + toString(): String
+  + setId(long): void
+  + getBeatCount(): int
+  + getCSVHeader(): String[]
+  + getId(): long
+  + getBeatValue(): int
+  + getFieldContents(): String[]
+}
+interface BarTypeListObserver << interface >> {
+  + onBarTypeListChanged(List<BarType>): void
+}
+interface BarTypeRepository << interface >> {
+  + findBarTypeById(long): Optional<BarType>
+  + delete(long): void
+  + findAllBarTypes(): List<BarType>
+  + save(BarType): void
+}
+class BarTypeRepositoryImpl {
+  + BarTypeRepositoryImpl(CSVHelper): 
+  + BarTypeRepositoryImpl(): 
+  + FILE_PATH: String
+  + csvHelper: CSVHelper
+  + barTypes: List<BarType>
+  + findBarTypeById(long): Optional<BarType>
+  + save(BarType): void
+  + writeOut(): void
+  + delete(long): void
+  + findAllBarTypes(): List<BarType>
+  + reload(): void
+}
+class BarTypeRepositoryTest {
+  ~ BarTypeRepositoryTest(): 
+  ~ csvHelper: CSVHelper
+  ~ delete(): void
+  ~ save(): void
+  ~ prepareTest(): void
+  ~ findBarTypeById(): void
+  ~ findAllBarTypes(): void
+}
+interface BarTypeService << interface >> {
+  + getAllBarTypes(): List<BarType>
+  + createBarType(BarType): void
+}
+class BarTypeServiceImpl {
+  + BarTypeServiceImpl(BarTypeRepository, BarTypeListObserver): 
+  + barTypeRepository: BarTypeRepository
+  + barTypeListObserver: BarTypeListObserver
+  + createBarType(BarType): void
+  + getAllBarTypes(): List<BarType>
+}
+class BarTypeServiceTest {
+  ~ BarTypeServiceTest(): 
+  ~ barTypeRepository: BarTypeRepository
+  ~ prepareTests(): void
+  ~ getAllBarTypes(): void
+  ~ createBarType(): void
+}
+class CSVHelper {
+  + CSVHelper(String, String): 
+  + delimiter: String
+  + filePath: Path
+  + read(): Optional<List<String[]>>
+  + write(String[], List<String[]>): void
+}
+class CSVHelperTest {
+  ~ CSVHelperTest(): 
+  ~ TEST_FILE_1: String
+  ~ TEST_FILE_2: String
+  ~ TEST_FILE_4: String
+  ~ TEST_FILE_3: String
+  ~ read1(): void
+  ~ write1(): void
+  ~ write2(): void
+  ~ read2(): void
+}
+class Genre {
+  + Genre(long, String): 
+  + id: long
+  + name: String
+  + toString(): String
+  + getCSVHeader(): String[]
+  + setId(long): void
+  + getName(): String
+  + equals(Object): boolean
+  + getId(): long
+  + getFieldContents(): String[]
+  + hashCode(): int
+}
+interface GenreListObserver << interface >> {
+  + onGenreListChanged(List<Genre>): void
+}
+interface GenreRepository << interface >> {
+  + findAllGenres(): List<Genre>
+  + delete(long): void
+  + findGenreById(long): Optional<Genre>
+  + save(Genre): void
+}
+class GenreRepositoryImpl {
+  + GenreRepositoryImpl(CSVHelper): 
+  + GenreRepositoryImpl(): 
+  + FILE_PATH: String
+  + csvHelper: CSVHelper
+  + genres: List<Genre>
+  + findAllGenres(): List<Genre>
+  + writeOut(): void
+  + reload(): void
+  + save(Genre): void
+  + delete(long): void
+  + findGenreById(long): Optional<Genre>
+}
+class GenreRepositoryTest {
+  ~ GenreRepositoryTest(): 
+  ~ csvHelper: CSVHelper
+  ~ prepareTest(): void
+  ~ findGenreById(): void
+  ~ findAllGenres(): void
+  ~ delete(): void
+  ~ save(): void
+}
+interface GenreService << interface >> {
+  + createGenre(Genre): void
+  + getAllGenres(): List<Genre>
+}
+class GenreServiceImpl {
+  + GenreServiceImpl(GenreRepository, GenreListObserver): 
+  + genreListObserver: GenreListObserver
+  + genreRepository: GenreRepository
+  + createGenre(Genre): void
+  + getAllGenres(): List<Genre>
+}
+class GenreServiceTest {
+  ~ GenreServiceTest(): 
+  ~ genreRepository: GenreRepository
+  ~ prepareTests(): void
+  ~ getAllGenres(): void
+  ~ createGenre(): void
+}
+interface LoginObserver << interface >> {
+  + onLogout(): void
+  + onLogin(User): void
+}
+class LoginUI {
+  + LoginUI(LoginObserver): 
+  + textFieldUsername: JTextField
+  + textFieldPassword: JPasswordField
+  + errorLabel: JLabel
+  + userService: UserServiceImpl
+  + loginObserver: LoginObserver
+  + setupUI(): void
+  + register(): void
+  + attemptToLogin(): void
+}
+class MusicManager {
+  + MusicManager(): 
+  + onLogin(User): void
+  + showLoginFrame(): void
+  + onLogout(): void
+  + showMainFrame(User): void
+}
+class MusicManagerUI {
+  + MusicManagerUI(LoginObserver, User): 
+  + buttonDelete: JButton
+  + songs: List<Song>
+  + buttonEdit: JButton
+  + selectedSong: Optional<Song>
+  + buttonPlay: JButton
+  + songService: SongServiceImpl
+  + loginObserver: LoginObserver
+  + user: User
+  + songTable: JTable
+  + linkGeneratorService: YTLinkGeneratorServiceImpl
+  + unknownString: String
+  + setupSongTable(JPanel): void
+  + editSong(): void
+  + setupUI(): void
+  + playSong(): void
+  + setupButtons(JPanel): void
+  + onSongListChanged(List<Song>): void
+  + triggerLogout(): void
+  + deleteSong(): void
+  + newSong(): void
+}
+class NewEditSongDialog {
+  + NewEditSongDialog(SongServiceImpl, User, Song): 
+  + songArtists: JList<Artist>
+  + selectedSong: Song
+  + barTypes: List<BarType>
+  + songGenre: JComboBox<Genre>
+  + songTitle: JTextField
+  + songService: SongServiceImpl
+  + genres: List<Genre>
+  + songBpm: JTextField
+  + artists: List<Artist>
+  + songBarType: JComboBox<BarType>
+  + user: User
+  + onBarTypeListChanged(List<BarType>): void
+  + setupUI(): void
+  + createOrUpdateSong(): void
+  + fillUI(Song): void
+  + onArtistListChanged(List<Artist>): void
+  + onGenreListChanged(List<Genre>): void
+}
+class RegistrationFailedException {
+  + RegistrationFailedException(String): 
+}
+class RelSongArtist {
+  + RelSongArtist(long, long, long): 
+  + artistId: long
+  + id: long
+  + songId: long
+  + equals(Object): boolean
+  + getCSVHeader(): String[]
+  + getFieldContents(): String[]
+  + getId(): long
+  + getArtistId(): long
+  + hashCode(): int
+  + toString(): String
+  + getSongId(): long
+}
+interface RelSongArtistRepository << interface >> {
+  + findAllArtistsBySongId(long): List<Artist>
+  + updateRelations(List<RelSongArtist>): void
+}
+class RelSongArtistRepositoryImpl {
+  + RelSongArtistRepositoryImpl(ArtistRepository, CSVHelper): 
+  + RelSongArtistRepositoryImpl(ArtistRepository): 
+  + relSongArtists: List<RelSongArtist>
+  + artistRepository: ArtistRepository
+  + csvHelper: CSVHelper
+  + FILE_PATH: String
+  + reload(): void
+  + updateRelations(List<RelSongArtist>): void
+  + writeOut(): void
+  + findAllArtistsBySongId(long): List<Artist>
+}
+class RelSongArtistRepositoryTest {
+  ~ RelSongArtistRepositoryTest(): 
+  ~ csvHelper: CSVHelper
+  ~ artistRepository: ArtistRepository
+  ~ prepareTest(): void
+  ~ findArtistsBySongId(): void
+  ~ updateRelations(): void
+}
+class Song {
+  + Song(long, long, String, List<Artist>, Genre, float, BarType): 
+  + artists: List<Artist>
+  + id: long
+  + bpm: float
+  + title: String
+  + userId: long
+  + barType: BarType
+  + genre: Genre
+  + getCSVHeader(): String[]
+  + getUserId(): long
+  + getTitle(): String
+  + getId(): long
+  + toString(): String
+  + getArtists(): List<Artist>
+  + hashCode(): int
+  + getGenre(): Genre
+  + getFieldContents(): String[]
+  + getBarType(): BarType
+  + getBpm(): float
+  + equals(Object): boolean
+  + setId(long): void
+}
+class SongBuilder {
+  + SongBuilder(long, User, String, List<Artist>): 
+  + artists: List<Artist>
+  + id: long
+  + title: String
+  + user: User
+  + bpm: float
+  + genre: Genre
+  + barType: BarType
+  + withBpm(float): SongBuilder
+  + build(): Song
+  + withBarType(BarType): SongBuilder
+  + withGenre(Genre): SongBuilder
+}
+class SongBuilderTest {
+  ~ SongBuilderTest(): 
+  ~ testBuilder1(): void
+  ~ testBuilder2(): void
+}
+interface SongListObserver << interface >> {
+  + onSongListChanged(List<Song>): void
+}
+interface SongRepository << interface >> {
+  + findSongById(long): Optional<Song>
+  + findAllSongsByUserId(long): List<Song>
+  + delete(long): void
+  + findAllSongs(): List<Song>
+  + save(Song): void
+  + update(Song): void
+}
+class SongRepositoryImpl {
+  + SongRepositoryImpl(CSVHelper, GenreRepository, BarTypeRepository, RelSongArtistRepository): 
+  + SongRepositoryImpl(): 
+  + FILE_PATH: String
+  + relSongArtistRepository: RelSongArtistRepository
+  + csvHelper: CSVHelper
+  + barTypeRepository: BarTypeRepository
+  + songs: List<Song>
+  + genreRepository: GenreRepository
+  + findSongById(long): Optional<Song>
+  + save(Song): void
+  + reload(): void
+  + findAllSongs(): List<Song>
+  + findAllSongsByUserId(long): List<Song>
+  + update(Song): void
+  + delete(long): void
+  + writeOut(): void
+}
+class SongRepositoryTest {
+  ~ SongRepositoryTest(): 
+  ~ csvHelper: CSVHelper
+  ~ relSongArtistRepository: RelSongArtistRepository
+  ~ genreRepository: GenreRepository
+  ~ barTypeRepository: BarTypeRepository
+  ~ findAllSongsByUserId(): void
+  ~ prepareTest(): void
+  ~ findAllSongs(): void
+  ~ update(): void
+  ~ delete(): void
+  ~ save(): void
+  ~ findSongById(): void
+}
+interface SongService << interface >> {
+  + searchSongsByTitle(String): List<Song>
+  + create(Song): void
+  + getAllSongsForUser(): List<Song>
+  + update(Song): void
+  + delete(Song): void
+}
+class SongServiceImpl {
+  + SongServiceImpl(User, SongRepository, SongListObserver): 
+  + songListObserver: SongListObserver
+  + songRepository: SongRepository
+  + user: User
+  + getAllSongsForUser(): List<Song>
+  + searchSongsByTitle(String): List<Song>
+  + create(Song): void
+  + delete(Song): void
+  + update(Song): void
+}
+class SongServiceTest {
+  ~ SongServiceTest(): 
+  ~ user: User
+  ~ songRepository: SongRepository
+  ~ createSong(): void
+  ~ deleteSong(): void
+  ~ getAllSongsForUser(): void
+  ~ updateSong(): void
+  ~ searchSongsByTitle(): void
+  ~ prepareTests(): void
+}
+class TransitiveDataException {
+  + TransitiveDataException(String): 
+}
+class UIHelper {
+  + UIHelper(): 
+  + placeUIComp(JPanel, JComponent, int, int, int, int, int): void
+}
+class User {
+  + User(long, String, String): 
+  + username: String
+  + password: String
+  + id: long
+  + setId(long): void
+  + getFieldContents(): String[]
+  + hashCode(): int
+  + getPassword(): String
+  + equals(Object): boolean
+  + getId(): long
+  + toString(): String
+  + getUsername(): String
+  + getCSVHeader(): String[]
+}
+class UserAlreadyExistsException {
+  + UserAlreadyExistsException(String): 
+}
+class UserNotFoundException {
+  + UserNotFoundException(String): 
+}
+interface UserRepository << interface >> {
+  + findUserByUsername(String): Optional<User>
+  + findAllUsers(): List<User>
+  + save(User): void
+}
+class UserRepositoryImpl {
+  + UserRepositoryImpl(CSVHelper): 
+  + UserRepositoryImpl(): 
+  + csvHelper: CSVHelper
+  + FILE_PATH: String
+  + users: List<User>
+  + writeOut(): void
+  + findUserByUsername(String): Optional<User>
+  + findAllUsers(): List<User>
+  + reload(): void
+  + save(User): void
+}
+class UserRepositoryTest {
+  ~ UserRepositoryTest(): 
+  ~ csvHelper: CSVHelper
+  ~ findAllUsers(): void
+  ~ findUserById(): void
+  ~ prepareTest(): void
+  ~ save(): void
+}
+interface UserService << interface >> {
+  + login(String, String): User
+  + register(String, String): User
+}
+class UserServiceImpl {
+  + UserServiceImpl(UserRepository): 
+  + userRepository: UserRepository
+  + register(String, String): User
+  + login(String, String): User
+}
+class UserServiceTest {
+  ~ UserServiceTest(): 
+  ~ userRepository: UserRepository
+  ~ loginUnknownUsername(): void
+  ~ registerUserAlreadyExists(): void
+  ~ loginSuccess(): void
+  ~ prepareTests(): void
+  ~ registerSuccess(): void
+  ~ loginWrongPassword(): void
+}
+class WrongPasswordException {
+  + WrongPasswordException(String): 
+}
+interface YTLinkGeneratorService << interface >> {
+  + generateYouTubeLink(Song): String
+}
+class YTLinkGeneratorServiceImpl {
+  + YTLinkGeneratorServiceImpl(): 
+  + URL_TEMPLATE: String
+  + generateYouTubeLink(Song): String
+  + encodeValue(String): String
+}
+class YTLinkGeneratorServiceTest {
+  ~ YTLinkGeneratorServiceTest(): 
+  ~ generateYouTubeLink(): void
+}
+
+ArtistRepositoryImpl         -[#000082,plain]-^  AbstractRepository          
+ArtistRepositoryImpl        "1" *-[#595959,plain]-> "artists\n*" Artist                      
+ArtistRepositoryImpl         -[#595959,dashed]->  Artist                      : "«create»"
+ArtistRepositoryImpl         -[#008200,dashed]-^  ArtistRepository            
+ArtistRepositoryImpl         -[#595959,dashed]->  CSVHelper                   : "«create»"
+ArtistRepositoryImpl        "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+ArtistRepositoryTest         -[#595959,dashed]->  Artist                      : "«create»"
+ArtistRepositoryTest         -[#595959,dashed]->  ArtistRepositoryImpl        : "«create»"
+ArtistRepositoryTest        "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+ArtistServiceImpl           "1" *-[#595959,plain]-> "artistListObserver\n1" ArtistListObserver          
+ArtistServiceImpl           "1" *-[#595959,plain]-> "artistRepository\n1" ArtistRepository            
+ArtistServiceImpl            -[#008200,dashed]-^  ArtistService               
+ArtistServiceTest            -[#595959,dashed]->  Artist                      : "«create»"
+ArtistServiceTest           "1" *-[#595959,plain]-> "artistRepository\n1" ArtistRepository            
+ArtistServiceTest            -[#595959,dashed]->  ArtistServiceImpl           : "«create»"
+BarTypeRepositoryImpl        -[#000082,plain]-^  AbstractRepository          
+BarTypeRepositoryImpl       "1" *-[#595959,plain]-> "barTypes\n*" BarType                     
+BarTypeRepositoryImpl        -[#595959,dashed]->  BarType                     : "«create»"
+BarTypeRepositoryImpl        -[#008200,dashed]-^  BarTypeRepository           
+BarTypeRepositoryImpl        -[#595959,dashed]->  CSVHelper                   : "«create»"
+BarTypeRepositoryImpl       "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+BarTypeRepositoryTest        -[#595959,dashed]->  BarType                     : "«create»"
+BarTypeRepositoryTest        -[#595959,dashed]->  BarTypeRepositoryImpl       : "«create»"
+BarTypeRepositoryTest       "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+BarTypeServiceImpl          "1" *-[#595959,plain]-> "barTypeListObserver\n1" BarTypeListObserver         
+BarTypeServiceImpl          "1" *-[#595959,plain]-> "barTypeRepository\n1" BarTypeRepository           
+BarTypeServiceImpl           -[#008200,dashed]-^  BarTypeService              
+BarTypeServiceTest           -[#595959,dashed]->  BarType                     : "«create»"
+BarTypeServiceTest          "1" *-[#595959,plain]-> "barTypeRepository\n1" BarTypeRepository           
+BarTypeServiceTest           -[#595959,dashed]->  BarTypeServiceImpl          : "«create»"
+CSVHelperTest                -[#595959,dashed]->  Artist                      : "«create»"
+CSVHelperTest                -[#595959,dashed]->  BarType                     : "«create»"
+CSVHelperTest                -[#595959,dashed]->  CSVHelper                   : "«create»"
+CSVHelperTest                -[#595959,dashed]->  Genre                       : "«create»"
+CSVHelperTest                -[#595959,dashed]->  Song                        : "«create»"
+GenreRepositoryImpl          -[#000082,plain]-^  AbstractRepository          
+GenreRepositoryImpl          -[#595959,dashed]->  CSVHelper                   : "«create»"
+GenreRepositoryImpl         "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+GenreRepositoryImpl          -[#595959,dashed]->  Genre                       : "«create»"
+GenreRepositoryImpl         "1" *-[#595959,plain]-> "genres\n*" Genre                       
+GenreRepositoryImpl          -[#008200,dashed]-^  GenreRepository             
+GenreRepositoryTest         "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+GenreRepositoryTest          -[#595959,dashed]->  Genre                       : "«create»"
+GenreRepositoryTest          -[#595959,dashed]->  GenreRepositoryImpl         : "«create»"
+GenreServiceImpl            "1" *-[#595959,plain]-> "genreListObserver\n1" GenreListObserver           
+GenreServiceImpl            "1" *-[#595959,plain]-> "genreRepository\n1" GenreRepository             
+GenreServiceImpl             -[#008200,dashed]-^  GenreService                
+GenreServiceTest             -[#595959,dashed]->  Genre                       : "«create»"
+GenreServiceTest            "1" *-[#595959,plain]-> "genreRepository\n1" GenreRepository             
+GenreServiceTest             -[#595959,dashed]->  GenreServiceImpl            : "«create»"
+LoginUI                     "1" *-[#595959,plain]-> "loginObserver\n1" LoginObserver               
+LoginUI                      -[#595959,dashed]->  UserRepositoryImpl          : "«create»"
+LoginUI                     "1" *-[#595959,plain]-> "userService\n1" UserServiceImpl             
+LoginUI                      -[#595959,dashed]->  UserServiceImpl             : "«create»"
+MusicManager                 -[#008200,dashed]-^  LoginObserver               
+MusicManager                 -[#595959,dashed]->  LoginUI                     : "«create»"
+MusicManager                 -[#595959,dashed]->  MusicManagerUI              : "«create»"
+MusicManagerUI              "1" *-[#595959,plain]-> "loginObserver\n1" LoginObserver               
+MusicManagerUI               -[#595959,dashed]->  NewEditSongDialog           : "«create»"
+MusicManagerUI              "1" *-[#595959,plain]-> "songs\n*" Song                        
+MusicManagerUI               -[#008200,dashed]-^  SongListObserver            
+MusicManagerUI               -[#595959,dashed]->  SongRepositoryImpl          : "«create»"
+MusicManagerUI              "1" *-[#595959,plain]-> "songService\n1" SongServiceImpl             
+MusicManagerUI               -[#595959,dashed]->  SongServiceImpl             : "«create»"
+MusicManagerUI              "1" *-[#595959,plain]-> "user\n1" User                        
+MusicManagerUI              "1" *-[#595959,plain]-> "linkGeneratorService\n1" YTLinkGeneratorServiceImpl  
+MusicManagerUI               -[#595959,dashed]->  YTLinkGeneratorServiceImpl  : "«create»"
+NewEditSongDialog           "1" *-[#595959,plain]-> "artists\n*" Artist                      
+NewEditSongDialog            -[#008200,dashed]-^  ArtistListObserver          
+NewEditSongDialog            -[#595959,dashed]->  ArtistRepositoryImpl        : "«create»"
+NewEditSongDialog            -[#595959,dashed]->  ArtistServiceImpl           : "«create»"
+NewEditSongDialog           "1" *-[#595959,plain]-> "barTypes\n*" BarType                     
+NewEditSongDialog            -[#008200,dashed]-^  BarTypeListObserver         
+NewEditSongDialog            -[#595959,dashed]->  BarTypeRepositoryImpl       : "«create»"
+NewEditSongDialog            -[#595959,dashed]->  BarTypeServiceImpl          : "«create»"
+NewEditSongDialog           "1" *-[#595959,plain]-> "genres\n*" Genre                       
+NewEditSongDialog            -[#008200,dashed]-^  GenreListObserver           
+NewEditSongDialog            -[#595959,dashed]->  GenreRepositoryImpl         : "«create»"
+NewEditSongDialog            -[#595959,dashed]->  GenreServiceImpl            : "«create»"
+NewEditSongDialog           "1" *-[#595959,plain]-> "selectedSong\n1" Song                        
+NewEditSongDialog            -[#595959,dashed]->  SongBuilder                 : "«create»"
+NewEditSongDialog           "1" *-[#595959,plain]-> "songService\n1" SongServiceImpl             
+NewEditSongDialog           "1" *-[#595959,plain]-> "user\n1" User                        
+RelSongArtistRepositoryImpl  -[#000082,plain]-^  AbstractRepository          
+RelSongArtistRepositoryImpl "1" *-[#595959,plain]-> "artistRepository\n1" ArtistRepository            
+RelSongArtistRepositoryImpl "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+RelSongArtistRepositoryImpl  -[#595959,dashed]->  CSVHelper                   : "«create»"
+RelSongArtistRepositoryImpl "1" *-[#595959,plain]-> "relSongArtists\n*" RelSongArtist               
+RelSongArtistRepositoryImpl  -[#595959,dashed]->  RelSongArtist               : "«create»"
+RelSongArtistRepositoryImpl  -[#008200,dashed]-^  RelSongArtistRepository     
+RelSongArtistRepositoryImpl  -[#595959,dashed]->  TransitiveDataException     : "«create»"
+RelSongArtistRepositoryTest  -[#595959,dashed]->  Artist                      : "«create»"
+RelSongArtistRepositoryTest "1" *-[#595959,plain]-> "artistRepository\n1" ArtistRepository            
+RelSongArtistRepositoryTest "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+RelSongArtistRepositoryTest  -[#595959,dashed]->  RelSongArtist               : "«create»"
+RelSongArtistRepositoryTest  -[#595959,dashed]->  RelSongArtistRepositoryImpl : "«create»"
+Song                        "1" *-[#595959,plain]-> "artists\n*" Artist                      
+Song                        "1" *-[#595959,plain]-> "barType\n1" BarType                     
+Song                        "1" *-[#595959,plain]-> "genre\n1" Genre                       
+SongBuilder                 "1" *-[#595959,plain]-> "artists\n*" Artist                      
+SongBuilder                 "1" *-[#595959,plain]-> "barType\n1" BarType                     
+SongBuilder                 "1" *-[#595959,plain]-> "genre\n1" Genre                       
+SongBuilder                  -[#595959,dashed]->  Song                        : "«create»"
+SongBuilder                 "1" *-[#595959,plain]-> "user\n1" User                        
+SongBuilderTest              -[#595959,dashed]->  Artist                      : "«create»"
+SongBuilderTest              -[#595959,dashed]->  BarType                     : "«create»"
+SongBuilderTest              -[#595959,dashed]->  Genre                       : "«create»"
+SongBuilderTest              -[#595959,dashed]->  Song                        : "«create»"
+SongBuilderTest              -[#595959,dashed]->  SongBuilder                 : "«create»"
+SongBuilderTest              -[#595959,dashed]->  User                        : "«create»"
+SongRepositoryImpl           -[#000082,plain]-^  AbstractRepository          
+SongRepositoryImpl           -[#595959,dashed]->  ArtistRepositoryImpl        : "«create»"
+SongRepositoryImpl          "1" *-[#595959,plain]-> "barTypeRepository\n1" BarTypeRepository           
+SongRepositoryImpl           -[#595959,dashed]->  BarTypeRepositoryImpl       : "«create»"
+SongRepositoryImpl           -[#595959,dashed]->  CSVHelper                   : "«create»"
+SongRepositoryImpl          "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+SongRepositoryImpl          "1" *-[#595959,plain]-> "genreRepository\n1" GenreRepository             
+SongRepositoryImpl           -[#595959,dashed]->  GenreRepositoryImpl         : "«create»"
+SongRepositoryImpl           -[#595959,dashed]->  RelSongArtist               : "«create»"
+SongRepositoryImpl          "1" *-[#595959,plain]-> "relSongArtistRepository\n1" RelSongArtistRepository     
+SongRepositoryImpl           -[#595959,dashed]->  RelSongArtistRepositoryImpl : "«create»"
+SongRepositoryImpl           -[#595959,dashed]->  Song                        : "«create»"
+SongRepositoryImpl          "1" *-[#595959,plain]-> "songs\n*" Song                        
+SongRepositoryImpl           -[#008200,dashed]-^  SongRepository              
+SongRepositoryImpl           -[#595959,dashed]->  TransitiveDataException     : "«create»"
+SongRepositoryTest           -[#595959,dashed]->  Artist                      : "«create»"
+SongRepositoryTest           -[#595959,dashed]->  BarType                     : "«create»"
+SongRepositoryTest          "1" *-[#595959,plain]-> "barTypeRepository\n1" BarTypeRepository           
+SongRepositoryTest          "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+SongRepositoryTest           -[#595959,dashed]->  Genre                       : "«create»"
+SongRepositoryTest          "1" *-[#595959,plain]-> "genreRepository\n1" GenreRepository             
+SongRepositoryTest          "1" *-[#595959,plain]-> "relSongArtistRepository\n1" RelSongArtistRepository     
+SongRepositoryTest           -[#595959,dashed]->  Song                        : "«create»"
+SongRepositoryTest           -[#595959,dashed]->  SongRepositoryImpl          : "«create»"
+SongServiceImpl             "1" *-[#595959,plain]-> "songListObserver\n1" SongListObserver            
+SongServiceImpl             "1" *-[#595959,plain]-> "songRepository\n1" SongRepository              
+SongServiceImpl              -[#008200,dashed]-^  SongService                 
+SongServiceImpl             "1" *-[#595959,plain]-> "user\n1" User                        
+SongServiceTest              -[#595959,dashed]->  Artist                      : "«create»"
+SongServiceTest              -[#595959,dashed]->  BarType                     : "«create»"
+SongServiceTest              -[#595959,dashed]->  Genre                       : "«create»"
+SongServiceTest              -[#595959,dashed]->  Song                        : "«create»"
+SongServiceTest             "1" *-[#595959,plain]-> "songRepository\n1" SongRepository              
+SongServiceTest              -[#595959,dashed]->  SongServiceImpl             : "«create»"
+SongServiceTest             "1" *-[#595959,plain]-> "user\n1" User                        
+UserRepositoryImpl           -[#000082,plain]-^  AbstractRepository          
+UserRepositoryImpl           -[#595959,dashed]->  CSVHelper                   : "«create»"
+UserRepositoryImpl          "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+UserRepositoryImpl          "1" *-[#595959,plain]-> "users\n*" User                        
+UserRepositoryImpl           -[#595959,dashed]->  User                        : "«create»"
+UserRepositoryImpl           -[#008200,dashed]-^  UserRepository              
+UserRepositoryTest          "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+UserRepositoryTest           -[#595959,dashed]->  User                        : "«create»"
+UserRepositoryTest           -[#595959,dashed]->  UserRepositoryImpl          : "«create»"
+UserServiceImpl              -[#595959,dashed]->  User                        : "«create»"
+UserServiceImpl              -[#595959,dashed]->  UserAlreadyExistsException  : "«create»"
+UserServiceImpl              -[#595959,dashed]->  UserNotFoundException       : "«create»"
+UserServiceImpl             "1" *-[#595959,plain]-> "userRepository\n1" UserRepository              
+UserServiceImpl              -[#008200,dashed]-^  UserService                 
+UserServiceImpl              -[#595959,dashed]->  WrongPasswordException      : "«create»"
+UserServiceTest              -[#595959,dashed]->  User                        : "«create»"
+UserServiceTest             "1" *-[#595959,plain]-> "userRepository\n1" UserRepository              
+UserServiceTest              -[#595959,dashed]->  UserServiceImpl             : "«create»"
+YTLinkGeneratorServiceImpl   -[#008200,dashed]-^  YTLinkGeneratorService      
+YTLinkGeneratorServiceTest   -[#595959,dashed]->  Artist                      : "«create»"
+YTLinkGeneratorServiceTest   -[#595959,dashed]->  BarType                     : "«create»"
+YTLinkGeneratorServiceTest   -[#595959,dashed]->  Genre                       : "«create»"
+YTLinkGeneratorServiceTest   -[#595959,dashed]->  Song                        : "«create»"
+YTLinkGeneratorServiceTest   -[#595959,dashed]->  YTLinkGeneratorServiceImpl  : "«create»"
+@enduml
