@@ -26,7 +26,7 @@ import java.util.List;
 
 import static com.marc_auberer.musicmanager.domain.AbstractRepository.AUTO_INC;
 
-public class NewEditSongDialog extends UIHelper implements ArtistListObserver, GenreListObserver, BarTypeListObserver {
+public class NewEditSongDialog extends JFrame implements ArtistListObserver, GenreListObserver, BarTypeListObserver {
 
     // UI Components
     private JTextField songTitle;
