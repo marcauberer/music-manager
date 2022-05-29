@@ -1,0 +1,71 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+package Domain <<Rectangle>> {
+
+    class Genre {
+      + Genre(long, String):
+      + id: long
+      + name: String
+      + toString(): String
+      + getCSVHeader(): String[]
+      + setId(long): void
+      + getName(): String
+      + equals(Object): boolean
+      + getId(): long
+      + getFieldContents(): String[]
+      + hashCode(): int
+    }
+
+    interface GenreRepository << interface >> {
+      + findAllGenres(): List<Genre>
+      + delete(long): void
+      + findGenreById(long): Optional<Genre>
+      + save(Genre): void
+    }
+
+}
+
+package Application <<Rectangle>> {
+
+    interface GenreService << interface >> {
+      + createGenre(Genre): void
+      + getAllGenres(): List<Genre>
+    }
+
+    class GenreServiceImpl {
+      + GenreServiceImpl(GenreRepository, GenreListObserver):
+      + genreListObserver: GenreListObserver
+      + genreRepository: GenreRepository
+      + createGenre(Genre): void
+      + getAllGenres(): List<Genre>
+    }
+
+}
+
+package Plugin <<Rectangle>> {
+
+    class GenreRepositoryImpl {
+      + GenreRepositoryImpl(CSVHelper):
+      + GenreRepositoryImpl():
+      + FILE_PATH: String
+      + csvHelper: CSVHelper
+      + genres: List<Genre>
+      + findAllGenres(): List<Genre>
+      + writeOut(): void
+      + reload(): void
+      + save(Genre): void
+      + delete(long): void
+      + findGenreById(long): Optional<Genre>
+    }
+
+}
+
+GenreRepositoryImpl  -[#595959,dashed]->  Genre               : "«create»"
+GenreRepositoryImpl "1" *-[#595959,plain]-> "genres\n*" Genre               
+GenreRepositoryImpl  -[#008200,dashed]-^  GenreRepository     
+GenreServiceImpl    "1" *-[#595959,plain]-> "genreRepository\n1" GenreRepository     
+GenreServiceImpl     -[#008200,dashed]-^  GenreService        
+@enduml

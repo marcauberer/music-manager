@@ -192,10 +192,15 @@ Hier als Beispiel der `GenreService`:
 
 ### Analyse Liskov-Substitution- (LSP), Interface-Segregation- (ISP), Dependency-Inversion-Principle (DIP)
 
-#### Positiv-Beispiel
-*ToDo*
+#### Positiv-Beispiel (Dependency Inversion)
 
-#### Negativ-Beispiel
+![DIP positive example](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/dip-positive.plantuml&fmt=svg)
+
+Das UML-Diagramm zeigt, dass keine Abhängigkeit der Klasse `GenreServiceImpl` zur Klasse `GenreRepositoryImpl` besteht.
+Der Service basiert stattdessen auf dem Interface `GenreRepository` und nimmt somit jede beliebige Implementierung dieses
+Interfaces als validen Input an. So ist die Abhängigkeit umgekehrt und von außen kann eine neue Repository injiziert werden.
+
+#### Negativ-Beispiel (Dependency Inversion)
 *ToDo*
 
 ## Kapitel 4: Weitere Prinzipien
