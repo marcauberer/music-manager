@@ -1,0 +1,20 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+interface GenreService << interface >> {
+  + createGenre(Genre): void
+  + getAllGenres(): List<Genre>
+}
+class GenreServiceImpl {
+  + GenreServiceImpl(GenreRepository, GenreListObserver): 
+  + genreListObserver: GenreListObserver
+  + genreRepository: GenreRepository
+  + createGenre(Genre): void
+  + getAllGenres(): List<Genre>
+}
+
+GenreServiceImpl  -[#008200,dashed]-^  GenreService     
+@enduml

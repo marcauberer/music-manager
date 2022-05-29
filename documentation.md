@@ -71,6 +71,9 @@ Die Demo-Daten beinhalten auch zwei Nutzeraccounts mit bereits verknüpften Song
 
 #### Ausführbare JAR-Datei finden
 
+Die ausführbare JAR-Datei kann aus dem [neuesten Release in der GitHub-Repo](https://github.com/marcauberer/music-manager/releases/latest) heruntergeladen werden. Falls das Projekt
+wie oben beschrieben kompiliert wurde kann folgendermaßen vorgegangen werden:
+
 ```shell
 cd 3-mm-plugin
 ```
@@ -160,7 +163,9 @@ an andere Repositories gelöst, könnte aber sicher noch weiter optimiert werden
 
 ### Analyse Open-Closed-Principle (OCP)
 
-#### Positiv-Beispiel
+Nach längerem Überlegen habe ich kein Negativ-Beispiel gefunden, daher hier zwei Positiv-Beispiele.
+
+#### Positiv-Beispiel 1
 
 Alle Repositories innerhalb des Projektes bieten eine gute Möglichkeit das OCP umzusetzen. Diese sind alle als Interface
 definiert und die Implementierungen werden auf der Plugin-Schicht bereitgestellt. So können auch andere Implementationen
@@ -169,13 +174,21 @@ implementieren.
 
 Hier als Beispiel die `ArtistRepository`:
 
-![OCP positive example](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/ocp-positive.plantuml&fmt=svg)
+![OCP positive example](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/ocp-positive1.plantuml&fmt=svg)
 
-#### Negativ-Beispiel
+Ein kleiner Test hat hier ergeben, dass wenn ein Feld im Domänenmodell, also der `Artist` Klasse hinzugeführt wird,
+muss sich lediglich in der Implementierung der Repository der Konstruktoraufruf ändern, sodass für dieses neue Feld ein
+Wert übergeben werden kann.
 
-*ToDo*
+#### Positiv-Beispiel 2
 
-![OCP negative example](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/ocp-negative.plantuml&fmt=svg)
+Alle Services des Projektes setzen das OCP ebenfalls um. Auch wird Information Hiding mittels Interfaces betrieben, sodass
+bei Bedarf in äußeren Schichten Ersatz-Klassen für die jeweiligen Implementierungen nach innen durchgereicht werden können
+und das Programm nach wie vor funktioniert.
+
+Hier als Beispiel der `GenreService`:
+
+![OCP positive example](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/ocp-positive2.plantuml&fmt=svg)
 
 ### Analyse Liskov-Substitution- (LSP), Interface-Segregation- (ISP), Dependency-Inversion-Principle (DIP)
 
