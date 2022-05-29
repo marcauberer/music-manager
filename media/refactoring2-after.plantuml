@@ -1,0 +1,66 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class LoginUI {
+  + LoginUI(LoginObserver): 
+  + textFieldPassword: JPasswordField
+  + textFieldUsername: JTextField
+  + userService: UserServiceImpl
+  + loginObserver: LoginObserver
+  + errorLabel: JLabel
+  + attemptToLogin(): void
+  + setupUI(): void
+  + register(): void
+}
+class MusicManagerUI {
+  + MusicManagerUI(LoginObserver, User): 
+  + songService: SongServiceImpl
+  + linkGeneratorService: YTLinkGeneratorServiceImpl
+  + songTable: JTable
+  + loginObserver: LoginObserver
+  + songs: List<Song>
+  + user: User
+  + selectedSong: Optional<Song>
+  + newSong(): void
+  + deleteSong(): void
+  + triggerLogout(): void
+  + editSong(): void
+  + onSongListChanged(List<Song>): void
+  + playSong(): void
+  + setupUI(): void
+}
+class NewEditSongDialog {
+  + NewEditSongDialog(SongServiceImpl, User, Song): 
+  + artists: List<Artist>
+  + songGenre: JComboBox<Genre>
+  + barTypes: List<BarType>
+  + selectedSong: Song
+  + songBpm: JTextField
+  + songTitle: JTextField
+  + songBarType: JComboBox<BarType>
+  + user: User
+  + barTypeService: BarTypeServiceImpl
+  + genres: List<Genre>
+  + genreService: GenreServiceImpl
+  + songArtists: JList<Artist>
+  + songService: SongServiceImpl
+  + artistService: ArtistServiceImpl
+  + onBarTypeListChanged(List<BarType>): void
+  + fillUI(Song): void
+  + onArtistListChanged(List<Artist>): void
+  + createOrUpdateSong(): void
+  + setupUI(): void
+  + onGenreListChanged(List<Genre>): void
+}
+class UIHelper {
+  + UIHelper(): 
+  + placeUIComp(JPanel, JComponent, int, int, int, int, int): void
+}
+note "placeUIComp gets called whenever an UI component needs to be placed" as note4            
+
+MusicManagerUI     -[#595959,dashed]->  NewEditSongDialog : "«create»"
+UIHelper           -[#595959,dashed]-  note4             
+@enduml

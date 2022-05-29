@@ -26,7 +26,7 @@ import java.util.List;
 
 import static com.marc_auberer.musicmanager.domain.AbstractRepository.AUTO_INC;
 
-public class NewEditSongDialog extends JFrame implements ArtistListObserver, GenreListObserver, BarTypeListObserver {
+public class NewEditSongDialog extends UIHelper implements ArtistListObserver, GenreListObserver, BarTypeListObserver {
 
     // UI Components
     private JTextField songTitle;
@@ -85,81 +85,56 @@ public class NewEditSongDialog extends JFrame implements ArtistListObserver, Gen
         rootPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setContentPane(rootPanel);
 
-        // Prepare constraints
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.gridwidth = 5;
-        constraints.gridheight = 1;
-        constraints.weightx = 5;
-
         // Title label
         JLabel songTitleLabel = new JLabel("Song title:");
-        rootPanel.add(songTitleLabel, constraints);
+        UIHelper.placeUIComp(rootPanel, songTitleLabel, 0, 0, 5, 1, 5);
 
         // Title text field
         songTitle = new JTextField();
-        constraints.gridy = 1;
-        rootPanel.add(songTitle, constraints);
+        UIHelper.placeUIComp(rootPanel, songTitle, 0, 1, 5, 1, 5);
 
         // Artists label
         JLabel songArtistsLabel = new JLabel("Artists:");
-        constraints.gridy = 2;
-        rootPanel.add(songArtistsLabel, constraints);
+        UIHelper.placeUIComp(rootPanel, songArtistsLabel, 0, 2, 5, 1, 5);
 
         // Artists
         songArtists = new JList<>();
         JScrollPane songScrollPane = new JScrollPane(songArtists);
-        constraints.gridy = 3;
-        constraints.gridheight = 4;
-        rootPanel.add(songScrollPane, constraints);
+        UIHelper.placeUIComp(rootPanel, songScrollPane, 0, 3, 5, 4, 5);
 
         // Genre label
         JLabel songGenreLabel = new JLabel("Genre:");
-        constraints.gridy = 7;
-        constraints.gridheight = 1;
-        rootPanel.add(songGenreLabel, constraints);
+        UIHelper.placeUIComp(rootPanel, songGenreLabel, 0, 7, 5, 1, 5);
 
         // Genre
         songGenre = new JComboBox<>();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridy = 8;
-        rootPanel.add(songGenre, constraints);
+        UIHelper.placeUIComp(rootPanel, songGenre, 0, 8, 5, 1, 5);
 
         // Bpm label
         JLabel bpmLabel = new JLabel("Bpm:");
-        constraints.gridy = 9;
-        rootPanel.add(bpmLabel, constraints);
+        UIHelper.placeUIComp(rootPanel, bpmLabel, 0, 9, 5, 1, 5);
 
         // Bpm text field
         songBpm = new JTextField();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridy = 10;
-        rootPanel.add(songBpm, constraints);
+        UIHelper.placeUIComp(rootPanel, songBpm, 0, 10, 5, 1, 5);
 
         // Bpm label
         JLabel barTypeLabel = new JLabel("Bar type:");
-        constraints.gridy = 11;
-        rootPanel.add(barTypeLabel, constraints);
+        UIHelper.placeUIComp(rootPanel, barTypeLabel, 0, 11, 5, 1, 5);
 
         // Bar type
         songBarType = new JComboBox<>();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridy = 12;
-        rootPanel.add(songBarType, constraints);
+        UIHelper.placeUIComp(rootPanel, songBarType, 0, 12, 5, 1, 5);
 
         // Create song button
         JButton buttonCreate = new JButton(selectedSong == null ? "Create song" : "Update song");
-        constraints.gridy = 13;
-        rootPanel.add(buttonCreate, constraints);
         buttonCreate.addActionListener(actionEvent -> createOrUpdateSong());
+        UIHelper.placeUIComp(rootPanel, buttonCreate, 0, 13, 5, 1, 5);
 
         // Cancel button
         JButton buttonCancel = new JButton("Cancel");
-        constraints.gridy = 14;
-        rootPanel.add(buttonCancel, constraints);
         buttonCancel.addActionListener(actionEvent -> dispose());
+        UIHelper.placeUIComp(rootPanel, buttonCancel, 0, 14, 5, 1, 5);
     }
 
     private void fillUI(Song selectedSong) {

@@ -1,0 +1,60 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class LoginUI {
+  + LoginUI(LoginObserver): 
+  + userService: UserServiceImpl
+  + textFieldPassword: JPasswordField
+  + textFieldUsername: JTextField
+  + errorLabel: JLabel
+  + loginObserver: LoginObserver
+  + setupUI(): void
+  + register(): void
+  + attemptToLogin(): void
+}
+class MusicManagerUI {
+  + MusicManagerUI(LoginObserver, User): 
+  + songService: SongServiceImpl
+  + songs: List<Song>
+  + user: User
+  + selectedSong: Optional<Song>
+  + songTable: JTable
+  + linkGeneratorService: YTLinkGeneratorServiceImpl
+  + loginObserver: LoginObserver
+  + triggerLogout(): void
+  + onSongListChanged(List<Song>): void
+  + newSong(): void
+  + deleteSong(): void
+  + setupUI(): void
+  + playSong(): void
+  + editSong(): void
+}
+class NewEditSongDialog {
+  + NewEditSongDialog(SongServiceImpl, User, Song): 
+  + artists: List<Artist>
+  + barTypes: List<BarType>
+  + selectedSong: Song
+  + genres: List<Genre>
+  + songTitle: JTextField
+  + user: User
+  + songGenre: JComboBox<Genre>
+  + songBpm: JTextField
+  + songArtists: JList<Artist>
+  + songService: SongServiceImpl
+  + genreService: GenreServiceImpl
+  + barTypeService: BarTypeServiceImpl
+  + artistService: ArtistServiceImpl
+  + songBarType: JComboBox<BarType>
+  + createOrUpdateSong(): void
+  + onArtistListChanged(List<Artist>): void
+  + onGenreListChanged(List<Genre>): void
+  + setupUI(): void
+  + fillUI(Song): void
+  + onBarTypeListChanged(List<BarType>): void
+}
+
+MusicManagerUI     -[#595959,dashed]->  NewEditSongDialog : "«create»"
+@enduml

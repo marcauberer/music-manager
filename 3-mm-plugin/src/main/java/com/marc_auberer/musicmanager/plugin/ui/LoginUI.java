@@ -46,58 +46,35 @@ public class LoginUI extends JFrame {
         rootPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setContentPane(rootPanel);
 
-        // Prepare constraints
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.gridwidth = 2;
-        constraints.weightx = 2;
-
         // Info/error label
         JLabel labelInfo = new JLabel("Please enter your login credentials below");
-        rootPanel.add(labelInfo, constraints);
+        UIHelper.placeUIComp(rootPanel, labelInfo, 0, 0, 2, 1, 2);
 
         // Username text field
         JLabel labelUsername = new JLabel("Username:");
-        constraints.gridy = 1;
-        constraints.gridwidth = 1;
-        constraints.weightx = 1;
-        rootPanel.add(labelUsername, constraints);
-        constraints.gridx = 1;
-        rootPanel.add(textFieldUsername, constraints);
+        UIHelper.placeUIComp(rootPanel, labelUsername, 0, 1, 1, 1, 1);
+        UIHelper.placeUIComp(rootPanel, textFieldUsername, 1, 1, 1, 1, 1);
 
         // Password text field
         JLabel labelPassword = new JLabel("Password:");
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        rootPanel.add(labelPassword, constraints);
+        UIHelper.placeUIComp(rootPanel, labelPassword, 0, 2, 1, 1, 1);
         textFieldPassword.addActionListener(e -> attemptToLogin());
-        constraints.gridx = 1;
-        rootPanel.add(textFieldPassword, constraints);
+        UIHelper.placeUIComp(rootPanel, textFieldPassword, 1, 2, 1, 1, 1);
 
         // Error label
         errorLabel = new JLabel();
-        constraints.gridx = 0;
-        constraints.gridy = 3;
-        constraints.gridwidth = 2;
-        constraints.weightx = 2;
-        rootPanel.add(errorLabel, constraints);
         errorLabel.setForeground(Color.RED);
+        UIHelper.placeUIComp(rootPanel, errorLabel, 0, 3, 2, 1, 2);
 
         // Register button
         JButton registerButton = new JButton("Register");
         registerButton.addActionListener(e -> register());
-        constraints.gridy = 4;
-        constraints.gridwidth = 1;
-        constraints.weightx = 1;
-        rootPanel.add(registerButton, constraints);
+        UIHelper.placeUIComp(rootPanel, registerButton, 0, 4, 1, 1, 1);
 
         // Login button
         JButton buttonLogin = new JButton("LogIn");
         buttonLogin.addActionListener(e -> attemptToLogin());
-        constraints.gridx = 1;
-        rootPanel.add(buttonLogin, constraints);
+        UIHelper.placeUIComp(rootPanel, buttonLogin, 1, 4, 1, 1, 1);
 
         // Set focus to username field
         textFieldUsername.requestFocus();

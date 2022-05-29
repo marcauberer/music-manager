@@ -73,63 +73,35 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
             }
         });
         JScrollPane songScrollPane = new JScrollPane(songTable);
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.gridwidth = 5;
-        constraints.gridheight = 4;
-        constraints.weightx = 5;
-        rootPanel.add(songScrollPane, constraints);
+        UIHelper.placeUIComp(rootPanel, songScrollPane, 0, 0, 5, 4, 5);
 
         // New button
         JButton buttonNew = new JButton("New Song");
         buttonNew.addActionListener(e -> newSong());
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridx = 0;
-        constraints.gridy = 4;
-        constraints.gridwidth = 1;
-        constraints.gridheight = 1;
-        constraints.weightx = 1;
-        rootPanel.add(buttonNew, constraints);
+        UIHelper.placeUIComp(rootPanel, buttonNew, 0, 4, 1, 1, 1);
 
         // Edit button
         JButton buttonEdit = new JButton("Edit Song");
         buttonEdit.setEnabled(false);
         buttonEdit.addActionListener(e -> editSong());
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridx = 1;
-        constraints.gridy = 4;
-        constraints.weightx = 1;
-        rootPanel.add(buttonEdit, constraints);
+        UIHelper.placeUIComp(rootPanel, buttonEdit, 1, 4, 1, 1, 1);
 
         // Delete button
         JButton buttonDelete = new JButton("Delete Song");
         buttonDelete.setEnabled(false);
         buttonDelete.addActionListener(e -> deleteSong());
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridx = 2;
-        constraints.gridy = 4;
-        constraints.weightx = 1;
-        rootPanel.add(buttonDelete, constraints);
+        UIHelper.placeUIComp(rootPanel, buttonDelete, 2, 4, 1, 1, 1);
 
         // Play button
         JButton buttonPlay = new JButton("Play Song");
         buttonPlay.setEnabled(false);
         buttonPlay.addActionListener(e -> playSong());
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridx = 3;
-        constraints.gridy = 4;
-        constraints.weightx = 1;
-        rootPanel.add(buttonPlay, constraints);
+        UIHelper.placeUIComp(rootPanel, buttonPlay, 3, 4, 1, 1, 1);
 
         // Logout button
         JButton buttonLogout = new JButton("LogOut");
         buttonLogout.addActionListener(e -> triggerLogout());
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridx = 4;
-        constraints.gridy = 4;
-        constraints.weightx = 1;
-        rootPanel.add(buttonLogout, constraints);
+        UIHelper.placeUIComp(rootPanel, buttonLogout, 4, 4, 1, 1, 1);
 
         // Add selection listener to song table
         songTable.getSelectionModel().addListSelectionListener(e -> {

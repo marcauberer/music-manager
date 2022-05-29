@@ -230,13 +230,21 @@ Name `onSongListChanged`verwendet.
 ![Rename method after](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring1-after.plantuml&fmt=svg)
 
 #### Refactoring 2: Extract method
-*ToDo*
+Um die Oberflächenkomponenten auf der UI zu platzieren, nutze ich den `GridBagLayoutManager`. Um diesen zu nutzen, bedarf
+es `LayoutConstraints`. Da alle JFrame-Klassen diese Funktionalität benötigen, reicht es nicht eine Methoden-Extraktion
+innerhalb einer JFrame-Klasse zu machen. Stattdessen habe ich mich dazu entschieden eine neue Klasse `UIHelper` zu erstellen,
+der eine statische Methode `placeUIComp` anbietet um eine Komponente zu platzieren. Dieser übergibt man das Root Panel,
+die zu platzierende Komponente sowie die Koordinaten und Dimensionen der Komponente auf dem Root Panel.
 
 **Vorher:** <br>
 ![Rename method before](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring2-before.plantuml&fmt=svg)
 
 **Nachher (Commit ID: ):** <br>
 ![Rename method after](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring2-after.plantuml&fmt=svg)
+
+Im Code ist es eventuell anschaulicher: <br>
+Vorher: <br>
+Nachher: 
 
 ## Kapitel 8: Entwurfsmuster
 
