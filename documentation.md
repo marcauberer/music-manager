@@ -223,20 +223,20 @@ Die folgende Tabelle umfasst eine Auswahl der Unit-Tests für die MusicManager-A
 Der Methodenname `onRefresh` is für ein Observer-Callable nicht besonders aussagekräftig. Stattdessen wird jetzt der
 Name `onSongListChanged`verwendet.
 
-**Vorher:**
-![Rename method before](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring1-before.plantuml)
+**Vorher:** <br>
+![Rename method before](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring1-before.plantuml&fmt=svg)
 
-**Nachher:**
-![Rename method after](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring1-after.plantuml)
+**Nachher (Commit ID: 2a72e489650af0ad4f4b022fd222dea15a92be71):** <br>
+![Rename method after](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring1-after.plantuml&fmt=svg)
 
 #### Refactoring 2: Extract method
 *ToDo*
 
-**Vorher:**
-![Rename method before](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring2-before.plantuml)
+**Vorher:** <br>
+![Rename method before](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring2-before.plantuml&fmt=svg)
 
-**Nachher:**
-![Rename method after](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring2-after.plantuml)
+**Nachher (Commit ID: ):** <br>
+![Rename method after](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring2-after.plantuml&fmt=svg)
 
 ## Kapitel 8: Entwurfsmuster
 
@@ -248,7 +248,7 @@ kommt hier der `SongBuilder` zum Einsatz. Hier können die einzelnen Angaben
 über Builder-Methoden getätigt werden. Am Ende kann das fertige Song-Objekt
 mit der Methode `build()` erzeugt werden.
 
-![Observer Pattern](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/builder-pattern.plantuml)
+![Observer Pattern](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/builder-pattern.plantuml&fmt=svg)
 
 ### Entwurfsmuster 2: Observer Pattern
 Das Observer-Pattern kommt an zwei Stellen im Code zum Einsatz. Zum einen
@@ -258,4 +258,4 @@ Zum anderen zur aktualisierung der Song-Liste auf der Benutzeroberfläche.
 Hier benachrichtigt der `SongService` die UI über Veränderungen an der
 Song-Liste sodass sich diese aktualisieren kann.
 
-![Observer Pattern](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/observer-pattern.plantuml)
+![Observer Pattern](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/observer-pattern.plantuml&fmt=svg)
