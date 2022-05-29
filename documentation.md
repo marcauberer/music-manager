@@ -239,12 +239,12 @@ die zu platzierende Komponente sowie die Koordinaten und Dimensionen der Kompone
 **Vorher:** <br>
 ![Rename method before](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring2-before.plantuml&fmt=svg)
 
-**Nachher (Commit ID: ):** <br>
+**Nachher (Commit ID: fae1236a349dcdeea7c5c2dc1532aa7478ce26f3):** <br>
 ![Rename method after](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring2-after.plantuml&fmt=svg)
 
-Im Code ist es eventuell anschaulicher: <br>
-Vorher: <br>
-Nachher: 
+Im Code ist es eventuell anschaulicher: 
+[vorher](https://github.com/marcauberer/music-manager/blob/191aa635316bc549318f3bae780af175a4c122bc/3-mm-plugin/src/main/java/com/marc_auberer/musicmanager/plugin/ui/MusicManagerUI.java#L50-L142) -
+[nachher](https://github.com/marcauberer/music-manager/blob/fae1236a349dcdeea7c5c2dc1532aa7478ce26f3/3-mm-plugin/src/main/java/com/marc_auberer/musicmanager/plugin/ui/MusicManagerUI.java#L50-L114)
 
 ## Kapitel 8: Entwurfsmuster
 
