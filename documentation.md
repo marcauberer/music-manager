@@ -192,8 +192,19 @@ Die folgende Tabelle umfasst eine Auswahl der Unit-Tests für die MusicManager-A
 
 ## Kapitel 6: Domain Driven Design
 
+![ER-Diagram](./media/er-diagram.png)
+
 ### Ubiquitous Language
-*ToDo*
+Alle in der Domäne üblichen Begriffe wurden ins Domänenmodell im Projekt übernommen. Folgende Tabelle zeigt die
+Begrifflichkeiten im Detail:
+
+| Begriff | Beschreibung                                                                                                                                                                                   | Begründung                                                                                                                                                                                                                                             |
+|---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Song    | Ein Song stellt ein Musikstück mit Titel, Bpm-Zahl sowie Relationen zu Artist (n:m), Genre (n:1) und BarType (n:1). Songs können jeweils nur einem Nutzer zugeordnet sein.                     | Songs sind der zentrale Bestandteil der Anwendung. Diese sollen gesammelt werden und weitere Metadaten gespeichert werden (Genre, BarType, Bpm, Artists).                                                                                              |
+| Artist  | Ein Artist/Interpret ist ein Künstler, der an einem Song mitgewirkt hat. Es können mehrere Künstler einem Song zugewiesen sein, sowie mehrere Songs einem Künstler.                            | Für gewöhnlich ist nicht nur der Songtitel interessant, sondern auch der Artist. Es kann durchaus vorkommen, dass mehrere Songs mit gleichem Namen abgespeichert sind. Zudem könnte ein Feature eingebaut werden, um alle Songs pro Artist anzuzeigen. |
+| Genre   | Ein Genre beschreibt eine Musikrichtung mit einem Namen. Ein Song hat kein bzw. genau ein Genre zugeordnet. Genre können jedoch für mehrere Songs wiederverwendet werden.                      | s. Artist                                                                                                                                                                                                                                              |
+| BarType | Ein BarType ist eine Taktart wie beispielsweise beim 3/4-Takt. BarTypes beinhalten zwei Zahlen: Den BeatCount (3) und die BeatValue (4). Auch BarTypes können mehreren Song zugeordnet werden. | s. Artist                                                                                                                                                                                                                                              |
+| User    | Ein User repräsentiert einen Benutzer des MusicManager-Systems. Die einem User zugeordneten Songs sind voneinander getrennt, alle anderen Resourcen werden jedoch geteilt.                     | Ohne eine Unterstützung von mehreren, (zumindest teilweise) voneinander getrennten Nutzern, kann ein Mehrbenutzerbetrieb nicht funktionieren.                                                                                                          |
 
 ### Entities
 *ToDo*
