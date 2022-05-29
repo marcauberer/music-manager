@@ -201,7 +201,13 @@ Der Service basiert stattdessen auf dem Interface `GenreRepository` und nimmt so
 Interfaces als validen Input an. So ist die Abhängigkeit umgekehrt und von außen kann eine neue Repository injiziert werden.
 
 #### Negativ-Beispiel (Dependency Inversion)
-*ToDo*
+
+![DIP negative example](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/dip-negative.plantuml&fmt=svg)
+
+Die Klasse `RelSongArtistRepositoryImpl` hängt von der konkreten Implementierung des `CSVHelper`s ab. Damit ist hier das
+Dependency Inversion Principle verletzt. Dies könnte verbessert werden, indem ein Interface zur Abstraktion zur Verfügung
+gestellt wird und die konkrete Implementierung des `CSVHelper`s erst in der Plugin-Schicht stattfindet. So wäre beispielsweise
+auch ein XMLHelper denkbar, welcher dann ebenfalls auf der Plugin-Schicht liegt, jedoch auch das generelle Interface implementiert.
 
 ## Kapitel 4: Weitere Prinzipien
 

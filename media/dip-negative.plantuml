@@ -1,0 +1,29 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class CSVHelper {
+  + CSVHelper(String, String): 
+  + delimiter: String
+  + filePath: Path
+  + read(): Optional<List<String[]>>
+  + write(String[], List<String[]>): void
+}
+class RelSongArtistRepositoryImpl {
+  + RelSongArtistRepositoryImpl(ArtistRepository, CSVHelper): 
+  + RelSongArtistRepositoryImpl(ArtistRepository): 
+  + relSongArtists: List<RelSongArtist>
+  + artistRepository: ArtistRepository
+  + csvHelper: CSVHelper
+  + FILE_PATH: String
+  + reload(): void
+  + updateRelations(List<RelSongArtist>): void
+  + writeOut(): void
+  + findAllArtistsBySongId(long): List<Artist>
+}
+
+RelSongArtistRepositoryImpl  -[#595959,dashed]->  CSVHelper                   : "«create»"
+RelSongArtistRepositoryImpl "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+@enduml
