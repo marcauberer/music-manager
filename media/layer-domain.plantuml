@@ -1,0 +1,152 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class AbstractRepository {
+  + AbstractRepository(): 
+  + AUTO_INC: long
+  + writeOut(): void
+  + reload(): void
+}
+class Artist {
+  + Artist(long, String, String, Date): 
+  + lastName: String
+  + dateOfBirth: Date
+  + id: long
+  + firstName: String
+  + getLastName(): String
+  + getCSVHeader(): String[]
+  + toString(): String
+  + getId(): long
+  + getFirstName(): String
+  + getDateOfBirth(): Date
+  + equals(Object): boolean
+  + hashCode(): int
+  + setId(long): void
+  + getFieldContents(): String[]
+}
+interface ArtistRepository << interface >> {
+  + findArtistById(long): Optional<Artist>
+  + delete(long): void
+  + save(Artist): void
+  + findAllArtists(): List<Artist>
+}
+class BarType {
+  + BarType(long, int, int): 
+  + id: long
+  + beatCount: int
+  + beatValue: int
+  + setId(long): void
+  + hashCode(): int
+  + getCSVHeader(): String[]
+  + getBeatValue(): int
+  + getFieldContents(): String[]
+  + getBeatCount(): int
+  + getId(): long
+  + toString(): String
+  + equals(Object): boolean
+}
+interface BarTypeRepository << interface >> {
+  + save(BarType): void
+  + delete(long): void
+  + findAllBarTypes(): List<BarType>
+  + findBarTypeById(long): Optional<BarType>
+}
+class Genre {
+  + Genre(long, String): 
+  + id: long
+  + name: String
+  + equals(Object): boolean
+  + getId(): long
+  + toString(): String
+  + getCSVHeader(): String[]
+  + setId(long): void
+  + getName(): String
+  + getFieldContents(): String[]
+  + hashCode(): int
+}
+interface GenreRepository << interface >> {
+  + findGenreById(long): Optional<Genre>
+  + save(Genre): void
+  + delete(long): void
+  + findAllGenres(): List<Genre>
+}
+class RelSongArtist {
+  + RelSongArtist(long, long, long): 
+  + songId: long
+  + id: long
+  + artistId: long
+  + getSongId(): long
+  + getArtistId(): long
+  + getId(): long
+  + getFieldContents(): String[]
+  + equals(Object): boolean
+  + getCSVHeader(): String[]
+  + hashCode(): int
+  + toString(): String
+}
+interface RelSongArtistRepository << interface >> {
+  + findAllArtistsBySongId(long): List<Artist>
+  + updateRelations(List<RelSongArtist>): void
+}
+class Song {
+  + Song(long, long, String, List<Artist>, Genre, float, BarType): 
+  + id: long
+  + artists: List<Artist>
+  + userId: long
+  + barType: BarType
+  + bpm: float
+  + genre: Genre
+  + title: String
+  + getFieldContents(): String[]
+  + equals(Object): boolean
+  + getArtists(): List<Artist>
+  + getCSVHeader(): String[]
+  + toString(): String
+  + getTitle(): String
+  + hashCode(): int
+  + getBpm(): float
+  + getGenre(): Genre
+  + getId(): long
+  + setId(long): void
+  + getBarType(): BarType
+  + getUserId(): long
+}
+interface SongRepository << interface >> {
+  + findSongById(long): Optional<Song>
+  + findAllSongs(): List<Song>
+  + delete(long): void
+  + findAllSongsByUserId(long): List<Song>
+  + update(Song): void
+  + save(Song): void
+}
+class TransitiveDataException {
+  + TransitiveDataException(String): 
+}
+class User {
+  + User(long, String, String): 
+  + id: long
+  + username: String
+  + password: String
+  + getId(): long
+  + getCSVHeader(): String[]
+  + toString(): String
+  + setId(long): void
+  + getUsername(): String
+  + getFieldContents(): String[]
+  + equals(Object): boolean
+  + hashCode(): int
+  + getPassword(): String
+}
+interface UserRepository << interface >> {
+  + findAllUsers(): List<User>
+  + save(User): void
+  + findUserByUsername(String): Optional<User>
+}
+
+Song                    "1" *-[#595959,plain]-> "artists\n*" Artist                  
+Song                    "1" *-[#595959,plain]-> "barType\n1" BarType                 
+Song                    "1" *-[#595959,plain]-> "genre\n1" Genre                   
+@enduml

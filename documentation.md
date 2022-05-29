@@ -45,6 +45,7 @@ auf YouTube an.
 #### Requirements
 - Java 11 oder höher
 - Maven
+- Betriebsfähiger Browser zum Testen der YouTube-Links
 
 #### Projekt herunterladen
 
@@ -58,15 +59,15 @@ git clone https://github.com/marcauberer/music-manager.git
 mvn package 
 ```
 
-#### Demo-Daten laden (Optional)
+#### Demo-Daten laden (Empfohlen)
 
 Es existiert ein vorbereiteter Datenbestand, mit dem sich die Applikation testen lässt.
 Um diesen zu laden, kann das Skript `reload-demo-data.bat` genutzt werden.
 
-Die Demo-Daten beinhalten auch zwei Nutzeraccounts. Die Zugangsdaten lauten:
+Die Demo-Daten beinhalten auch zwei Nutzeraccounts mit bereits verknüpften Songs. Die Zugangsdaten lauten:
 
-1. Username: marc, Passwort: 12345
-2. Username: testuser, Password: testpw
+1. Username: `marc`, Passwort: `12345`
+2. Username: `testuser`, Password: `testpw`
 
 #### Ausführbare JAR-Datei finden
 
@@ -96,8 +97,6 @@ Tätigkeitskapselung entstehen.
 
 ### Analyse der Dependency Rule
 
-### Analyse der Schichten
-
 In dieser Applikation halten prinzipiell alle Klassen die Dependency-Rule hinsichtlich dem "Fluss" der Abhängigkeiten ein.
 Klassen innerer Schichten besitzen <u>keine</u> Abhängigkeiten nach Außen. Dies wird u.a. durch den Aufbau des Maven Projektes
 selbst gewährleistet, da nur die äußeren Schichten/Module weiter innen liegende Module als Abhängigkeit definiert haben.
@@ -115,6 +114,28 @@ Application und Plugin zum Einsatz.
 Selbiges gilt für die Schichtenarchitektur bei Artists, wobei hier kein Builder notwendig ist.
 
 ![Layers positive example 1](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/layers-positive2.plantuml&fmt=svg)
+
+### Analyse der Schichten
+
+#### Domain Layer
+
+![Domain layer](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/layer-domain.plantuml&fmt=svg)
+
+Die Domain Layer bildet die Domäne "Musik" auf ein Domänenmodell ab. Sie beinhaltet auch eine abstrakte Klasse
+`AbstractRepository`, von der alle Implementierungen der Repositories abstammen, die persistiert werden sollen.
+Dies wurde absichtlich von den restlichen Repository-Interfaces getrennt, sodass sich auch gegen eine Persistenz der
+Daten entschieden werden kann.
+
+Die Model-Klasse `Song` ist der zentrale Bestandteil der Domain. Ein Song referenziert dann auf `Genre`, `Artist` und
+`BarType`. Es kann mehrere `User` geben, die jeweils mehrere `Song`s haben.
+
+#### Application Layer 
+
+![Application layer](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/layer-application.plantuml&fmt=svg)
+
+Die Application Layer beinhaltet die gesamte Logik der Anwendung. Im Falle des MusicManagers ist dies nicht besonders viel.
+Diese Logik wird von sogenannten Services bereitgestellt. Diese Services sind zum einen in dieser Schicht durch
+Interfaces strukturell festgehalten und können an äußere Schichten weitergereicht werden, sind dort aber auch implementiert.
 
 ## Kapitel 3: SOLID
 
