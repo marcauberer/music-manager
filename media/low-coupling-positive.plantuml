@@ -1,0 +1,45 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+class Song {
+  + Song(long, long, String, List<Artist>, Genre, float, BarType): 
+  + id: long
+  + artists: List<Artist>
+  + userId: long
+  + barType: BarType
+  + bpm: float
+  + genre: Genre
+  + title: String
+  + getFieldContents(): String[]
+  + equals(Object): boolean
+  + getArtists(): List<Artist>
+  + getCSVHeader(): String[]
+  + toString(): String
+  + getTitle(): String
+  + hashCode(): int
+  + getBpm(): float
+  + getGenre(): Genre
+  + getId(): long
+  + setId(long): void
+  + getBarType(): BarType
+  + getUserId(): long
+}
+class SongBuilder {
+  + SongBuilder(long, User, String, List<Artist>): 
+  + artists: List<Artist>
+  + bpm: float
+  + genre: Genre
+  + title: String
+  + id: long
+  + barType: BarType
+  + user: User
+  + withBpm(float): SongBuilder
+  + withBarType(BarType): SongBuilder
+  + withGenre(Genre): SongBuilder
+  + build(): Song
+}
+
+SongBuilder  -[#595959,dashed]->  Song        : "«create»"
+@enduml

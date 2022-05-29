@@ -1,0 +1,112 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+interface BarTypeRepository << interface >> {
+  + save(BarType): void
+  + delete(long): void
+  + findAllBarTypes(): List<BarType>
+  + findBarTypeById(long): Optional<BarType>
+}
+class BarTypeRepositoryImpl {
+  + BarTypeRepositoryImpl(CSVHelper): 
+  + BarTypeRepositoryImpl(): 
+  + csvHelper: CSVHelper
+  + FILE_PATH: String
+  + barTypes: List<BarType>
+  + writeOut(): void
+  + findBarTypeById(long): Optional<BarType>
+  + reload(): void
+  + delete(long): void
+  + findAllBarTypes(): List<BarType>
+  + save(BarType): void
+}
+class CSVHelper {
+  + CSVHelper(String, String): 
+  + delimiter: String
+  + filePath: Path
+  + write(String[], List<String[]>): void
+  + read(): Optional<List<String[]>>
+}
+interface GenreRepository << interface >> {
+  + findGenreById(long): Optional<Genre>
+  + save(Genre): void
+  + delete(long): void
+  + findAllGenres(): List<Genre>
+}
+class GenreRepositoryImpl {
+  + GenreRepositoryImpl(CSVHelper): 
+  + GenreRepositoryImpl(): 
+  + FILE_PATH: String
+  + genres: List<Genre>
+  + csvHelper: CSVHelper
+  + reload(): void
+  + findAllGenres(): List<Genre>
+  + save(Genre): void
+  + findGenreById(long): Optional<Genre>
+  + delete(long): void
+  + writeOut(): void
+}
+interface RelSongArtistRepository << interface >> {
+  + findAllArtistsBySongId(long): List<Artist>
+  + updateRelations(List<RelSongArtist>): void
+}
+class RelSongArtistRepositoryImpl {
+  + RelSongArtistRepositoryImpl(ArtistRepository): 
+  + RelSongArtistRepositoryImpl(ArtistRepository, CSVHelper): 
+  + csvHelper: CSVHelper
+  + artistRepository: ArtistRepository
+  + relSongArtists: List<RelSongArtist>
+  + FILE_PATH: String
+  + findAllArtistsBySongId(long): List<Artist>
+  + updateRelations(List<RelSongArtist>): void
+  + writeOut(): void
+  + reload(): void
+}
+interface SongRepository << interface >> {
+  + findSongById(long): Optional<Song>
+  + findAllSongs(): List<Song>
+  + delete(long): void
+  + findAllSongsByUserId(long): List<Song>
+  + update(Song): void
+  + save(Song): void
+}
+class SongRepositoryImpl {
+  + SongRepositoryImpl(): 
+  + SongRepositoryImpl(CSVHelper, GenreRepository, BarTypeRepository, RelSongArtistRepository): 
+  + songs: List<Song>
+  + csvHelper: CSVHelper
+  + FILE_PATH: String
+  + genreRepository: GenreRepository
+  + barTypeRepository: BarTypeRepository
+  + relSongArtistRepository: RelSongArtistRepository
+  + findAllSongsByUserId(long): List<Song>
+  + findAllSongs(): List<Song>
+  + reload(): void
+  + delete(long): void
+  + findSongById(long): Optional<Song>
+  + save(Song): void
+  + update(Song): void
+  + writeOut(): void
+}
+
+BarTypeRepositoryImpl        -[#008200,dashed]-^  BarTypeRepository           
+BarTypeRepositoryImpl       "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+BarTypeRepositoryImpl        -[#595959,dashed]->  CSVHelper                   : "«create»"
+GenreRepositoryImpl          -[#595959,dashed]->  CSVHelper                   : "«create»"
+GenreRepositoryImpl         "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+GenreRepositoryImpl          -[#008200,dashed]-^  GenreRepository             
+RelSongArtistRepositoryImpl "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+RelSongArtistRepositoryImpl  -[#595959,dashed]->  CSVHelper                   : "«create»"
+RelSongArtistRepositoryImpl  -[#008200,dashed]-^  RelSongArtistRepository     
+SongRepositoryImpl          "1" *-[#595959,plain]-> "barTypeRepository\n1" BarTypeRepository           
+SongRepositoryImpl           -[#595959,dashed]->  BarTypeRepositoryImpl       : "«create»"
+SongRepositoryImpl           -[#595959,dashed]->  CSVHelper                   : "«create»"
+SongRepositoryImpl          "1" *-[#595959,plain]-> "csvHelper\n1" CSVHelper                   
+SongRepositoryImpl          "1" *-[#595959,plain]-> "genreRepository\n1" GenreRepository             
+SongRepositoryImpl           -[#595959,dashed]->  GenreRepositoryImpl         : "«create»"
+SongRepositoryImpl          "1" *-[#595959,plain]-> "relSongArtistRepository\n1" RelSongArtistRepository     
+SongRepositoryImpl           -[#595959,dashed]->  RelSongArtistRepositoryImpl : "«create»"
+SongRepositoryImpl           -[#008200,dashed]-^  SongRepository              
+@enduml

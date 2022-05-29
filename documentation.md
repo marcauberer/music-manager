@@ -135,10 +135,21 @@ Tätigkeitskapselung entstehen.
 ### Analyse GRASP: Geringe Kopplung
 
 #### Positiv-Beispiel
-*ToDo*
+
+Ein positives Beispiel für Log Coupling ist die Klasse `SongBuilder`. Diese Klasse wird verwendet um mit dem
+Builder-Pattern Song-Objekte zu konstruieren. Sie hat mit der Song-Klasse nur eine einzige Abhängigkeit. Demnach ist das
+Testen unproblematisch.
+
+![Low coupling positive example](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/low-coupling-positive.plantuml&fmt=svg)
 
 #### Negativ-Beispiel
-*ToDo*
+
+Ein Negativ-Beispiel für Low Coupling ist die Klasse `SongRepositoryImpl`. Hier laufen gewissermaßen alle Drähte zusammen,
+da die Klasse für die Auflösung von Relationen zwischen Songs und Genres, Songs und Artisten, sowie Songs und BarTypes
+zuständig ist. <br>
+Das Testen dieser Klasse ist vor allem durch die vielen Mock-Objekte eine Herausforderung.
+
+![Low coupling negative example](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/low-coupling-negative.plantuml&fmt=svg)
 
 ### Analyse GRASP: Hohe Kohäsion
 
@@ -149,7 +160,54 @@ Tätigkeitskapselung entstehen.
 *ToDo*
 
 ### Don't Repeat Yourself (DRY)
-*ToDo*
+Um die Oberflächenkomponenten auf der UI zu platzieren, nutze ich den `GridBagLayoutManager`. Um diesen zu nutzen, bedarf
+es `LayoutConstraints`. Da alle JFrame-Klassen diese Funktionalität benötigen, reicht es nicht eine Methoden-Extraktion
+innerhalb einer JFrame-Klasse zu machen. Stattdessen habe ich mich dazu entschieden eine neue Klasse `UIHelper` zu erstellen,
+der eine statische Methode `placeUIComp` anbietet um eine Komponente zu platzieren. Dieser übergibt man das Root Panel,
+die zu platzierende Komponente sowie die Koordinaten und Dimensionen der Komponente auf dem Root Panel.
+
+**Vorher:**
+```java
+JLabel labelPassword = new JLabel("Password:");
+constraints.gridx = 0;
+constraints.gridy = 2;
+rootPanel.add(labelPassword, constraints);
+textFieldPassword.addActionListener(e -> attemptToLogin());
+constraints.gridx = 1;
+rootPanel.add(textFieldPassword, constraints);
+```
+
+Dieser Code wiederholt sich für alle UI-Komponenten.
+
+**Nachher (Commit ID: fae1236a349dcdeea7c5c2dc1532aa7478ce26f3):**
+
+```java
+public class UIHelper {
+
+    // Private constructor to hide the public one (Good according to SonarCloud)
+    private UIHelper() {}
+
+    public static void placeUIComp(JPanel rootPanel, JComponent component, int gridX, int gridY,
+                                   int gridWidth, int gridHeight, int gridWeightX) {
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.gridx = gridX;
+        constraints.gridy = gridY;
+        constraints.gridwidth = gridWidth;
+        constraints.gridheight = gridHeight;
+        constraints.weightx = gridWeightX;
+        rootPanel.add(component, constraints);
+    }
+}
+
+```
+
+```java
+JLabel labelUsername = new JLabel("Username:");
+UIHelper.placeUIComp(rootPanel, labelUsername, 0, 1, 1, 1, 1);
+```
+
+Dieser Code wiederholt sich für alle UI-Komponenten.
 
 ## Kapitel 5: Unit tests
 
