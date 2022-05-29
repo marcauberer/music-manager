@@ -2,7 +2,16 @@ name: CI
 
 on:
   push:
-    branches: [ main, feature/** ]
+    branches:
+      - main
+      - feature/**
+    paths:
+      - 0-mm-utils/**
+      - 1-mm-domain/**
+      - 2-mm-application/**
+      - 3-mm-plugin/**
+      - mm-report/**
+      - pom.xml
   pull_request:
     branches: [ main ]
 
