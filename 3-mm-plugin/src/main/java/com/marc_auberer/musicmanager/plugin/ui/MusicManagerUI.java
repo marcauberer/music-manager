@@ -182,7 +182,7 @@ public class MusicManagerUI extends JFrame implements SongListObserver {
     }
 
     @Override
-    public void onRefresh(List<Song> songList) {
+    public void onSongListChanged(List<Song> songList) {
         this.songs = songList;
 
         // Convert the List into table rows and cells

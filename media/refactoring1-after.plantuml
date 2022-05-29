@@ -1,0 +1,29 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class MusicManagerUI {
+  + MusicManagerUI(LoginObserver, User): 
+  + songService: SongServiceImpl
+  + songs: List<Song>
+  + user: User
+  + selectedSong: Optional<Song>
+  + songTable: JTable
+  + linkGeneratorService: YTLinkGeneratorServiceImpl
+  + loginObserver: LoginObserver
+  + triggerLogout(): void
+  + onSongListChanged(List<Song>): void
+  + newSong(): void
+  + deleteSong(): void
+  + setupUI(): void
+  + playSong(): void
+  + editSong(): void
+}
+interface SongListObserver << interface >> {
+  + onSongListChanged(List<Song>): void
+}
+
+MusicManagerUI    -[#008200,dashed]-^  SongListObserver 
+@enduml

@@ -20,7 +20,7 @@ public class SongServiceImpl implements SongService {
         this.songRepository = songRepository;
         this.songListObserver = songListObserver;
         // Notify observers about initial data load
-        songListObserver.onRefresh(getAllSongsForUser());
+        songListObserver.onSongListChanged(getAllSongsForUser());
     }
 
     @Override
@@ -40,18 +40,18 @@ public class SongServiceImpl implements SongService {
     @Override
     public void create(Song song) {
         songRepository.save(song);
-        songListObserver.onRefresh(getAllSongsForUser());
+        songListObserver.onSongListChanged(getAllSongsForUser());
     }
 
     @Override
     public void update(Song song) {
         songRepository.update(song);
-        songListObserver.onRefresh(getAllSongsForUser());
+        songListObserver.onSongListChanged(getAllSongsForUser());
     }
 
     @Override
     public void delete(Song song) {
         songRepository.delete(song.getId());
-        songListObserver.onRefresh(getAllSongsForUser());
+        songListObserver.onSongListChanged(getAllSongsForUser());
     }
 }

@@ -219,11 +219,24 @@ Die folgende Tabelle umfasst eine Auswahl der Unit-Tests für die MusicManager-A
 
 ### Refactorings
 
-#### Refactoring 1
+#### Refactoring 1: Rename method
+Der Methodenname `onRefresh` is für ein Observer-Callable nicht besonders aussagekräftig. Stattdessen wird jetzt der
+Name `onSongListChanged`verwendet.
+
+**Vorher:**
+![Rename method before](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring1-before.plantuml)
+
+**Nachher:**
+![Rename method after](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring1-after.plantuml)
+
+#### Refactoring 2: Extract method
 *ToDo*
 
-#### Refactoring 2
-*ToDo*
+**Vorher:**
+![Rename method before](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring2-before.plantuml)
+
+**Nachher:**
+![Rename method after](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marcauberer/music-manager/main/media/refactoring2-after.plantuml)
 
 ## Kapitel 8: Entwurfsmuster
 
