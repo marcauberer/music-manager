@@ -10,8 +10,11 @@
 For more detailed information about the project, please visit the [documentation](./documentation.md).
 
 ## Screenshots
+![Login dialog](media/screenshots/login-window.png)
+![Main window](media/screenshots/main-window.png)
+![Add song dialog](media/screenshots/add-song-window.png)
 
 ## ER-Diagram
-![ER diagram](media/er-diagram.png "ER diagram")
+![ER diagram](media/er-diagram.png)
 
 © Marc Auberer 2022
