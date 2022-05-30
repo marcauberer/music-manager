@@ -3,130 +3,40 @@
 top to bottom direction
 skinparam linetype ortho
 
-interface ArtistListObserver << interface >> {
-  + onArtistListChanged(List<Artist>): void
-}
-interface ArtistService << interface >> {
-  + createArtist(Artist): void
-  + getAllArtists(): List<Artist>
-}
-class ArtistServiceImpl {
-  + ArtistServiceImpl(ArtistRepository, ArtistListObserver): 
-  + artistRepository: ArtistRepository
-  + artistListObserver: ArtistListObserver
-  + getAllArtists(): List<Artist>
-  + createArtist(Artist): void
-}
-interface BarTypeListObserver << interface >> {
-  + onBarTypeListChanged(List<BarType>): void
-}
-interface BarTypeService << interface >> {
-  + getAllBarTypes(): List<BarType>
-  + createBarType(BarType): void
-}
-class BarTypeServiceImpl {
-  + BarTypeServiceImpl(BarTypeRepository, BarTypeListObserver): 
-  + barTypeRepository: BarTypeRepository
-  + barTypeListObserver: BarTypeListObserver
-  + createBarType(BarType): void
-  + getAllBarTypes(): List<BarType>
-}
-interface GenreListObserver << interface >> {
-  + onGenreListChanged(List<Genre>): void
-}
-interface GenreService << interface >> {
-  + createGenre(Genre): void
-  + getAllGenres(): List<Genre>
-}
-class GenreServiceImpl {
-  + GenreServiceImpl(GenreRepository, GenreListObserver): 
-  + genreListObserver: GenreListObserver
-  + genreRepository: GenreRepository
-  + createGenre(Genre): void
-  + getAllGenres(): List<Genre>
-}
-interface LoginObserver << interface >> {
-  + onLogout(): void
-  + onLogin(User): void
-}
-class RegistrationFailedException {
-  + RegistrationFailedException(String): 
-}
 class SongBuilder {
-  + SongBuilder(long, User, String, List<Artist>): 
-  + artists: List<Artist>
-  + id: long
+  + genre: Genre
   + title: String
   + user: User
-  + bpm: float
-  + genre: Genre
+  + artists: List<Artist>
   + barType: BarType
-  + withBpm(float): SongBuilder
-  + build(): Song
+  + bpm: float
+  + id: long
   + withBarType(BarType): SongBuilder
   + withGenre(Genre): SongBuilder
+  + withBpm(float): SongBuilder
+  + build(): Song
 }
 interface SongListObserver << interface >> {
   + onSongListChanged(List<Song>): void
 }
 interface SongService << interface >> {
   + searchSongsByTitle(String): List<Song>
-  + create(Song): void
-  + getAllSongsForUser(): List<Song>
   + update(Song): void
   + delete(Song): void
+  + create(Song): void
+  + getAllSongsForUser(): List<Song>
 }
 class SongServiceImpl {
-  + SongServiceImpl(User, SongRepository, SongListObserver): 
-  + songListObserver: SongListObserver
-  + songRepository: SongRepository
   + user: User
-  + getAllSongsForUser(): List<Song>
-  + searchSongsByTitle(String): List<Song>
-  + create(Song): void
+  + songRepository: SongRepository
+  + songListObserver: SongListObserver
   + delete(Song): void
+  + create(Song): void
+  + searchSongsByTitle(String): List<Song>
   + update(Song): void
-}
-class UserAlreadyExistsException {
-  + UserAlreadyExistsException(String): 
-}
-class UserNotFoundException {
-  + UserNotFoundException(String): 
-}
-interface UserService << interface >> {
-  + login(String, String): User
-  + register(String, String): User
-}
-class UserServiceImpl {
-  + UserServiceImpl(UserRepository): 
-  + userRepository: UserRepository
-  + register(String, String): User
-  + login(String, String): User
-}
-class WrongPasswordException {
-  + WrongPasswordException(String): 
-}
-interface YTLinkGeneratorService << interface >> {
-  + generateYouTubeLink(Song): String
-}
-class YTLinkGeneratorServiceImpl {
-  + YTLinkGeneratorServiceImpl(): 
-  + URL_TEMPLATE: String
-  + generateYouTubeLink(Song): String
-  + encodeValue(String): String
+  + getAllSongsForUser(): List<Song>
 }
 
-ArtistServiceImpl           "1" *-[#595959,plain]-> "artistListObserver\n1" ArtistListObserver          
-ArtistServiceImpl            -[#008200,dashed]-^  ArtistService               
-BarTypeServiceImpl          "1" *-[#595959,plain]-> "barTypeListObserver\n1" BarTypeListObserver         
-BarTypeServiceImpl           -[#008200,dashed]-^  BarTypeService              
-GenreServiceImpl            "1" *-[#595959,plain]-> "genreListObserver\n1" GenreListObserver           
-GenreServiceImpl             -[#008200,dashed]-^  GenreService                
-SongServiceImpl             "1" *-[#595959,plain]-> "songListObserver\n1" SongListObserver            
-SongServiceImpl              -[#008200,dashed]-^  SongService                 
-UserServiceImpl              -[#595959,dashed]->  UserAlreadyExistsException  : "«create»"
-UserServiceImpl              -[#595959,dashed]->  UserNotFoundException       : "«create»"
-UserServiceImpl              -[#008200,dashed]-^  UserService                 
-UserServiceImpl              -[#595959,dashed]->  WrongPasswordException      : "«create»"
-YTLinkGeneratorServiceImpl   -[#008200,dashed]-^  YTLinkGeneratorService      
+SongServiceImpl  "1" *-[#595959,plain]-> "songListObserver\n1" SongListObserver 
+SongServiceImpl   -[#008200,dashed]-^  SongService      
 @enduml

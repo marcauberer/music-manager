@@ -1,6 +1,7 @@
 package com.marc_auberer.musicmanager.domain.song;
 
 import com.marc_auberer.musicmanager.domain.artist.Artist;
+import com.marc_auberer.musicmanager.domain.bartype.BarType;
 import com.marc_auberer.musicmanager.domain.genre.Genre;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class Song {
     private final List<Artist> artists;
     private final Genre genre;
     private final float bpm;
-    private final com.marc_auberer.musicmanager.domain.bartype.BarType barType;
+    private final BarType barType;
 
     public Song(long id, long userId, String title, List<Artist> artists, Genre genre, float bpm, com.marc_auberer.musicmanager.domain.bartype.BarType barType) {
         this.id = id;
